@@ -43,6 +43,10 @@ class Window:
         self.__Screen.destroy()
         quit(exitCode)
     
+    def setBackground(self, color:str) -> None:
+        self.__Screen.configure(background=color)
+        pass
+    
 # root = Tk()
 # root.geometry("800x450")
 # root.title("thing")
