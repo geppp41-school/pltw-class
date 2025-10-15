@@ -3,5 +3,10 @@
     "oneDarkPro.bold": false,
     "python.analysis.autoFormatStrings": true,
     "python-envs.defaultEnvManager": "ms-python.python:system",
-    "python-envs.pythonProjects": []
+    "python-envs.pythonProjects": [],
+    "java.dependency.showMembers": true,
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "Java-Game/lib/*.jar"
+    ]
 }
