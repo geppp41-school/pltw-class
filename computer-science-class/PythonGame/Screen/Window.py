@@ -4,7 +4,7 @@ from tkinter import ttk
 
 
 #https://stackoverflow.com/questions/32289175/list-of-all-tkinter-events
-class Window:
+class Window:## class class_name(different_class) is 
     '''The class for the window'''
 
     def __init__(self, Title : str = "", Resolution : str = "800x450"):
@@ -17,7 +17,6 @@ class Window:
         #seting up the screen
         self.__Screen.title(Title)
         self.__Screen.geometry(Resolution)#set resolution
-        
         self.__Screen.bind("<Key>", lambda key : self.__keysPressed.append(key.keycode))#checks what keys are pressed
         self.__Screen.bind("<KeyRelease>", lambda key : self.__keysPressed.remove(key.keycode))
     
@@ -42,6 +41,20 @@ class Window:
         """quit the program"""
         self.__Screen.destroy()
         quit(exitCode)
+    
+    def setBackgroundColor(self, color:str | tuple[(int, int, int)]) -> None:
+        """sets the windows background color"""
+        if(type(color) == tuple):
+            hexString = "#"
+            for i in range(3):
+                if(color[i] > 255 or color[i] < 0):
+                    raise ValueError("color value is above the maximum allowed integer input or below the minimum allowed integer input")
+                else:
+                    hexString += str(color[i].to_bytes()).replace("b\'\\x", "").replace("\'", "") 
+            self.__Screen.configure(bg=hexString)
+        elif(type(color) == str):
+            self.__Screen.configure(bg=color)
+        pass
     
 # root = Tk()
 # root.geometry("800x450")
