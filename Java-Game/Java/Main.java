@@ -1,6 +1,10 @@
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Main {
+    private static Window mainWindow;
     public static void main(String[] args) {
-        System.err.println("test");
+        mainWindow = new Window(700, 300, "null", NULL, NULL);
+        mainWindow.mainLoop();
+        System.out.println("Closed Window");
     }
 }
