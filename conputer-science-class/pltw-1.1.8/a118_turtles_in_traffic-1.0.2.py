@@ -49,8 +49,7 @@ def moveTurtles(distance):
     if(turtle.xcor()+distance < 0 and turtle.ycor()-distance > 0 and turtle.fillcolor != "#00ffff"):
       turtle.forward(distance)
     else:
-      turtle.color("#00ffff")
-    
+      turtle.color("#00ffff")   
 
 def checkColisions():
   for horizontal_turtle in horiz_turtles:
@@ -70,8 +69,6 @@ def checkColisions():
         horizontal_turtle.color(old_colors[0])
         vertical_turtle.shape(old_shapes[1])
         vertical_turtle.color(old_colors[1])
-
-        
 
 for step in range(50):
   moveTurtles(step*5/3)
