@@ -4,7 +4,7 @@ from tkinter import ttk
 
 
 #https://stackoverflow.com/questions/32289175/list-of-all-tkinter-events
-class Window:
+class Window:## class class_name(different_class) is 
     '''The class for the window'''
 
     def __init__(self, Title : str = "", Resolution : str = "800x450"):
