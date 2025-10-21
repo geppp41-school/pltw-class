@@ -17,7 +17,7 @@ class EnemyBase:
         self.__frames = {}
         self.__currentFrame = 0
         self.__lastFrameTime = time.time()
-        
+        ##TODO: get the frames of the gif extracted and animate turtle
         self.__body.getscreen().register_shape("pltw-1.1.9\\assets\\enemies\\GreenSlime\\SlimeMoving.gif")
         self.__body.shape("pltw-1.1.9\\assets\\enemies\\GreenSlime\\SlimeMoving.gif")
         pass
