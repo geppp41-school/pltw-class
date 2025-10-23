@@ -24,7 +24,6 @@ class Player:
             self.__input.isKeyPressedInt("d")-self.__input.isKeyPressedInt("a")
         )
         turtleMovement = turtleMovement.normalized()
-        print("3" + str(turtleMovement))
         self.__turtle.setpos(
             turtlePosition[0]+turtleMovement[1],
             turtlePosition[1]+turtleMovement[0]
@@ -33,6 +32,11 @@ class Player:
     def mainLoop(self):
         self.__turtle.screen.mainloop()
 
+    def getHeading(self):
+        return self.__turtle.heading()
+    
+    def getPos(self):
+        return self.__turtle.pos()
     
 
     

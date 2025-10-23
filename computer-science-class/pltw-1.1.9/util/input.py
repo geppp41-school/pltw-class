@@ -1,8 +1,6 @@
 from tkinter import Canvas
 import turtle
 
-from matplotlib.pylab import str_
-
 
 class input:
 
