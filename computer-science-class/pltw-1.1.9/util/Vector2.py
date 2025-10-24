@@ -1,7 +1,6 @@
 import math
 from turtle import Vec2D, right
 from typing import overload
-from typing_extensions import Self
 
 
 
@@ -9,7 +8,7 @@ class Vector2:
     x : float
     y : float
     
-    def __new__(cls, x, y) -> Self:
+    def __new__(cls, x, y):
         return super(Vector2, cls).__new__(cls)
     
     def __init__(self, x : float, y : float) -> None:
@@ -47,6 +46,10 @@ class Vector2:
         self.x = self.x*val
         self.y = self.y*val
         return self
+    
+    def __str__(self) -> str:
+        return f"({self.x}, {self.y})"
+
     
     def toVec2D(self) -> Vec2D:
         return Vec2D(self.x, self.y)

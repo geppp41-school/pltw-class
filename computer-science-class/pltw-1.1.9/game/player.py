@@ -5,7 +5,7 @@ from util.Vector2 import *
 
 class Player:
     def __init__(self, Turtle : turtle.Turtle):
-        self.__speed : float = 1.0
+        self.__speed : float = 2
         self.__turtle : turtle.Turtle = Turtle
         pass
 
@@ -23,7 +23,9 @@ class Player:
             self.__input.isKeyPressedInt("w")-self.__input.isKeyPressedInt("s"),
             self.__input.isKeyPressedInt("d")-self.__input.isKeyPressedInt("a")
         )
+
         turtleMovement = turtleMovement.normalized()
+        turtleMovement *= self.__speed
         self.__turtle.setpos(
             turtlePosition[0]+turtleMovement[1],
             turtlePosition[1]+turtleMovement[0]

@@ -1,5 +1,3 @@
-import tkinter as TK
-
 import turtle
 from game.player import Player
 from util.input import input
