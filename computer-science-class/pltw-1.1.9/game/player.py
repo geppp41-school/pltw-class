@@ -1,7 +1,7 @@
 import turtle
 
 from util.input import *
-from util.Vector import *
+from util.Vector2 import *
 
 class Player:
     def __init__(self, Turtle : turtle.Turtle):
@@ -19,7 +19,7 @@ class Player:
     def updateMovement(self):
         turtlePosition = self.__turtle.pos()
         
-        turtleMovement = Vector2D(
+        turtleMovement = Vector2(
             self.__input.isKeyPressedInt("w")-self.__input.isKeyPressedInt("s"),
             self.__input.isKeyPressedInt("d")-self.__input.isKeyPressedInt("a")
         )

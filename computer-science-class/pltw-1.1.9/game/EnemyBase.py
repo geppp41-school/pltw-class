@@ -1,7 +1,7 @@
 import math
 import time
-from turtle import Turtle, Vec2D, speed
-import turtle
+from turtle import Turtle
+from util import Vector2
 from game.player import Player
 
 class EnemyBase:
@@ -27,6 +27,7 @@ class EnemyBase:
             self.__frames.append(f"computer-science-class/pltw-1.1.9/assets/enemies/GreenSlime/sprite_{i}.png")
 
         self.__body.shape("computer-science-class/pltw-1.1.9/assets/enemies/GreenSlime/sprite_0.png")
+        self.__body.getscreen()
         pass
 
 
@@ -49,21 +50,20 @@ class EnemyBase:
 
     def update(self):
         self.__dt = time.time_ns()*1000000 - self.__lastFrame
-        self.__lastFrame = time.time_ns()
+        self.__lastFrame = time.time_ns()*1000000
         if(time.time() - self.__lastFrameTime > self.__frameTime):
             self.__body.shape(self.__frames[self.__currentFrame])
             self.__currentFrame = self.__currentFrame + 1 if self.__currentFrame+1 < self.__frameCount else 0
             self.__lastFrameTime = time.time()
+        screen = self.__body.getscreen()
+        with screen.no_animation():
 
-        if(self.__target != None):
-            
-            angle = self.__body.towards(self.__target.getPos())
-            self.__body.setheading(angle)
-            direction = Vec2D.rotate(Vec2D(1,1), angle)
-            print(direction)
-            velocity = direction * self.__speed
-            self.__body.setpos(self.__body.pos() + (velocity*self.__dt))
-            self.__body.teleport()
-            pass
-
-        pass
+            if(self.__target != None):
+                
+                angle = self.__body.towards(self.__target.getPos())
+                print(angle)
+                direction = Vector2.RIGHT.rotated(angle)
+                velocity = direction * self.__speed
+                self.__body.setpos(self.__body.pos() + (velocity.toVec2D()*self.__dt))
+                self.__body.teleport(self.__body.pos()[0] + (velocity.x*self.__dt), self.__body.pos()[1] + (velocity.y*self.__dt))
+                print("done moving")
