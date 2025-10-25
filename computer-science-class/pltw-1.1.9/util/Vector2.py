@@ -5,8 +5,6 @@ from typing import overload
 
 
 class Vector2:
-    x : float
-    y : float
     
     def __new__(cls, x, y):
         return super(Vector2, cls).__new__(cls)
