@@ -1,4 +1,5 @@
 import math
+import random
 import time
 from turtle import Turtle
 from util import Vector2
@@ -39,7 +40,9 @@ class EnemyBase:
         else:
             self.__body.shape(f"pltw-1.1.9\\assets\\enemies\\GreenSlime\\sprite_0.png")
 
-        self.__body.setpos(100, 100)
+        self.__body.penup()
+        self.__body.setpos(random.randint(-250, 250), random.randint(-250,250))
+        self.__body.pendown()
         
 
 
@@ -76,6 +79,6 @@ class EnemyBase:
                 direction = Vector2.RIGHT.rotated(angle)
                 velocity = direction * self.__speed
                 self.__body.setpos(self.__body.pos() + (velocity.toVec2D()*self.__dt))
-                print(self.__dt)
+                
                 # self.__body.teleport(self.__body.pos()[0] + (velocity.x*self.__dt), self.__body.pos()[1] + (velocity.y*self.__dt))
                 # print("done moving")
