@@ -2,7 +2,8 @@ import math
 import random
 import time
 from turtle import Turtle
-from util import Vector2
+from util.Vector2 import *
+
 from game.player import Player
 
 class EnemyBase:
@@ -23,6 +24,13 @@ class EnemyBase:
         self.__lastFrame = time.time_ns()/1000000000
         self.__dt = time.time_ns()/1000000000-self.__lastFrame
         self.__tryWindowsDirs = False
+        self.__die = False
+        
+
+        self.__deathTimeStart = 0
+        self.__deathTimePassed = 0
+
+
         
         #TODO: get the frames of the gif extracted and animate turtle
         for i in range(self.__frameCount):
@@ -50,7 +58,8 @@ class EnemyBase:
         self.__target = target
 
     def die(self):
-        del self
+        self.__die = True
+        self.__deathTimeStart = time.time()
 
     def damage(self, damage : float):
         self.__hp -= damage
@@ -64,21 +73,50 @@ class EnemyBase:
         pass
 
     def update(self):
-        self.__dt = time.time_ns()/1000000000 - self.__lastFrame
-        self.__lastFrame = time.time_ns()/1000000000
-        if(time.time() - self.__lastFrameTime > self.__frameTime):
-            self.__body.shape(self.__frames[self.__currentFrame])
-            self.__currentFrame = self.__currentFrame + 1 if self.__currentFrame+1 < self.__frameCount else 0
-            self.__lastFrameTime = time.time()
-        screen = self.__body.getscreen()
-        with screen.no_animation(): # type: ignore
+        if(not self.__die):
+            self.__dt = time.time_ns()/1000000000 - self.__lastFrame
+            self.__lastFrame = time.time_ns()/1000000000
+            if(time.time() - self.__lastFrameTime > self.__frameTime):
+                self.__body.shape(self.__frames[self.__currentFrame])
+                self.__currentFrame = self.__currentFrame + 1 if self.__currentFrame+1 < self.__frameCount else 0
+                self.__lastFrameTime = time.time()
+            screen = self.__body.getscreen()
+            with screen.no_animation(): # type: ignore
 
-            if(self.__target != None):
-                
-                angle = self.__body.towards(self.__target.getPos())
-                direction = Vector2.RIGHT.rotated(angle)
-                velocity = direction * self.__speed
-                self.__body.setpos(self.__body.pos() + (velocity.toVec2D()*self.__dt))
-                
-                # self.__body.teleport(self.__body.pos()[0] + (velocity.x*self.__dt), self.__body.pos()[1] + (velocity.y*self.__dt))
-                # print("done moving")
+                if(self.__target != None):
+                    
+                    angle = self.__body.towards(self.__target.getPos())
+                    direction = RIGHT.rotated(angle)
+                    velocity = direction * self.__speed
+                    self.__body.setpos(self.__body.pos() + (velocity.toVec2D()*self.__dt))
+                    
+                    # self.__body.teleport(self.__body.pos()[0] + (velocity.x*self.__dt), self.__body.pos()[1] + (velocity.y*self.__dt))
+                    # print("done moving")
+        else:
+            self.__body.clear()
+            self.__body.hideturtle()
+            self.__deathTimePassed = time.time() - self.__deathTimeStart
+            print(self.__deathTimePassed)
+            angle = 72*self.__deathTimePassed
+            startPosition = self.__body.pos()
+            maxLength = 10*math.pow(0.1, -(self.__deathTimePassed/5))
+            cornerPoint = Vector2(2*(maxLength/10), 2*(maxLength/10))
+            endPoint = Vector2(0, maxLength)
+            points = []
+            for i in range(3):
+                points.append(endPoint.rotated(90*(i+1)))
+                points.append(cornerPoint.rotated(90*(i+1)))
+            with self.__body.getscreen().no_animation(): # type: ignore
+                self.__body.color("blue")
+                self.__body.begin_fill()
+                for i in range(len(points)):
+                    self.__body.setpos(startPosition + points[i])
+                self.__body.end_fill()
+                self.__body.setpos(startPosition)
+                self.__body.color("black")
+            if(self.__deathTimePassed >= 5):
+                self.__body.hideturtle()
+                self.__body.penup()
+                self.__body.clear()
+                    
+            

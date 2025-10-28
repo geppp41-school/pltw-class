@@ -2,11 +2,13 @@ import turtle
 
 from util.input import *
 from util.Vector2 import *
-
+from util.Time import *
 class Player:
     def __init__(self, Turtle : turtle.Turtle):
-        self.__speed : float = 2
+        self.__speed : float = 16
         self.__turtle : turtle.Turtle = Turtle
+        self.__lastTime = time_ms()
+        self.__deltaTime = time_ms()-self.__lastTime
         pass
 
     def getScreen(self):
@@ -17,6 +19,8 @@ class Player:
         pass
 
     def updateMovement(self):
+        self.__deltaTime = time_ms() - self.__lastTime
+        self.__lastTime = time_ms()
         turtlePosition = self.__turtle.pos()
         
         turtleMovement = Vector2(
@@ -25,7 +29,7 @@ class Player:
         )
 
         turtleMovement = turtleMovement.normalized()
-        turtleMovement *= self.__speed
+        turtleMovement *= self.__speed/self.__deltaTime
         self.__turtle.setpos(
             turtlePosition[0]+turtleMovement[1],
             turtlePosition[1]+turtleMovement[0]
