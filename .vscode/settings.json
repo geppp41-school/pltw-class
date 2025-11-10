@@ -5,4 +5,11 @@
     "python.analysis.typeCheckingMode": "standard",
     "python-envs.defaultEnvManager": "ms-python.python:system",
     "python-envs.pythonProjects": [],
+    "files.associations": {
+        "time.h": "c"
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+    "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
+        "clang-diagnostic-format"
+    ],
 }
