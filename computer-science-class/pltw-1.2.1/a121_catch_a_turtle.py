@@ -10,7 +10,7 @@ import random
 #-----game configuration----
 #seting up file paths
 _scoreFilePathLynx = "computer-science-class/pltw-1.2.1/highScores.json"
-_scoreFIlePathWin = "computer-science-class\\pltw-1.2.1\\highScores.json"
+_scoreFIlePathWin = "pltw-1.2.1\\highScores.json"
 #stuff for the player
 playerShape = "square"
 shapeFillColor = "blue"
@@ -104,7 +104,7 @@ def update_score():
     global score 
     score += 1
     score_writer.clear()
-    score_writer.write(score, font=font_setup)
+    score_writer.write("Score: "+str(score), font=font_setup)
 
     pass
 
@@ -164,7 +164,8 @@ window = player.getscreen()
 read_high_score_file()    
 print("please enter a name")
 name = input(">>> ")
-
+update_score()
+score -= 1
 
 player.onclick(click)
 window.ontimer(countdown, counter_interval)
