@@ -25,7 +25,7 @@ HighScores:list = []
 font_setup = ("Arial", 20, "normal")
 
 #timer
-timer = 30
+timer = 10
 counter_interval = 1000
 timer_up = False
 
@@ -52,12 +52,20 @@ leaderboard_writer = turtle.Turtle()
 leaderboard_writer.penup()
 leaderboard_writer.hideturtle()
 
+
 #--------file stuff---------
 def read_high_score_file():
     """read the file containing the high scores"""
     global HighScores
     if (sys.platform == "linux"):
        with open(_scoreFilePathLynx, "r") as scoreFile:
+          jsonObject:dict = json.load(scoreFile)
+          
+          HighScores = jsonObject.get("scores", [])
+          print(HighScores)
+          scoreFile.close()
+    elif(sys.platform == "win32"):
+       with open(_scoreFIlePathWin, "r") as scoreFile:
           jsonObject:dict = json.load(scoreFile)
           
           HighScores = jsonObject.get("scores", [])
@@ -70,6 +78,10 @@ def write_high_score_file():
        with open(_scoreFilePathLynx, "w") as scoreFile:
           json.dump({"scores": HighScores}, scoreFile)
           scoreFile.close()
+   elif(sys.platform == "win32"):
+       with open(_scoreFIlePathWin, "w") as scoreFile:
+           json.dump({"scores": HighScores}, scoreFile)
+           scoreFile.close()
 
 #-----game functions--------
 def countdown():
@@ -97,9 +109,9 @@ def update_score():
     pass
 
 def update_leaderboard():
-   
+   player.hideturtle()
    #sorting the scores
-   for i in range(4):
+   for i in range(5):
       score1 = HighScores[i]
       score2 = HighScores[4]
       if(score2.get("score") > score1.get("score")):
@@ -107,15 +119,15 @@ def update_leaderboard():
          HighScores[4] = score1
     
     #checking player score against leaderboard
-   for i in range(4):
+   for i in range(5):
         if(score > HighScores[i].get("score")):
            HighScores.pop(4)
-           HighScores.insert(0, {"name": name, "score": score})
+           HighScores.insert(i, {"name": name, "score": score})
            break
         
    write_high_score_file()#saving the updated scores
    #creating the output
-   for i in range(4):
+   for i in range(5):
       if(i == 0):
          leaderboard_writer.color("#e1eb34")#gold
       elif(i == 1):
@@ -148,9 +160,8 @@ def click(x:float|int, y:float|int):
 
 
 #-----events----------------
-window = turtle.getscreen()
+window = player.getscreen()
 read_high_score_file()    
-
 print("please enter a name")
 name = input(">>> ")
 
