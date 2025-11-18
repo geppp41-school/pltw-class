@@ -25,7 +25,7 @@ HighScores:list = []
 font_setup = ("Arial", 20, "normal")
 
 #timer
-timer = 10
+timer = 15
 counter_interval = 1000
 timer_up = False
 
