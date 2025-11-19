@@ -1,7 +1,8 @@
 
-from tkinter import Canvas, Label, PhotoImage, Tk, ttk
+from tkinter import RIGHT, Canvas, Label, PhotoImage, Tk, ttk
 from PIL import Image, ImageTk
 import PIL.ImageFile as ImageFile
+import math
 
 class Int(int):
     pass
@@ -24,6 +25,21 @@ class Vector2:
         self.x = x
         self.y = y
 
+    def rotated(self, angle_degrees: float):
+        x = self.x
+        y = self.y
+        self.x = x*math.cos(math.radians(angle_degrees)) - y*math.sin(math.radians(angle_degrees))
+        self.y = x*math.sin(math.radians(angle_degrees)) + y*math.cos(math.radians(angle_degrees))
+
+    def RIGHT(self):
+        return Vector2(1.0, 0.0)
+    def LEFT(self):
+        return Vector2(-1.0, 0.0)
+    def UP(self):
+        return Vector2(0.0, 1.0)
+    def DOWN(self):
+        return Vector2(0.0, -1.0)
+
 class Object:
     def __init__(self) -> None:
         self.transform:Transform = Transform()
@@ -31,19 +47,21 @@ class Object:
     pass
 
 class TexturedObject(Object):
-    def __init__(self,screen_root:Tk , texture:ImageFile.ImageFile | PhotoImage | str) -> None:
+    def __init__(self,screen_root:Tk , texture:ImageFile.ImageFile | str) -> None:
         super().__init__()
         if(isinstance(texture, ImageFile.ImageFile)):
+            self.textureImage = texture
             self.texture = ImageTk.PhotoImage(texture)
-        elif(isinstance(texture, PhotoImage)):
-            self.texture = texture
         elif(isinstance(texture, str)):
-            image = Image.open(texture)
-            self.texture = ImageTk.PhotoImage(image)
+            self.textureImage = Image.open(texture)
+            self.texture = ImageTk.PhotoImage(self.textureImage)
         else:
-            raise TypeError("Texture must be a File Path, PIL Image, or Tkinter PhotoImage")
+            raise TypeError("Texture must be a File Path or PIL Image")
         self.__objectLabel = ttk.Label(screen_root, image=self.texture)
 
     def place(self):
+        rotatedTexture = self.textureImage.rotate(self.transform.Rotation%360)
+        updatedTkinterImage = ImageTk.PhotoImage(rotatedTexture)
+        self.__objectLabel.config(image=updatedTkinterImage)
         self.__objectLabel.place(x=self.transform.Position.x, y=self.transform.Position.y)
     pass
