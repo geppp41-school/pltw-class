@@ -5,10 +5,11 @@ from tkinter import ttk
 from turtle import color
 from typing import Any, List
 from PIL import Image, ImageTk
+from engine.util.types import TexturedObject
 
-__root = tk.Tk()
-__root.geometry("640x480")
-__loadedTextures = {}
+root = tk.Tk()
+root.geometry("640x480")
+__loadedObjects = []
 _actionQueue: List[Any] = []
 
 def ResolveQueue():
@@ -16,20 +17,24 @@ def ResolveQueue():
     for action in _actionQueue:
         action[0](action[1])
     _actionQueue = []
-    __root.update()
-    __root.after(50, ResolveQueue)
+    root.update()
+    root.after(50, ResolveQueue)
 
 def __setBackground(color):
-    __root.configure(bg=color)
+    root.configure(bg=color)
 
 def setBackground(color):
     _actionQueue.append((__setBackground, color))
 
+# def __loadTexture(texturePath):
+#     image = Image.open(texturePath)
+#     tk_image = ImageTk.PhotoImage(image)
+#     __loadedTextures[texturePath] = tk_image
+#     image_lable = tk.Label(root, image=tk_image)
+#     image_lable.place(x=0, y=0)
+
 def __loadTexture(texturePath):
-    image = Image.open(texturePath)
-    tk_image = ImageTk.PhotoImage(image)
-    __loadedTextures[texturePath] = tk_image
-    image_lable = tk.Label(__root, image=tk_image)
+    __loadedObjects.append(TexturedObject(root, texturePath))
 
 def loadTexture(texturePath):
     _actionQueue.append((__loadTexture, texturePath))
@@ -38,16 +43,17 @@ def loadTexture(texturePath):
 def close_window():
     global running
     running = False
-    __root.destroy()
+    root.destroy()
 
-__root.protocol("WM_DELETE_WINDOW", close_window)
+root.protocol("WM_DELETE_WINDOW", close_window)
 
 ResolveQueue()
 
 def update():
-
-    __root.update()
+    for obj in __loadedObjects:
+        obj.place()
+    root.update()
 
 def mainLoop():
-    __root.mainloop()
+    root.mainloop()
 
