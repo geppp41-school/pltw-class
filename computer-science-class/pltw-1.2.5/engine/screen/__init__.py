@@ -58,11 +58,11 @@ timeOne = time.time()
 timeTwo = time.time()
 def update():
     global timeOne, timeTwo
-    timeTwo = time.time()
-    print('\033c', end='', flush=True)
-    if((timeTwo-timeOne) != 0):
-        print("fps: "+str(1/(timeTwo-timeOne)))
-    timeOne = timeTwo
+    #timeTwo = time.time()
+    #print('\033c', end='', flush=True)
+    #if((timeTwo-timeOne) != 0):
+    #    print("fps: "+str(1/(timeTwo-timeOne)))
+    #timeOne = timeTwo
     for obj in __loadedObjects:
         obj.place()
     root.update()
