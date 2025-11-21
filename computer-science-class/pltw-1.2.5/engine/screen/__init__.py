@@ -8,9 +8,9 @@ from PIL import Image, ImageTk
 from engine.util.types import TexturedObject
 import time
 
-root = tk.Tk()
-root.geometry("640x480")
-__loadedObjects = []
+_root = tk.Tk()
+_root.geometry("640x480")
+__loadedObjects = {"TexturedObject": []}
 _actionQueue: List[tuple[Any, dict]] = []
 
 def ResolveQueue():
@@ -18,10 +18,10 @@ def ResolveQueue():
     for action in _actionQueue:
         action[0](action[1])
     _actionQueue = []
-    root.after(1, ResolveQueue)
+    _root.after(1, ResolveQueue)
 
 def __setBackground(color):
-    root.configure(bg=color)
+    _root.configure(bg=color)
 
 def setBackground(color):
     _actionQueue.append((__setBackground, color))
@@ -35,23 +35,30 @@ def setBackground(color):
 
 def __loadTexture(texturePath):
     global __loadedObjects
-    __loadedObjects.append(TexturedObject(root, texturePath))
+    __loadedObjects["TexturedObject"].append(TexturedObject(_root, texturePath["texture"]))
+    #__loadedObjects.append(TexturedObject(root, texturePath))
 
-def loadTexture(texturePath, name=f"TexturedObject{__loadedObjects.count(type(TexturedObject))+1}"):
+def loadTexture(texturePath, name=f"TexturedObject{__loadedObjects["TexturedObject"].count(type(TexturedObject))+1}"):
     global _actionQueue
+    
     args = {
         "name": name,
         "texture": texturePath
     }
     _actionQueue.append((__loadTexture, args))
     pass
+def get_test_object():
+    global __loadedObjects
+    if len(__loadedObjects["TexturedObject"]) > 0:
+        return __loadedObjects["TexturedObject"][0]
+    return None
 
 def close_window():
     global running
     running = False
-    root.destroy()
+    _root.destroy()
 
-root.protocol("WM_DELETE_WINDOW", close_window)
+_root.protocol("WM_DELETE_WINDOW", close_window)
 
 ResolveQueue()
 timeOne = time.time()
@@ -63,12 +70,12 @@ def update():
     #if((timeTwo-timeOne) != 0):
     #    print("fps: "+str(1/(timeTwo-timeOne)))
     #timeOne = timeTwo
-    for obj in __loadedObjects:
+    for obj in __loadedObjects["TexturedObject"]:
         obj.place()
-    root.update()
-    root.after(1, update)
+    _root.update()
+    _root.after(1, update)
     
 
 def mainLoop():
-    root.mainloop()
+    _root.mainloop()
 

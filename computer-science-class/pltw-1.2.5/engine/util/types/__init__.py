@@ -51,17 +51,20 @@ class TexturedObject(Object):
         super().__init__()
         if(isinstance(texture, ImageFile.ImageFile)):
             self.textureImage = texture
-            self.texture = ImageTk.PhotoImage(texture)
+            self.photoImageTexture = ImageTk.PhotoImage(texture)
+            self.texture = self.photoImageTexture
         elif(isinstance(texture, str)):
             self.textureImage = Image.open(texture)
-            self.texture = ImageTk.PhotoImage(self.textureImage)
+            self.photoImageTexture = ImageTk.PhotoImage(self.textureImage)
+            self.texture = self.photoImageTexture
+            
         else:
-            raise TypeError("Texture must be a File Path or PIL Image")
+            raise TypeError(f"Texture must be a File Path or PIL Image\n Got: {type(texture)}")
         self.__objectLabel = ttk.Label(screen_root, image=self.texture)
 
     def place(self):
         rotatedTexture = self.textureImage.rotate(self.transform.Rotation%360)
-        updatedTkinterImage = ImageTk.PhotoImage(rotatedTexture)
-        self.__objectLabel.config(image=updatedTkinterImage)
+        self.photoImageTexture = ImageTk.PhotoImage(rotatedTexture)
+        self.__objectLabel.configure(image=self.photoImageTexture)
         self.__objectLabel.place(x=self.transform.Position.x, y=self.transform.Position.y)
     pass
