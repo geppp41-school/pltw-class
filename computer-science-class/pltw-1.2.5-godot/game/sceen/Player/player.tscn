@@ -1,0 +1,182 @@
+[gd_scene load_steps=21 format=3 uid="uid://cvwrfokt5v8ue"]
+
+[ext_resource type="Script" path="res://src/python/player/main.py" id="1_4afv1"]
+[ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="2_svavm"]
+[ext_resource type="Texture2D" uid="uid://c6i7cvr4hvr6s" path="res://assets/player/wizard/MovingWizardSpriteSheet.png" id="3_x456k"]
+[ext_resource type="Script" path="res://src/python/player/Sprite.py" id="4_x456k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul6r3"]
+atlas = ExtResource("2_svavm")
+region = Rect2(0, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qgjq"]
+atlas = ExtResource("2_svavm")
+region = Rect2(43, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puips"]
+atlas = ExtResource("2_svavm")
+region = Rect2(86, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlp82"]
+atlas = ExtResource("2_svavm")
+region = Rect2(129, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hvj6"]
+atlas = ExtResource("2_svavm")
+region = Rect2(172, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igimb"]
+atlas = ExtResource("2_svavm")
+region = Rect2(215, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vbes"]
+atlas = ExtResource("2_svavm")
+region = Rect2(258, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sklui"]
+atlas = ExtResource("2_svavm")
+region = Rect2(301, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1oib"]
+atlas = ExtResource("3_x456k")
+region = Rect2(0, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4jtx"]
+atlas = ExtResource("3_x456k")
+region = Rect2(23, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqbp3"]
+atlas = ExtResource("3_x456k")
+region = Rect2(46, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6riq7"]
+atlas = ExtResource("3_x456k")
+region = Rect2(69, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vto0h"]
+atlas = ExtResource("3_x456k")
+region = Rect2(92, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6f34m"]
+atlas = ExtResource("3_x456k")
+region = Rect2(115, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7i22"]
+atlas = ExtResource("3_x456k")
+region = Rect2(138, 0, 23, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tfiom"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ul6r3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qgjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puips")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlp82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hvj6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igimb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vbes")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sklui")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1oib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4jtx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqbp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6riq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vto0h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6f34m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7i22")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}]
+
+[node name="Player" type="Node2D"]
+_import_path = NodePath("")
+process_mode = 0
+process_physics_priority = 0
+physics_interpolation_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(0, 0)
+scale = Vector2(1, 1)
+skew = 0.0
+script = ExtResource("1_4afv1")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+_import_path = NodePath("")
+process_mode = 0
+process_physics_priority = 0
+physics_interpolation_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(59, 47)
+scale = Vector2(1, 1)
+skew = 0.0
+sprite_frames = SubResource("SpriteFrames_tfiom")
+animation = &"moving"
+autoplay = ""
+frame_progress = 0.0
+centered = true
+flip_h = false
+script = ExtResource("4_x456k")
+test_int = 5
+test_float = 5.2
+test_bool = true
+test_vector = Vector3(1, 2, 3)
