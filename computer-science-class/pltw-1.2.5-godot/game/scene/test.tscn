@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8xxjso7ckawb"]
+
+[ext_resource type="Script" path="res://src/python/test.py" id="1_fghjm"]
+
+[node name="Test" type="Node2D"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(0, 0)
+rotation = 0.0
+scale = Vector2(1, 1)
+skew = 0.0
+script = ExtResource("1_fghjm")
+test_int = 5
+test_float = 5.2
+test_bool = true
+test_vector = Vector3(1, 2, 3)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 81.0
+offset_top = 103.0
+offset_right = 121.0
+offset_bottom = 143.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 427.0
+offset_top = 305.0
+offset_right = 467.0
+offset_bottom = 345.0
+color = Color(0, 1, 1, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+offset_left = 112.0
+offset_top = 346.0
+offset_right = 152.0
+offset_bottom = 386.0
+color = Color(1, 1, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="."]
+offset_left = 445.0
+offset_top = 141.0
+offset_right = 485.0
+offset_bottom = 181.0
+color = Color(1, 0, 1, 1)
