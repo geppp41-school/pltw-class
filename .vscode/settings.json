@@ -12,4 +12,7 @@
     "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
         "clang-diagnostic-format"
     ],
+    "python.analysis.extraPaths": [
+        "./computer-science-class/pltw-1.2.5-godot/game/addons/py4godot/cpython-3.12.4-linux64/python/lib/python3.12/site-packages"
+    ],
 }
