@@ -1,13 +1,13 @@
 import random
 import turtle
 
-maze_size = "10x10"
+maze_size = "12x12"
 maze_start = turtle.Vec2D(0, 0)
 maze_end = turtle.Vec2D(9, 9)
 maze = []
 
-player = turtle.Turtle()
-player.shape("square")
+mazeGenerator = turtle.Turtle()
+mazeGenerator.shape("square")
 
 #setup the maze array
 for i in range(int(maze_size.split('x')[0])):
@@ -23,33 +23,33 @@ def draw_base_maze():
     y_size = int(maze_size.split('x')[1])
     #draw border
     for i in range(2):
-        player.forward(x_size*20)
-        player.right(90)
-        player.forward(y_size*20)
-        player.right(90)
+        mazeGenerator.forward(x_size*20)
+        mazeGenerator.right(90)
+        mazeGenerator.forward(y_size*20)
+        mazeGenerator.right(90)
     
     #draw collums
     for i in range(x_size-1):
-        player.forward(20)
-        player.right(90)
-        player.forward(y_size*20)
-        player.backward(y_size*20)
-        player.left(90)
+        mazeGenerator.forward(20)
+        mazeGenerator.right(90)
+        mazeGenerator.forward(y_size*20)
+        mazeGenerator.backward(y_size*20)
+        mazeGenerator.left(90)
 
-    player.backward((x_size-1)*20)
+    mazeGenerator.backward((x_size-1)*20)
 
     #draw rows
     for i in range(y_size-1):
-        player.right(90)
-        player.forward(20)
-        player.left(90)
-        player.forward(x_size*20)
-        player.backward(x_size*20)
-    player.penup()
-    player.left(90)
-    player.forward((y_size-1)*20-10)
-    player.right(90)
-    player.forward(10)
+        mazeGenerator.right(90)
+        mazeGenerator.forward(20)
+        mazeGenerator.left(90)
+        mazeGenerator.forward(x_size*20)
+        mazeGenerator.backward(x_size*20)
+    mazeGenerator.penup()
+    mazeGenerator.left(90)
+    mazeGenerator.forward((y_size-1)*20-10)
+    mazeGenerator.right(90)
+    mazeGenerator.forward(10)
 
 
         
@@ -93,8 +93,8 @@ def get_possible_directions(x,y):
 def draw_maze(x,y):
     maze[x][y]["visited"] = True
     while(get_possible_directions(x,y) != "xxxx"):
-        player.goto((x*20)+10,(y*(-20))-10)
-        player.dot(5)
+        mazeGenerator.goto((x*20)+10,(y*(-20))-10)
+        mazeGenerator.dot(5)
         turtle.tracer(True)
         possible_directions = get_possible_directions(x,y).replace("x", "")
         
@@ -102,42 +102,42 @@ def draw_maze(x,y):
         direction = random.choice(possible_directions)
         # TODO: simplify this by moving all the movement stuff apart from set heading to another functino
         if(direction == "n"):
-            player.setheading(90)
-            player.forward(10)
-            player.pencolor("white")
-            player.dot(19)
-            player.pencolor("black")
-            player.forward(10)
+            mazeGenerator.setheading(90)
+            mazeGenerator.forward(10)
+            mazeGenerator.pencolor("white")
+            mazeGenerator.dot(19)
+            mazeGenerator.pencolor("black")
+            mazeGenerator.forward(10)
             draw_maze(x, y-1)
             maze[x][y]["connections"] = "n" + maze[x][y]["connections"][1] + maze[x][y]["connections"][2] + maze[x][y]["connections"][3]
             pass
         elif(direction == "e"):
-            player.setheading(0)
-            player.forward(10)
-            player.pencolor("white")
-            player.dot(19)
-            player.pencolor("black")
-            player.forward(10)
+            mazeGenerator.setheading(0)
+            mazeGenerator.forward(10)
+            mazeGenerator.pencolor("white")
+            mazeGenerator.dot(19)
+            mazeGenerator.pencolor("black")
+            mazeGenerator.forward(10)
             draw_maze(x+1, y)
             maze[x][y]["connections"] = maze[x][y]["connections"][0] + "e" + maze[x][y]["connections"][2] + maze[x][y]["connections"][3]
             pass
         elif(direction == "s"):
-            player.setheading(270)
-            player.forward(10)
-            player.pencolor("white")
-            player.dot(19)
-            player.pencolor("black")
-            player.forward(10)
+            mazeGenerator.setheading(270)
+            mazeGenerator.forward(10)
+            mazeGenerator.pencolor("white")
+            mazeGenerator.dot(19)
+            mazeGenerator.pencolor("black")
+            mazeGenerator.forward(10)
             draw_maze(x, y+1)
             maze[x][y]["connections"] = maze[x][y]["connections"][0] + maze[x][y]["connections"][1] + "s" + maze[x][y]["connections"][3]
             pass
         elif(direction == "w"):
-            player.setheading(180)
-            player.forward(10)
-            player.pencolor("white")
-            player.dot(19)
-            player.pencolor("black")
-            player.forward(10)
+            mazeGenerator.setheading(180)
+            mazeGenerator.forward(10)
+            mazeGenerator.pencolor("white")
+            mazeGenerator.dot(19)
+            mazeGenerator.pencolor("black")
+            mazeGenerator.forward(10)
             draw_maze(x-1, y)
             maze[x][y]["connections"] = maze[x][y]["connections"][0] + maze[x][y]["connections"][1] + maze[x][y]["connections"][2] + "w"
             pass
@@ -162,5 +162,5 @@ turtle.tracer(True)
 #   remove the wall between the current cell and the neighbors
 #   invoke the routine recursively for the chosen cell
 #this is the dfs maze generation
-player.hideturtle()
+mazeGenerator.hideturtle()
 turtle.mainloop()
