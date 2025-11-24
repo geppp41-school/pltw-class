@@ -1,14 +1,25 @@
 import random
 import turtle
 
-maze_size = "12x12"
-maze_start = turtle.Vec2D(0, 0)
-maze_end = turtle.Vec2D(9, 9)
+maze_size = "10x10"
+
 maze = []
 
 mazeGenerator = turtle.Turtle()
 mazeGenerator.shape("square")
 
+exitTurtle = turtle.Turtle()
+exitTurtle.hideturtle()
+exitTurtle.shape("square")
+exitTurtle.color("red")
+exitTurtle.shapesize(0.5)
+exitTurtle.penup()
+
+player = turtle.Turtle()
+player.hideturtle()
+player.penup()
+player.setpos(10,-10)
+playerPosition = turtle.Vec2D(0,0)
 #setup the maze array
 for i in range(int(maze_size.split('x')[0])):
     maze.append([])
@@ -94,8 +105,7 @@ def draw_maze(x,y):
     maze[x][y]["visited"] = True
     while(get_possible_directions(x,y) != "xxxx"):
         mazeGenerator.goto((x*20)+10,(y*(-20))-10)
-        mazeGenerator.dot(5)
-        turtle.tracer(True)
+        
         possible_directions = get_possible_directions(x,y).replace("x", "")
         
         
@@ -108,6 +118,7 @@ def draw_maze(x,y):
             mazeGenerator.dot(19)
             mazeGenerator.pencolor("black")
             mazeGenerator.forward(10)
+            maze[x][y-1]["connections"] = maze[x][y-1]["connections"][0] + maze[x][y-1]["connections"][1] + "s" + maze[x][y-1]["connections"][3]
             draw_maze(x, y-1)
             maze[x][y]["connections"] = "n" + maze[x][y]["connections"][1] + maze[x][y]["connections"][2] + maze[x][y]["connections"][3]
             pass
@@ -118,6 +129,7 @@ def draw_maze(x,y):
             mazeGenerator.dot(19)
             mazeGenerator.pencolor("black")
             mazeGenerator.forward(10)
+            maze[x+1][y]["connections"] = maze[x+1][y]["connections"][0] + maze[x+1][y]["connections"][1] + maze[x+1][y]["connections"][2] + "w"
             draw_maze(x+1, y)
             maze[x][y]["connections"] = maze[x][y]["connections"][0] + "e" + maze[x][y]["connections"][2] + maze[x][y]["connections"][3]
             pass
@@ -128,6 +140,7 @@ def draw_maze(x,y):
             mazeGenerator.dot(19)
             mazeGenerator.pencolor("black")
             mazeGenerator.forward(10)
+            maze[x][y+1]["connections"] = "n" + maze[x][y+1]["connections"][1] + maze[x][y+1]["connections"][2] + maze[x][y+1]["connections"][3]
             draw_maze(x, y+1)
             maze[x][y]["connections"] = maze[x][y]["connections"][0] + maze[x][y]["connections"][1] + "s" + maze[x][y]["connections"][3]
             pass
@@ -138,15 +151,67 @@ def draw_maze(x,y):
             mazeGenerator.dot(19)
             mazeGenerator.pencolor("black")
             mazeGenerator.forward(10)
+            maze[x-1][y]["connections"] = maze[x-1][y]["connections"][0] + "e" + maze[x-1][y]["connections"][2] + maze[x-1][y]["connections"][3]
             draw_maze(x-1, y)
             maze[x][y]["connections"] = maze[x][y]["connections"][0] + maze[x][y]["connections"][1] + maze[x][y]["connections"][2] + "w"
             pass
-        turtle.tracer(False)
         
+def add_exit():
+    x = int(maze_size.split("x")[0])
+    y = int(maze_size.split("x")[1])
+    exitTurtle.goto((random.randint(0, x-1)*20)+10, (random.randint(0, y-1)*-20)-10)
+    exitTurtle.showturtle()
+
+def moveUp():
+    global playerPosition
+    if(maze[playerPosition[0]][playerPosition[1]]["connections"].find("n") != -1): # type: ignore
+        player.setheading(90)
+        playerPosition = turtle.Vec2D(playerPosition[0], playerPosition[1] - 1) 
+        player.setposition((playerPosition[0]*20)+10, (playerPosition[1]*-20)-10)
+        pass
+    pass
+
+def moveLeft():
+    global playerPosition
+    if(maze[playerPosition[0]][playerPosition[1]]["connections"].find("w") != -1): # type: ignore
+        player.setheading(180)
+        playerPosition = turtle.Vec2D(playerPosition[0]-1, playerPosition[1]) 
+        player.setposition((playerPosition[0]*20)+10, (playerPosition[1]*-20)-10)
+        pass
+    pass
+
+def moveRight():
+    global playerPosition
+    if(maze[playerPosition[0]][playerPosition[1]]["connections"].find("e") != -1): # type: ignore
+        player.setheading(0)
+        playerPosition = turtle.Vec2D(playerPosition[0]+1, playerPosition[1]) 
+        player.setposition((playerPosition[0]*20)+10, (playerPosition[1]*-20)-10)
+        pass
+    pass
+
+def moveDown():
+    global playerPosition
+    if(maze[playerPosition[0]][playerPosition[1]]["connections"].find("s") != -1): # type: ignore
+        player.setheading(270)
+        playerPosition = turtle.Vec2D(playerPosition[0], playerPosition[1] + 1) 
+        player.setposition((playerPosition[0]*20)+10, (playerPosition[1]*-20)-10)
+        pass
+    pass
 
 turtle.tracer(False)
 draw_maze(0,0)
+add_exit()
 turtle.tracer(True)
+
+
+player.getscreen().onkeypress(moveUp, "w")
+player.getscreen().onkeypress(moveLeft, "a")
+player.getscreen().onkeypress(moveDown, "s")
+player.getscreen().onkeypress(moveRight, "d")
+player.getscreen().listen()
+player.showturtle()
+
+
 # this will clear a wall 
 # player.forward(10)
 # player.pencolor("white")
@@ -163,4 +228,8 @@ turtle.tracer(True)
 #   invoke the routine recursively for the chosen cell
 #this is the dfs maze generation
 mazeGenerator.hideturtle()
+while (exitTurtle.distance(player) != 0):
+    exitTurtle.color("red")
+exitTurtle.color("green")
+exitTurtle.write("You Win!", align="center", font=("Arial", 16, "normal"))
 turtle.mainloop()
