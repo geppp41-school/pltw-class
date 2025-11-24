@@ -59,9 +59,8 @@ def draw_base_maze():
 
 draw_base_maze()
 
-def draw_maze(x,y):
+def get_possible_directions(x,y):
     possible_directions = "nesw"
-    maze[x][y]["visited"] = True
     #prevent index out of bound errors while checking possible moves
     if(x == 0):
         possible_directions = possible_directions.replace("w", "x")
@@ -74,7 +73,7 @@ def draw_maze(x,y):
 
     #filters out visited cells
     if (possible_directions.find("n") != -1):
-        if(maze[x][y+1]["visited"] == True): # type: ignore
+        if(maze[x][y-1]["visited"] == True): # type: ignore
             possible_directions = possible_directions.replace("n", "x")
 
     if (possible_directions.find("e") != -1):
@@ -82,57 +81,68 @@ def draw_maze(x,y):
             possible_directions = possible_directions.replace("e", "x")
         
     if (possible_directions.find("s") != -1):
-        if(maze[x][y-1]["visited"] == True): # type: ignore
-            possible_directions = possible_directions.replace("n", "x")
+        if(maze[x][y+1]["visited"] == True): # type: ignore
+            possible_directions = possible_directions.replace("s", "x")
         
     
     if (possible_directions.find("w") != -1):
         if(maze[x-1][y]["visited"] == True): # type: ignore
             possible_directions = possible_directions.replace("w", "x")
+    return possible_directions
 
-    if(possible_directions != "____"):
-        possible_directions = possible_directions.replace("_", "").replace("", " ").split(" ")
-    else:
-        return 0
-    
-    direction = random.choice(possible_directions)
-    # TODO: simplify this by moving all the movement stuff apart from set heading to another functino
-    if(direction == "n"):
-        player.setheading(90)
-        player.forward(10)
-        player.pencolor("white")
-        player.dot(19)
-        player.pencolor("black")
-        player.forward(10)
-        draw_maze(x, y+1)
-        pass
-    elif(direction == "e"):
-        player.setheading(0)
-        player.forward(10)
-        player.pencolor("white")
-        player.dot(19)
-        player.pencolor("black")
-        player.forward(10)
-        draw_maze(x+1, y)
-        pass
-    elif(direction == "s"):
-        player.setheading(270)
-        player.forward(10)
-        player.pencolor("white")
-        player.dot(19)
-        player.pencolor("black")
-        player.forward(10)
-        draw_maze(x, y-1)
-        pass
-    elif(direction == "w"):
-        player.setheading(180)
-        player.forward(10)
-        player.pencolor("white")
-        player.dot(19)
-        player.pencolor("black")
-        player.forward(10)
-        draw_maze(x-1, y)
-        pass
+def draw_maze(x,y):
+    maze[x][y]["visited"] = True
+    while(get_possible_directions(x,y) != "xxxx"):
+        player.goto((x*20)+10,(y*(-20))-10)
+        player.dot(5)
+        turtle.tracer(True)
+        possible_directions = get_possible_directions(x,y).replace("x", "")
+        
+        
+        direction = random.choice(possible_directions)
+        # TODO: simplify this by moving all the movement stuff apart from set heading to another functino
+        if(direction == "n"):
+            player.setheading(90)
+            player.forward(10)
+            player.pencolor("white")
+            player.dot(19)
+            player.pencolor("black")
+            player.forward(10)
+            draw_maze(x, y-1)
+            maze[x][y]["connections"] = "n" + maze[x][y]["connections"][1] + maze[x][y]["connections"][2] + maze[x][y]["connections"][3]
+            pass
+        elif(direction == "e"):
+            player.setheading(0)
+            player.forward(10)
+            player.pencolor("white")
+            player.dot(19)
+            player.pencolor("black")
+            player.forward(10)
+            draw_maze(x+1, y)
+            maze[x][y]["connections"] = maze[x][y]["connections"][0] + "e" + maze[x][y]["connections"][2] + maze[x][y]["connections"][3]
+            pass
+        elif(direction == "s"):
+            player.setheading(270)
+            player.forward(10)
+            player.pencolor("white")
+            player.dot(19)
+            player.pencolor("black")
+            player.forward(10)
+            draw_maze(x, y+1)
+            maze[x][y]["connections"] = maze[x][y]["connections"][0] + maze[x][y]["connections"][1] + "s" + maze[x][y]["connections"][3]
+            pass
+        elif(direction == "w"):
+            player.setheading(180)
+            player.forward(10)
+            player.pencolor("white")
+            player.dot(19)
+            player.pencolor("black")
+            player.forward(10)
+            draw_maze(x-1, y)
+            maze[x][y]["connections"] = maze[x][y]["connections"][0] + maze[x][y]["connections"][1] + maze[x][y]["connections"][2] + "w"
+            pass
+        turtle.tracer(False)
+        
 
 turtle.tracer(False)
 draw_maze(0,0)
