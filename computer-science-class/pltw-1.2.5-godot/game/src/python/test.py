@@ -5,6 +5,7 @@ from py4godot.classes import gdclass
 from py4godot.classes.core import Vector3
 from py4godot.classes.Node2D import Node2D
 from py4godot.classes.ResourceLoader import ResourceLoader
+
 @gdclass
 class test(Node2D):
 
@@ -19,7 +20,7 @@ class test(Node2D):
 
 
 	def _ready(self) -> None:
-		self.add_child(ResourceLoader.instance().load("res://scene/Player/player.tscn").instantiate())
+		self.add_child(ResourceLoader.instance().load("res://sceen/Player/player.tscn").instantiate())
 		pass
 		# put initialization code here
 

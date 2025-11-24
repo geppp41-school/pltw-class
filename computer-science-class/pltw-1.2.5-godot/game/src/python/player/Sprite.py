@@ -7,7 +7,7 @@ from py4godot.classes.AnimatedSprite2D import AnimatedSprite2D
 
 @gdclass
 class Sprite(AnimatedSprite2D):
-
+	
 	# define properties like this
 	
 
