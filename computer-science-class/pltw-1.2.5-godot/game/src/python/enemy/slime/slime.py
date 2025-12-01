@@ -2,41 +2,28 @@
 from py4godot.methods import private
 from py4godot.signals import signal, SignalArg
 from py4godot.classes import gdclass
-from py4godot.classes.core import Vector2, Vector3
+from py4godot.classes.core import Vector3
+from py4godot.classes.Node2D import Node2D
 from py4godot.classes.AnimatedSprite2D import AnimatedSprite2D
 
 @gdclass
-class Sprite(AnimatedSprite2D):
-	
+class slime(Node2D):
+
 	# define properties like this
-	
+	animated_body:  AnimatedSprite2D = None # type: ignore
 
 	# define signals like this
-	
+	test_signal = signal([SignalArg("test_arg", int)])
 
 
 	def _ready(self) -> None:
-		self.play("moving")
+		animated_body = self.get_node("AnimatedSprite2D")  # type: ignore
 		pass
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
-		
-		if(self.get_parent().get_pyscript().is_moving()):
-			if not self.is_playing():
-				self.play("moving")
-		else:
-			if self.is_playing():
-				self.stop()
 		pass
-
-	def die(self):
-		self.position += Vector2.new3(-7, -16)
 		# put dynamic code here
-	
-	
-	
-	
 
 	# Hide the method in the godot editor
 	@private

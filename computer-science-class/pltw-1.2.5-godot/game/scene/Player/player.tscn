@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cvwrfokt5v8ue"]
+[gd_scene load_steps=22 format=3 uid="uid://cvwrfokt5v8ue"]
 
 [ext_resource type="Script" path="res://src/python/player/main.py" id="1_4afv1"]
 [ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="2_svavm"]
@@ -123,30 +123,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="Node2D"]
-script = ExtResource("1_4afv1")
-test_int = null
-test_float = 5.2
-test_bool = true
-test_vector = Vector3(1, 2, 3)
-speed = 16
-health = 100
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbm5k"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
-_import_path = NodePath("")
+[node name="Player" type="Node2D"]
 unique_name_in_owner = false
-process_mode = 0
 process_priority = 0
-process_physics_priority = 0
 process_thread_group = 0
-physics_interpolation_mode = 0
 auto_translate_mode = 0
 editor_description = ""
 visible = true
 modulate = Color(1, 1, 1, 1)
 self_modulate = Color(1, 1, 1, 1)
 show_behind_parent = false
-top_level = false
 clip_children = 0
 light_mask = 1
 visibility_layer = 1
@@ -157,10 +145,10 @@ texture_filter = 0
 texture_repeat = 0
 use_parent_material = false
 position = Vector2(0, 0)
-rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
 script = ExtResource("1_4afv1")
+speed = 16
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 _import_path = NodePath("")
@@ -182,20 +170,20 @@ texture_filter = 0
 texture_repeat = 0
 use_parent_material = false
 position = Vector2(0, 0)
-rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
 sprite_frames = SubResource("SpriteFrames_tfiom")
 animation = &"moving"
 autoplay = ""
-frame = 0
 frame_progress = 0.0
-speed_scale = 1.0
 centered = true
-offset = Vector2(0, 0)
 flip_h = false
-flip_v = false
 script = ExtResource("4_x456k")
+
+[node name="Hitbox" type="Area2D" parent="Sprite"]
+
+[node name="hitboxShape" type="CollisionShape2D" parent="Sprite/Hitbox"]
+shape = SubResource("CapsuleShape2D_wbm5k")
 
 [node name="Camera" type="Camera2D" parent="."]
 zoom = Vector2(1.25, 1.25)

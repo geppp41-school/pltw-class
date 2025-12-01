@@ -20,7 +20,7 @@ class test(Node2D):
 
 
 	def _ready(self) -> None:
-		self.add_child(ResourceLoader.instance().load("res://sceen/Player/player.tscn").instantiate())
+		self.add_child(ResourceLoader.instance().load("res://scene/Player/player.tscn").instantiate())
 		pass
 		# put initialization code here
 

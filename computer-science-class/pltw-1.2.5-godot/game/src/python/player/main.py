@@ -12,7 +12,11 @@ class main(Node2D):
 
 	# define properties like this
 	speed: int = 32
+	health: int = 100
+	max_health: int = 100
+	modifiers: dict = {}
 	input_instance: Input = Input().instance()
+	_moving:bool = False
 
 
 	def _ready(self) -> None:
@@ -22,7 +26,6 @@ class main(Node2D):
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
-		print(f"{self.position.x}, {self.position.y}")
 		pass
 
 
@@ -36,12 +39,21 @@ class main(Node2D):
 			positiopnChange.y += 1
 		if(self.input_instance.is_key_pressed(Key.KEY_A)):
 			positiopnChange.x -= 1
+			self.get_children()[0].flip_h = True
 		if(self.input_instance.is_key_pressed(Key.KEY_D)):
 			positiopnChange.x += 1
+			self.get_children()[0].flip_h = False
+
+		if(positiopnChange.x == 0 and positiopnChange.y == 0):
+			self.__moving = False
+		else:
+			self.__moving = True
 
 		self.position += (positiopnChange.normalized()*delta) * self.speed
 		return super()._physics_process(delta)
 	
+	def is_moving(self) -> bool:
+		return self.__moving
 	# Hide the method in the godot editor
 	@private
 	def test_method(self):
