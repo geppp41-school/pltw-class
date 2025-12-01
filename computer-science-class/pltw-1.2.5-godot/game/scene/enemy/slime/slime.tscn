@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://y8en0co8km4"]
+[gd_scene load_steps=17 format=3 uid="uid://y8en0co8km4"]
 
 [ext_resource type="Script" path="res://src/python/enemy/slime/slime.py" id="1_hywa7"]
 [ext_resource type="Texture2D" uid="uid://bp4fbaadjc1u2" path="res://assets/enemy/slime/sprite-sheet.png" id="1_w6yge"]
+[ext_resource type="Script" path="res://src/python/enemy/slime/sprite.py" id="3_bhcty"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hywa7"]
 atlas = ExtResource("1_w6yge")
@@ -117,14 +118,26 @@ use_parent_material = false
 position = Vector2(0, 0)
 rotation = 0.0
 scale = Vector2(1, 1)
+skew = 0.0
 script = ExtResource("1_hywa7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+_import_path = NodePath("")
+process_mode = 0
+process_physics_priority = 0
+physics_interpolation_mode = 0
+top_level = false
+position = Vector2(0, 0)
+rotation = 0.0
+scale = Vector2(1, 1)
+skew = 0.0
+sprite_frames = SubResource("SpriteFrames_vj003")
+animation = &"Moving"
+frame_progress = 0.59131837
+centered = true
+flip_h = false
+script = ExtResource("3_bhcty")
 test_int = 5
 test_float = 5.2
 test_bool = true
 test_vector = Vector3(1, 2, 3)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_vj003")
-animation = &"Moving"
-frame = 3
-frame_progress = 0.62992895
