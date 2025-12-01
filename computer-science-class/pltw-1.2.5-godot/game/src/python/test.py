@@ -5,6 +5,7 @@ from py4godot.classes import gdclass
 from py4godot.classes.core import Vector3
 from py4godot.classes.Node2D import Node2D
 from py4godot.classes.ResourceLoader import ResourceLoader
+from py4godot.classes import PackedScene
 
 @gdclass
 class test(Node2D):
@@ -14,13 +15,16 @@ class test(Node2D):
 	test_float: float = 5.2
 	test_bool: bool = True
 	test_vector: Vector3 = Vector3.new3(1,2,3)
+	
 
 	# define signals like this
 	test_signal = signal([SignalArg("test_arg", int)])
 
 
 	def _ready(self) -> None:
+		self.slimeScene = ResourceLoader.instance().load("res://scene/enemy/slime/slime.tscn").instantiate()
 		self.add_child(ResourceLoader.instance().load("res://scene/Player/player.tscn").instantiate())
+		self.add_child(self.slimeScene)
 		pass
 		# put initialization code here
 
