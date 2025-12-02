@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./addons/py4godot/cpython-3.12.4-windows64/python/Lib/site-packages"
+    ]
+}
