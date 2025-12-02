@@ -1,4 +1,4 @@
 computer-science-class/pltw-1.2.5-godot/Godot_v4.5.1-stable_linux.x86_64
 *.pyc
 __pycache__/
-**\addons\
+computer-science-class/pltw-1.2.5-godot/game/addons/*
