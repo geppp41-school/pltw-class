@@ -1,63 +1,60 @@
 [gd_scene load_steps=17 format=3 uid="uid://y8en0co8km4"]
 
 [ext_resource type="Script" path="res://src/python/enemy/slime/slime.py" id="1_hywa7"]
-[ext_resource type="Texture2D" uid="uid://bp4fbaadjc1u2" path="res://assets/enemy/slime/sprite-sheet.png" id="1_w6yge"]
+[ext_resource type="Texture2D" uid="uid://drf6u0vigy1wg" path="res://assets/enemy/slime/sprite-sheet.png" id="1_w6yge"]
 [ext_resource type="Script" path="res://src/python/enemy/slime/sprite.py" id="3_bhcty"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hywa7"]
-atlas = ExtResource("1_w6yge")
-region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bhcty"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(32, 0, 32, 32)
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qvjia"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(64, 0, 32, 32)
+region = Rect2(34, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ipss"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(0, 32, 32, 32)
+region = Rect2(68, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qn50r"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(32, 32, 32, 32)
+region = Rect2(0, 34, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pcgfp"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(64, 32, 32, 32)
+region = Rect2(34, 34, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_irtc6"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(0, 64, 32, 32)
+region = Rect2(68, 34, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q4wm4"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(32, 64, 32, 32)
+region = Rect2(0, 68, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lsanv"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(64, 64, 32, 32)
+region = Rect2(34, 68, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aj6g2"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(0, 96, 32, 32)
+region = Rect2(68, 68, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nwttk"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(32, 96, 32, 32)
+region = Rect2(0, 102, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3puao"]
 atlas = ExtResource("1_w6yge")
-region = Rect2(64, 96, 32, 32)
+region = Rect2(34, 102, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vj003"]
+atlas = ExtResource("1_w6yge")
+region = Rect2(68, 102, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vj003"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hywa7")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bhcty")
 }, {
@@ -90,22 +87,61 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3puao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vj003")
 }],
 "loop": true,
 "name": &"Moving",
-"speed": 8.0
+"speed": 5.0
 }]
 
 [node name="Slime" type="Node2D"]
 _import_path = NodePath("")
+unique_name_in_owner = false
 process_mode = 0
+process_priority = 0
 process_physics_priority = 0
+process_thread_group = 0
 physics_interpolation_mode = 0
+auto_translate_mode = 0
 editor_description = ""
 visible = true
 modulate = Color(1, 1, 1, 1)
 self_modulate = Color(1, 1, 1, 1)
 show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(0, 0)
+rotation = 0.0
+scale = Vector2(1.5, 1.5)
+skew = 0.0
+script = ExtResource("1_hywa7")
+speed = 24
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
 clip_children = 0
 light_mask = 1
 visibility_layer = 1
@@ -119,23 +155,16 @@ position = Vector2(0, 0)
 rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
-script = ExtResource("1_hywa7")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-_import_path = NodePath("")
-process_mode = 0
-process_physics_priority = 0
-physics_interpolation_mode = 0
-top_level = false
-position = Vector2(0, 0)
-rotation = 0.0
-scale = Vector2(1, 1)
-skew = 0.0
 sprite_frames = SubResource("SpriteFrames_vj003")
 animation = &"Moving"
-frame_progress = 0.59131837
+autoplay = ""
+frame = 0
+frame_progress = 0.0
+speed_scale = 1.0
 centered = true
+offset = Vector2(0, 0)
 flip_h = false
+flip_v = false
 script = ExtResource("3_bhcty")
 test_int = 5
 test_float = 5.2

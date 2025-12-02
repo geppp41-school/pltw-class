@@ -126,15 +126,20 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbm5k"]
 
 [node name="Player" type="Node2D"]
+_import_path = NodePath("")
 unique_name_in_owner = false
+process_mode = 0
 process_priority = 0
+process_physics_priority = 0
 process_thread_group = 0
+physics_interpolation_mode = 0
 auto_translate_mode = 0
 editor_description = ""
 visible = true
 modulate = Color(1, 1, 1, 1)
 self_modulate = Color(1, 1, 1, 1)
 show_behind_parent = false
+top_level = false
 clip_children = 0
 light_mask = 1
 visibility_layer = 1
@@ -145,21 +150,29 @@ texture_filter = 0
 texture_repeat = 0
 use_parent_material = false
 position = Vector2(0, 0)
-scale = Vector2(1, 1)
+rotation = 0.0
+scale = Vector2(2, 2)
 skew = 0.0
 script = ExtResource("1_4afv1")
-speed = 16
+speed = 48
+health = 100
+max_health = 100
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 _import_path = NodePath("")
+unique_name_in_owner = false
 process_mode = 0
+process_priority = 0
 process_physics_priority = 0
+process_thread_group = 0
 physics_interpolation_mode = 0
+auto_translate_mode = 0
 editor_description = ""
 visible = true
 modulate = Color(1, 1, 1, 1)
 self_modulate = Color(1, 1, 1, 1)
 show_behind_parent = false
+top_level = false
 clip_children = 0
 light_mask = 1
 visibility_layer = 1
@@ -170,14 +183,19 @@ texture_filter = 0
 texture_repeat = 0
 use_parent_material = false
 position = Vector2(0, 0)
+rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
 sprite_frames = SubResource("SpriteFrames_tfiom")
 animation = &"moving"
 autoplay = ""
+frame = 0
 frame_progress = 0.0
+speed_scale = 1.0
 centered = true
+offset = Vector2(0, 0)
 flip_h = false
+flip_v = false
 script = ExtResource("4_x456k")
 
 [node name="Hitbox" type="Area2D" parent="Sprite"]
