@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfn0u5s2yhm84"]
+
+[ext_resource type="Texture2D" uid="uid://bt70m11shapb1" path="res://assets/projectiles/particles/New Piskel-1.png (3).png" id="1_g54f7"]
+
+[sub_resource type="Gradient" id="Gradient_g38xx"]
+colors = PackedColorArray(1, 0.41568628, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fkmv1"]
+noise_type = 0
+frequency = 0.05
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_362mi"]
+width = 256
+height = 256
+noise = SubResource("FastNoiseLite_fkmv1")
+color_ramp = SubResource("Gradient_g38xx")
+seamless = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g54f7"]
+radius = 24.083189
+
+[node name="Fireball" type="Node2D"]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+z_index = 1
+amount = 128
+texture = SubResource("NoiseTexture2D_362mi")
+preprocess = 5.75
+fixed_fps = 30
+local_coords = true
+draw_order = 1
+emission_shape = 2
+emission_sphere_radius = 10.0
+spread = 43.14
+gravity = Vector2(0, 0)
+angle_max = 180.0
+scale_amount_min = 0.1
+scale_amount_max = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_g54f7")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_g54f7")
