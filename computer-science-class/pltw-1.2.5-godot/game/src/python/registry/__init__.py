@@ -1,12 +1,12 @@
 from py4godot.classes import *
+from py4godot.classes.Input import Input
 from py4godot.classes.ResourceLoader import ResourceLoader
 from py4godot.classes.core import *
-from py4godot.classes.Input import Input
 from py4godot.classes.Object import Object
 
 
 _register:dict[str, Object] = {}
-
+input:Input = Input().instance()
 
 def register(name:str, path:str):
     _register[name] = ResourceLoader.instance().load(path)
