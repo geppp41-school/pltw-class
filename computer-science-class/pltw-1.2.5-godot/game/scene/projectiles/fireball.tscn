@@ -1,46 +1,162 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfn0u5s2yhm84"]
+[gd_scene load_steps=12 format=3 uid="uid://bfn0u5s2yhm84"]
 
-[ext_resource type="Texture2D" uid="uid://bt70m11shapb1" path="res://assets/projectiles/particles/New Piskel-1.png (3).png" id="1_g54f7"]
+[ext_resource type="Script" path="res://scene/projectiles/fireball.py" id="1_fkmv1"]
+[ext_resource type="Shader" uid="uid://6yy3obujfjgr" path="res://scene/projectiles/fireball.gdshader" id="1_g54f7"]
+[ext_resource type="Texture2D" uid="uid://cn8e37k0dc0vl" path="res://scene/projectiles/fireball.tres" id="2_g38xx"]
 
-[sub_resource type="Gradient" id="Gradient_g38xx"]
-colors = PackedColorArray(1, 0.41568628, 0, 1, 1, 0, 0, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fkmv1"]
+shader = ExtResource("1_g54f7")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.12
+shader_parameter/circle_color = Color(1, 0, 0, 1)
+shader_parameter/bg_color = Color(0, 0, 0, 0)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_fkmv1"]
-noise_type = 0
-frequency = 0.05
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_362mi"]
-width = 256
-height = 256
-noise = SubResource("FastNoiseLite_fkmv1")
-color_ramp = SubResource("Gradient_g38xx")
-seamless = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g38xx"]
+shader = ExtResource("1_g54f7")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.3
+shader_parameter/circle_color = Color(1, 0, 0, 1)
+shader_parameter/bg_color = Color(0, 0, 1, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g54f7"]
-radius = 24.083189
+radius = 32.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g54f7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 90
+corner_radius_top_right = 90
+corner_radius_bottom_right = 90
+corner_radius_bottom_left = 90
+
+[sub_resource type="Animation" id="Animation_362mi"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CPUParticles2D:texture:noise:offset:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles2D:texture:noise:offset:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p2ds8"]
+_data = {
+&"RESET": SubResource("Animation_362mi")
+}
+
+[sub_resource type="Animation" id="Animation_7xasx"]
+loop_mode = 1
+step = 0.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CPUParticles2D:texture:noise:offset:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(32, -0.0005, 0, 0.0005, 0, 0, -0.1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles2D:texture:noise:offset:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-32, -0.0005, 0, 0.0005, 0, 0, -0.16633119, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j6puc"]
+_data = {
+&"default": SubResource("Animation_7xasx")
+}
 
 [node name="Fireball" type="Node2D"]
+_import_path = NodePath("")
+process_mode = 0
+process_physics_priority = 0
+physics_interpolation_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(0, 0)
+rotation = 0.0
+scale = Vector2(1, 1)
+skew = 0.0
+script = ExtResource("1_fkmv1")
+test_int = 5
+test_float = 5.2
+test_bool = true
+test_vector = Vector3(1, 2, 3)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 z_index = 1
-amount = 128
-texture = SubResource("NoiseTexture2D_362mi")
-preprocess = 5.75
+material = SubResource("ShaderMaterial_fkmv1")
+amount = 1
+texture = ExtResource("2_g38xx")
+randomness = 1.0
+lifetime_randomness = 0.78
 fixed_fps = 30
 local_coords = true
 draw_order = 1
-emission_shape = 2
-emission_sphere_radius = 10.0
-spread = 43.14
 gravity = Vector2(0, 0)
-angle_max = 180.0
-scale_amount_min = 0.1
-scale_amount_max = 0.1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_g54f7")
+visible = false
+material = SubResource("ShaderMaterial_g38xx")
+texture = ExtResource("2_g38xx")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_g54f7")
+
+[node name="PanelContainer" type="Panel" parent="."]
+clip_contents = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g54f7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_p2ds8"),
+&"fireball": SubResource("AnimationLibrary_j6puc")
+}
