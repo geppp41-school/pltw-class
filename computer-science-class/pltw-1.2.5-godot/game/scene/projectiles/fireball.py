@@ -3,23 +3,32 @@ from py4godot.signals import signal, SignalArg
 from py4godot.classes import gdclass
 from py4godot.classes.core import Vector3
 from py4godot.classes.Node2D import Node2D
+from py4godot.classes.Sprite2D import Sprite2D
 
 @gdclass
 class fireball(Node2D):
 
 	# define properties like this
 	life_span : float = 10
-	noise_offset : Vector3 = Vector3.new3(0, 0, 0)
+	noise_offset : Vector3 = Vector3.new3(0, 0, 0)#32x for 1 second, -32y for 1 second
 
 	# define signals like this
 	
 	
 	def _ready(self) -> None:
-		self.noise_object = self.get_node("CPUParticles2D")
+		self.noise_object:Sprite2D = self.get_node("Sprite2D")
+		self.time_passed = 0.0
+		self.noise_offset = Vector3.new3(16*self.life_span, -16*self.life_span, 0)
+		self.noise_object.texture.noise.offset = self.noise_offset
 		pass
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
+		self.time_passed += delta
+		self.noise_offset += Vector3.new3(-16*delta, 16*delta, 0)
+		self.noise_object.texture.noise.offset = self.noise_offset
+		if(self.time_passed >= 10):
+			self.queue_free()
 		pass
 		# put dynamic code here
 

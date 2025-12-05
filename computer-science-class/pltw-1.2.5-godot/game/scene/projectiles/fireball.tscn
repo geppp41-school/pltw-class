@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bfn0u5s2yhm84"]
+[gd_scene load_steps=11 format=3 uid="uid://bfn0u5s2yhm84"]
 
 [ext_resource type="Script" path="res://scene/projectiles/fireball.py" id="1_fkmv1"]
 [ext_resource type="Shader" uid="uid://6yy3obujfjgr" path="res://scene/projectiles/fireball.gdshader" id="1_g54f7"]
@@ -10,13 +10,6 @@ shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/radius = 0.12
 shader_parameter/circle_color = Color(1, 0, 0, 1)
 shader_parameter/bg_color = Color(0, 0, 0, 0)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g38xx"]
-shader = ExtResource("1_g54f7")
-shader_parameter/center = Vector2(0.5, 0.5)
-shader_parameter/radius = 0.3
-shader_parameter/circle_color = Color(1, 0, 0, 1)
-shader_parameter/bg_color = Color(0, 0, 1, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g54f7"]
 radius = 32.0
@@ -30,28 +23,6 @@ corner_radius_bottom_left = 90
 
 [sub_resource type="Animation" id="Animation_362mi"]
 length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CPUParticles2D:texture:noise:offset:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.0005, 0, 0.0005, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CPUParticles2D:texture:noise:offset:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.0005, 0, 0.0005, 0),
-"times": PackedFloat32Array(0)
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p2ds8"]
 _data = {
@@ -61,28 +32,6 @@ _data = {
 [sub_resource type="Animation" id="Animation_7xasx"]
 loop_mode = 1
 step = 0.0
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CPUParticles2D:texture:noise:offset:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(32, -0.0005, 0, 0.0005, 0, 0, -0.1, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CPUParticles2D:texture:noise:offset:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-32, -0.0005, 0, 0.0005, 0, 0, -0.16633119, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j6puc"]
 _data = {
@@ -91,14 +40,19 @@ _data = {
 
 [node name="Fireball" type="Node2D"]
 _import_path = NodePath("")
+unique_name_in_owner = false
 process_mode = 0
+process_priority = 0
 process_physics_priority = 0
+process_thread_group = 0
 physics_interpolation_mode = 0
+auto_translate_mode = 0
 editor_description = ""
 visible = true
 modulate = Color(1, 1, 1, 1)
 self_modulate = Color(1, 1, 1, 1)
 show_behind_parent = false
+top_level = false
 clip_children = 0
 light_mask = 1
 visibility_layer = 1
@@ -113,26 +67,11 @@ rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
 script = ExtResource("1_fkmv1")
-test_int = 5
-test_float = 5.2
-test_bool = true
-test_vector = Vector3(1, 2, 3)
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-z_index = 1
-material = SubResource("ShaderMaterial_fkmv1")
-amount = 1
-texture = ExtResource("2_g38xx")
-randomness = 1.0
-lifetime_randomness = 0.78
-fixed_fps = 30
-local_coords = true
-draw_order = 1
-gravity = Vector2(0, 0)
+life_span = 10
+noise_offset = Vector3(0, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_g38xx")
+material = SubResource("ShaderMaterial_fkmv1")
 texture = ExtResource("2_g38xx")
 
 [node name="Area2D" type="Area2D" parent="."]

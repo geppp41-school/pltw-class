@@ -22,8 +22,10 @@ class test(Node2D):
 
 	def _ready(self) -> None:
 		self.slimeScene = ResourceLoader.instance().load("res://scene/enemy/slime/slime.tscn").instantiate()
+		self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn").instantiate()
 		self.add_child(ResourceLoader.instance().load("res://scene/Player/player.tscn").instantiate())
-		self.add_child(self.slimeScene)
+		self.add_child(self.fireball)
+		#self.add_child(self.slimeScene)
 		pass
 		# put initialization code here
 
