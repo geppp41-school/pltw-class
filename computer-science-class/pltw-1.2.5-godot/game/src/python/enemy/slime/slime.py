@@ -21,7 +21,8 @@ class slime(Node2D):
 
 	def _ready(self) -> None:
 		self.animated_body = self.get_node("AnimatedSprite2D")  # type: ignore
-		self.animated_body.play("Moving")
+		self.animation_node = self.get_node("AnimationPlayer")
+		self.animation_node.play("slime/moving")
 		if(self.get_parent() != None):
 			self.target = self.get_parent().get_node("Player")  # type: ignore
 		self.position = Vector2.new3(100,100)
