@@ -14,6 +14,7 @@ class test(Node2D):
 	test_float: float = 5.2
 	test_bool: bool = True
 	test_vector: Vector3 = Vector3.new3(1,2,3)
+	player = None
 	
 
 	# define signals like this
@@ -21,17 +22,21 @@ class test(Node2D):
 
 
 	def _ready(self) -> None:
-		self.slimeScene = ResourceLoader.instance().load("res://scene/enemy/slime/slime.tscn").instantiate()
-		self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn").instantiate()
+		self.slimeScene = ResourceLoader.instance().load("res://scene/enemy/slime/slime.tscn")
+		#self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn").instantiate()
 		self.add_child(ResourceLoader.instance().load("res://scene/Player/player.tscn").instantiate())
-		self.add_child(self.fireball)
-		#self.add_child(self.slimeScene)
+		self.player = self.get_node("player")
+		for i in range(500):
+			self.add_child(self.slimeScene.instantiate())
+		#self.add_child(self.fireball)
 		pass
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
 		pass
 		# put dynamic code here
+	def get_player(self):
+		return self.player
 
 	# Hide the method in the godot editor
 	@private

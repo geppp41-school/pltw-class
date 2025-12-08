@@ -20,27 +20,6 @@ tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_s3er0")
 
 [node name="Test" type="Node2D"]
-_import_path = NodePath("")
-process_mode = 0
-process_physics_priority = 0
-physics_interpolation_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-use_parent_material = false
-position = Vector2(0, 0)
-scale = Vector2(1, 1)
-skew = 0.0
 script = ExtResource("1_fghjm")
 test_int = 5
 test_float = 5.2

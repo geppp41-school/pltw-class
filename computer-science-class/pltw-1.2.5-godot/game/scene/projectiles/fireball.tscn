@@ -75,6 +75,7 @@ material = SubResource("ShaderMaterial_fkmv1")
 texture = ExtResource("2_g38xx")
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_g54f7")

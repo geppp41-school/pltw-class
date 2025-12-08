@@ -179,10 +179,10 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -191,10 +191,10 @@ tracks/1/path = NodePath("Area2D/CollisionShape2D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964]
+"values": [1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964, 1.5707964]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -203,10 +203,10 @@ tracks/2/path = NodePath("Area2D/CollisionShape2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(2.1316282e-14, 9.333334), Vector2(5.269859e-14, 10), Vector2(3.050251e-14, 8.666666), Vector2(1.0527264e-15, 5.3333335), Vector2(2.6989146e-14, 1.3333335), Vector2(4.365164e-15, 2), Vector2(6.831054e-15, 6), Vector2(-3.374425e-15, 11.333334), Vector2(3.683829e-14, 10), Vector2(-1.4466327e-14, 9.333333), Vector2(2.2938245e-15, 9.333333), Vector2(6.284415e-14, 8.666667)]
+"values": [Vector2(2.1316282e-14, 9.333334), Vector2(5.269859e-14, 10), Vector2(3.050251e-14, 8.666666), Vector2(1.0527264e-15, 5.3333335), Vector2(2.6989146e-14, 1.3333335), Vector2(4.365164e-15, 2), Vector2(6.831054e-15, 6), Vector2(-3.374425e-15, 11.333334), Vector2(3.683829e-14, 10), Vector2(-1.4466327e-14, 9.333333), Vector2(2.2938245e-15, 9.333333), Vector2(6.284415e-14, 8.666667), Vector2(6.284415e-14, 8.666667)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -215,10 +215,10 @@ tracks/3/path = NodePath("Area2D/CollisionShape2D:shape:radius")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [7.333333, 6.666668, 8.666668, 8.46961, 8.284587, 8.118616, 6.0, 5.333334, 5.8652806, 8.0, 7.6877413, 7.456165]
+"values": [7.333333, 6.666668, 8.666668, 8.46961, 8.284587, 8.118616, 6.0, 5.333334, 5.8652806, 8.0, 7.6877413, 7.456165, 7.456165]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -227,10 +227,10 @@ tracks/4/path = NodePath("Area2D/CollisionShape2D:shape:height")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [25.333334, 28.0, 20.0, 17.333334, 18.635996, 19.80452, 28.0, 30.666668, 28.0, 20.0, 24.0, 20.0]
+"values": [25.333334, 28.0, 20.0, 17.333334, 18.635996, 19.80452, 28.0, 30.666668, 28.0, 20.0, 24.0, 20.0, 20.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pcgfp"]

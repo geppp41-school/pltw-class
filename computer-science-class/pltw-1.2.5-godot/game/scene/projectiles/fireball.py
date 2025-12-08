@@ -19,7 +19,7 @@ class fireball(Node2D):
 		self.noise_object:Sprite2D = self.get_node("Sprite2D")
 		self.time_passed = 0.0
 		self.noise_offset = Vector3.new3(16*self.life_span, -16*self.life_span, 0)
-		self.noise_object.texture.noise.offset = self.noise_offset
+		
 		pass
 		# put initialization code here
 

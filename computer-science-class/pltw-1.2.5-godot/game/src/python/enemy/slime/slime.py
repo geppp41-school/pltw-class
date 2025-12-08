@@ -1,4 +1,5 @@
 
+import random
 from py4godot.methods import private
 from py4godot.signals import signal, SignalArg
 from py4godot.classes import gdclass
@@ -22,10 +23,11 @@ class slime(Node2D):
 	def _ready(self) -> None:
 		self.animated_body = self.get_node("AnimatedSprite2D")  # type: ignore
 		self.animation_node = self.get_node("AnimationPlayer")
+		#self.animated_body.play("Moving")
 		self.animation_node.play("slime/moving")
 		if(self.get_parent() != None):
-			self.target = self.get_parent().get_node("Player")  # type: ignore
-		self.position = Vector2.new3(100,100)
+			self.target = self.get_parent().get_pyscript().get_player()
+		self.position = Vector2.new3(random.randint(-300,300),random.randint(-300,300))
 		pass
 		# put initialization code here
 
@@ -49,6 +51,8 @@ class slime(Node2D):
 			move_direction = Vector2.RIGHT.rotated(self.target_angle)
 			velocity = move_direction * self.speed
 			self.position += velocity * delta
+		
+		pass
 		# if self.target != None and self._can_move:
 		# 	angle = self.position.angle_to_point(self.target.position) # get angle to player
 		# 	direction = Vector2.RIGHT.rotated(angle)# get direction to player

@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="game"
+run/main_scene="uid://b8v5b5uu0d0ej"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -27,6 +28,11 @@ project/assembly_name="game"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/py4godot/plugin.cfg")
+
+[physics]
+
+2d/run_on_separate_thread=true
+common/physics_interpolation=true
 
 [rendering]
 
