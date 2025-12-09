@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://cvwrfokt5v8ue"]
+[gd_scene load_steps=25 format=3 uid="uid://cvwrfokt5v8ue"]
 
 [ext_resource type="Script" path="res://src/python/player/main.py" id="1_4afv1"]
 [ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="2_svavm"]
 [ext_resource type="Texture2D" uid="uid://c6i7cvr4hvr6s" path="res://assets/player/wizard/MovingWizardSpriteSheet.png" id="3_x456k"]
 [ext_resource type="Script" path="res://src/python/player/Sprite.py" id="4_x456k"]
+[ext_resource type="Shader" uid="uid://2dix4hvllmqk" path="res://scene/Player/player.gdshader" id="5_7fv2l"]
 [ext_resource type="Texture2D" uid="uid://ql3jqgcbpb1k" path="res://assets/player/aim_wheel_thin.png" id="5_fd65k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ul6r3"]
@@ -126,6 +127,12 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbm5k"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fra3v"]
+shader = ExtResource("5_7fv2l")
+shader_parameter/fill_percent = 0.0
+shader_parameter/full = Color(1, 1, 1, 1)
+shader_parameter/empty = Color(0.5, 0.5, 0.5, 0.2)
+
 [node name="Player" type="Node2D"]
 _import_path = NodePath("")
 unique_name_in_owner = false
@@ -207,5 +214,6 @@ shape = SubResource("CapsuleShape2D_wbm5k")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="aim_wheel" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fra3v")
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("5_fd65k")
