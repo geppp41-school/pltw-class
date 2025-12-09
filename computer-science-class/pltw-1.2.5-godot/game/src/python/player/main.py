@@ -1,4 +1,5 @@
 
+import math
 from xml.dom import Node
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.InputEventMouseMotion import InputEventMouseMotion
@@ -29,8 +30,10 @@ class main(Node2D):
 		pass
 
 	def _process(self, delta:float) -> None:
-		position = self._mouse_position + self.position - Vector2.new3(320, 240)
-		self.aim_wheel.set_rotation(self.aim_wheel.get_angle_to(position))
+		relitive_mouse_position = self._mouse_position + self.position
+		angle = self.get_angle_to(relitive_mouse_position)
+		self.aim_wheel.set_rotation(angle+(math.pi/2))
+		print(f"{relitive_mouse_position.x}, {relitive_mouse_position.y}")
 		#self.aim_wheel.transform.rotated(self.aim_wheel.get_angle_to(self._mouse_position))
 		pass
 
@@ -39,8 +42,9 @@ class main(Node2D):
 	def _input(self, event: InputEvent) -> None:
 		if(event.get_type() == InputEventMouseMotion.get_type()):
 			eventMouseMotion:InputEventMouseMotion = InputEventMouseMotion.cast(event)
-			
-			self._mouse_position = eventMouseMotion.position
+			test = eventMouseMotion.position-Vector2.new3(320,240)
+			#print(math.atan(test.y/test.x))
+			self._mouse_position = eventMouseMotion.position-Vector2.new3(320,240)
 			
 		
 		return super()._input(event)
