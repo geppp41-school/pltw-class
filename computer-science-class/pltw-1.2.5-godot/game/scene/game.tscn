@@ -31,6 +31,3 @@ rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
 script = ExtResource("1_5kiuu")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(320, 240)
