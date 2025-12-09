@@ -23,12 +23,7 @@ class start_screen(Control):
 
 	def _process(self, delta:float) -> None:
 		if(self.background != None):
-			self.background.texture.noise.offset += Vector3.new3(0.04, 0, 0)
-		pass
-		# put dynamic code here
-
-	def _on_play_button_pressed(self):
-		print("Button was pressed")
+			self.background.texture.noise.offset += Vector3.new3(32*delta, 0, 0)
 		pass
 	# Hide the method in the godot editor
 	@private

@@ -9,12 +9,14 @@ class game(Node):
 
 	# define properties like this
 	# define signals like this
-	player = None
+	player:Node = Node.new()
 	start_screen:Node = Node.new()
 
 	def _ready(self) -> None:
-		self.player = ResourceLoader.instance().load("res://scene/start_screen.tscn").instantiate()
+		self.player = ResourceLoader.instance().load("res://scene/Player/player.tscn").instantiate()
 		self.start_screen = ResourceLoader.instance().load("res://scene/start_screen.tscn").instantiate()
+		self.world_one = ResourceLoader.instance().load("res://scene/worlds/world_one.tscn").instantiate()
+		
 		self.add_child(self.start_screen)
 		#self.get_node("start_screen").get_node("play_button").connect("pressed", self.play)
 		self.play_button = self.get_node("start_screen").get_node("play_button")
@@ -34,8 +36,11 @@ class game(Node):
 		return super()._input(event)
 	
 	def play(self):
+		print("play button was pressed")
 		self.start_screen.queue_free()
-		print("Play was pressed")
+		self.add_child(self.world_one)
+		self.add_child(self.player)
+		
 		pass
 
 	# Hide the method in the godot editor
