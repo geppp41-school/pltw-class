@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://cvwrfokt5v8ue"]
+[gd_scene load_steps=23 format=3 uid="uid://cvwrfokt5v8ue"]
 
 [ext_resource type="Script" path="res://src/python/player/main.py" id="1_4afv1"]
 [ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="2_svavm"]
 [ext_resource type="Texture2D" uid="uid://c6i7cvr4hvr6s" path="res://assets/player/wizard/MovingWizardSpriteSheet.png" id="3_x456k"]
 [ext_resource type="Script" path="res://src/python/player/Sprite.py" id="4_x456k"]
+[ext_resource type="Texture2D" uid="uid://ql3jqgcbpb1k" path="res://assets/player/aim_wheel_thin.png" id="5_fd65k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ul6r3"]
 atlas = ExtResource("2_svavm")
@@ -204,3 +205,7 @@ script = ExtResource("4_x456k")
 shape = SubResource("CapsuleShape2D_wbm5k")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="aim_wheel" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("5_fd65k")

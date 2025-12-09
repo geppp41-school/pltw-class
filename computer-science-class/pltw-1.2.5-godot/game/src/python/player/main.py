@@ -1,7 +1,11 @@
 
+from xml.dom import Node
+from py4godot.classes.InputEvent import InputEvent
+from py4godot.classes.InputEventMouseMotion import InputEventMouseMotion
 from py4godot.functions import print_verbose
 from py4godot.methods import private
-from py4godot.classes import gdclass
+from py4godot.classes import InputEventMouse, gdclass
+from py4godot.classes.Sprite2D import Sprite2D
 from py4godot.classes.core import Vector2
 from py4godot.classes.Node2D import Node2D
 from py4godot.classes.Input import Input
@@ -20,14 +24,28 @@ class main(Node2D):
 
 
 	def _ready(self) -> None:
-		
-		
+		self.aim_wheel:Sprite2D = self.get_node("aim_wheel")
+		self._mouse_position = Vector2.new3(0,0)
 		pass
-		# put initialization code here
 
 	def _process(self, delta:float) -> None:
+		position = self._mouse_position + self.position - Vector2.new3(320, 240)
+		self.aim_wheel.set_rotation(self.aim_wheel.get_angle_to(position))
+		#self.aim_wheel.transform.rotated(self.aim_wheel.get_angle_to(self._mouse_position))
 		pass
 
+
+	
+	def _input(self, event: InputEvent) -> None:
+		if(event.get_type() == InputEventMouseMotion.get_type()):
+			eventMouseMotion:InputEventMouseMotion = InputEventMouseMotion.cast(event)
+			
+			self._mouse_position = eventMouseMotion.position
+			
+		
+		return super()._input(event)
+	
+	
 
 		# put dynamic code here
 	def _physics_process(self, delta: float) -> None:
@@ -54,7 +72,8 @@ class main(Node2D):
 	
 	def is_moving(self) -> bool:
 		return self.__moving
-	# Hide the method in the godot editor
+	
+
 	@private
 	def test_method(self):
 		pass
