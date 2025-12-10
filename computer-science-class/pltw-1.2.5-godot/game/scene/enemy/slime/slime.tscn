@@ -326,3 +326,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_7ipss"),
 &"slime": SubResource("AnimationLibrary_pcgfp")
 }
+
+[connection signal="area_entered" from="Area2D" to="." method="_collision"]

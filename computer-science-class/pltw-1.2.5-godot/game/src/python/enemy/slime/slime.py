@@ -1,5 +1,6 @@
 
 import random
+from py4godot.classes.Area2D import Area2D
 from py4godot.methods import private
 from py4godot.signals import signal, SignalArg
 from py4godot.classes import gdclass
@@ -13,9 +14,11 @@ class slime(Node2D):
 	# define properties like this
 	animated_body:  AnimatedSprite2D = None # type: ignore
 	target: Node2D = None  # type: ignore
-	speed: int = 30
+	speed: int = 60
 	_can_move:bool = True
 	target_angle:float = 0
+	health:float = 100.0
+	max_health:float = 100.0
 	# define signals like this
 
 
@@ -32,7 +35,10 @@ class slime(Node2D):
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
-		
+		if(self.health <=0):
+			print("killed a slime")
+			self.queue_free()
+
 		# put dynamic code here
 		pass
 
@@ -65,6 +71,14 @@ class slime(Node2D):
 	def can_move(self) -> bool:
 		return self._can_move
 	# Hide the method in the godot editor
+
+	def _collision(self, area2D:Area2D) -> None:
+		print(area2D.get_parent().name)
+		target:Node2D = area2D.get_parent()
+		if(target.name.contains("fireball")):
+			self.health -= target.get_meta("damage")
+			target.queue_free()
+		pass
 	@private
 	def test_method(self):
 		pass
