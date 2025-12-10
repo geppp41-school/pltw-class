@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bfn0u5s2yhm84"]
 
-[ext_resource type="Script" path="res://scene/projectiles/fireball.py" id="1_fkmv1"]
+[ext_resource type="Script" path="res://src/python/projectile/fireball.py" id="1_fkmv1"]
 [ext_resource type="Shader" uid="uid://6yy3obujfjgr" path="res://scene/projectiles/fireball.gdshader" id="1_g54f7"]
 [ext_resource type="Texture2D" uid="uid://cn8e37k0dc0vl" path="res://scene/projectiles/fireball.tres" id="2_g38xx"]
 
@@ -67,7 +67,7 @@ rotation = 0.0
 scale = Vector2(0.5, 0.5)
 skew = 0.0
 script = ExtResource("1_fkmv1")
-life_span = 10
+life_span = 5
 speed = 16.0
 direction = 0.0
 noise_offset = Vector3(0, 0, 0)

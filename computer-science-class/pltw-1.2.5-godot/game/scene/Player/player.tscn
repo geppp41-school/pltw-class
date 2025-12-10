@@ -1,9 +1,9 @@
 [gd_scene load_steps=25 format=3 uid="uid://cvwrfokt5v8ue"]
 
-[ext_resource type="Script" path="res://src/python/player/main.py" id="1_4afv1"]
+[ext_resource type="Script" path="res://src/python/player/player.py" id="1_7fv2l"]
 [ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="2_svavm"]
 [ext_resource type="Texture2D" uid="uid://c6i7cvr4hvr6s" path="res://assets/player/wizard/MovingWizardSpriteSheet.png" id="3_x456k"]
-[ext_resource type="Script" path="res://src/python/player/Sprite.py" id="4_x456k"]
+[ext_resource type="Script" path="res://src/python/player/sprite.py" id="4_fra3v"]
 [ext_resource type="Shader" uid="uid://2dix4hvllmqk" path="res://scene/Player/player.gdshader" id="5_7fv2l"]
 [ext_resource type="Texture2D" uid="uid://bvxe6epknlk3s" path="res://assets/player/aim_wheel_thin (1).png" id="6_7fv2l"]
 
@@ -161,14 +161,9 @@ position = Vector2(0, 0)
 rotation = 0.0
 scale = Vector2(2, 2)
 skew = 0.0
-script = ExtResource("1_4afv1")
-speed = 48
-health = 100
-max_health = 100
-test = 0.0
+script = ExtResource("1_7fv2l")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-_import_path = NodePath("")
 unique_name_in_owner = false
 process_mode = 0
 process_priority = 0
@@ -205,7 +200,7 @@ centered = true
 offset = Vector2(0, 0)
 flip_h = false
 flip_v = false
-script = ExtResource("4_x456k")
+script = ExtResource("4_fra3v")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

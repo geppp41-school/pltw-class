@@ -6,7 +6,7 @@ from py4godot.classes.core import Vector2, Vector3
 from py4godot.classes.AnimatedSprite2D import AnimatedSprite2D
 
 @gdclass
-class Sprite(AnimatedSprite2D):
+class sprite(AnimatedSprite2D):
 	
 	# define properties like this
 	
