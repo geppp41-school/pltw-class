@@ -1,10 +1,11 @@
 shader_type canvas_item;
 //uniform float fill_percent = 0.5;
-uniform float fill_percent = 0.0;
+uniform float fill_percent = 1.0;
 uniform vec4 full : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform vec4 empty : source_color = vec4(0.5, 0.5, 0.5, 0.1);
 
 void vertex() {
+	//COLOR = vec4(UV.x, UV.y, 1.0, 1.0);
 	// Called for every vertex the material is visible on.
 }
 
@@ -21,7 +22,7 @@ void fragment() {
 			
 		} 
 	}
-	// Called for every pixel the material is visible on.
+	 //Called for every pixel the material is visible on.
 }
 
 //void light() {
