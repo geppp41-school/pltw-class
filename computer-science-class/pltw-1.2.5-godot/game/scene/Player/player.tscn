@@ -125,24 +125,29 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbm5k"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fra3v"]
 shader = ExtResource("5_7fv2l")
 shader_parameter/fill_percent = 1.0
 shader_parameter/full = Color(1, 1, 1, 1)
 shader_parameter/empty = Color(0.5, 0.5, 0.5, 0.2)
 
-[node name="Player" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbm5k"]
+
+[node name="player" type="Node2D"]
 _import_path = NodePath("")
+unique_name_in_owner = false
 process_mode = 0
+process_priority = 0
 process_physics_priority = 0
+process_thread_group = 0
 physics_interpolation_mode = 0
+auto_translate_mode = 0
 editor_description = ""
 visible = true
 modulate = Color(1, 1, 1, 1)
 self_modulate = Color(1, 1, 1, 1)
 show_behind_parent = false
+top_level = false
 clip_children = 0
 light_mask = 1
 visibility_layer = 1
@@ -164,14 +169,19 @@ test = 0.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 _import_path = NodePath("")
+unique_name_in_owner = false
 process_mode = 0
+process_priority = 0
 process_physics_priority = 0
+process_thread_group = 0
 physics_interpolation_mode = 0
+auto_translate_mode = 0
 editor_description = ""
 visible = true
 modulate = Color(1, 1, 1, 1)
 self_modulate = Color(1, 1, 1, 1)
 show_behind_parent = false
+top_level = false
 clip_children = 0
 light_mask = 1
 visibility_layer = 1
@@ -188,16 +198,14 @@ skew = 0.0
 sprite_frames = SubResource("SpriteFrames_tfiom")
 animation = &"moving"
 autoplay = ""
+frame = 0
 frame_progress = 0.0
+speed_scale = 1.0
 centered = true
+offset = Vector2(0, 0)
 flip_h = false
 flip_v = false
 script = ExtResource("4_x456k")
-
-[node name="Hitbox" type="Area2D" parent="Sprite"]
-
-[node name="hitboxShape" type="CollisionShape2D" parent="Sprite/Hitbox"]
-shape = SubResource("CapsuleShape2D_wbm5k")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -205,3 +213,8 @@ shape = SubResource("CapsuleShape2D_wbm5k")
 material = SubResource("ShaderMaterial_fra3v")
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("6_7fv2l")
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="hitboxShape" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CapsuleShape2D_wbm5k")
