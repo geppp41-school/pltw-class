@@ -1,10 +1,9 @@
-
 import math
-from xml.dom import Node
 from py4godot.classes.CanvasItemMaterial import CanvasItemMaterial
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.InputEventMouseMotion import InputEventMouseMotion
 from py4godot.classes.Material import Material
+from py4godot.classes.ResourceLoader import ResourceLoader
 from py4godot.functions import print_verbose
 from py4godot.methods import private
 from py4godot.classes import gdclass
@@ -28,11 +27,13 @@ class main(Node2D):
 	modifiers: dict = {}
 	input_instance: Input = Input().instance()
 	_moving:bool = False
-	test = 1.0
+	cooldown = 2.0
+	attack_cooldown = 2.0
 
 
 	def _ready(self) -> None:
 		self.aim_wheel:Sprite2D = self.get_node("aim_wheel")
+		self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn")
 		self._mouse_position = Vector2.new3(0,0)
 		self.aim_wheel_shader:ShaderMaterial = self.aim_wheel.get_material()
 		pass
@@ -41,10 +42,10 @@ class main(Node2D):
 		relitive_mouse_position = self._mouse_position + self.position
 		angle = self.get_angle_to(relitive_mouse_position)
 		self.aim_wheel.set_rotation(angle+(math.pi/2))
-		self.test += delta
-		self.test = min(self.test, 1.0)
+		self.cooldown += delta
+		self.cooldown = min(self.cooldown, self.attack_cooldown)
 		
-		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.test, 2))
+		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.cooldown/self.attack_cooldown, 2))
 		
 		self.aim_wheel_shader = self.aim_wheel.get_material()
 		#self.aim_wheel.transform.rotated(self.aim_wheel.get_angle_to(self._mouse_position))
@@ -60,12 +61,21 @@ class main(Node2D):
 			self._mouse_position = eventMouseMotion.position-Vector2.new3(320,240)
 		elif(event.get_type() == InputEventMouseButton.get_type()):
 			eventMouseButton:InputEventMouseButton = InputEventMouseButton.cast(event)
-			if(eventMouseButton.is_pressed() and self.test >= 1.0):
-				self.test = 0.0
+			#print(f"{eventMouseButton.as_text()}: {eventMouseButton.is_pressed()}, {eventMouseButton.get_button_index()}")
+			#button indexes |  1: left mouse button | 2: right mouse button | 3: scroll wheel press | 4-5 scrolling up and down
+			if(eventMouseButton.is_pressed() and eventMouseButton.get_button_index() == 1 and self.cooldown >= self.attack_cooldown):
+				projectile:Node2D = self.fireball.instantiate()
+				if(self.get_parent() != None):
+					self.get_parent().add_child(projectile)
+				else:
+					self.add_child(projectile)
+				projectile.set_meta("speed", 100)
+				projectile.set_meta("direction",self.aim_wheel.get_rotation()-(math.pi/2))
+				
+				self.cooldown = 0.0
 			pass
 			#self.aim_wheel_shader.set_shader_parameter("fill_percent", random())
-		else:
-			print(event.get_type())
+		
 			
 		
 		return super()._input(event)

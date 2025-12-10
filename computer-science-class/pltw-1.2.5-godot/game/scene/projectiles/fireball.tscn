@@ -38,7 +38,7 @@ _data = {
 &"default": SubResource("Animation_7xasx")
 }
 
-[node name="Fireball" type="Node2D"]
+[node name="fireball" type="Node2D"]
 _import_path = NodePath("")
 unique_name_in_owner = false
 process_mode = 0
@@ -64,10 +64,12 @@ texture_repeat = 0
 use_parent_material = false
 position = Vector2(0, 0)
 rotation = 0.0
-scale = Vector2(1, 1)
+scale = Vector2(0.5, 0.5)
 skew = 0.0
 script = ExtResource("1_fkmv1")
 life_span = 10
+speed = 16.0
+direction = 0.0
 noise_offset = Vector3(0, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

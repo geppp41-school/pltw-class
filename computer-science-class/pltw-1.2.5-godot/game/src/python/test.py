@@ -26,7 +26,8 @@ class test(Node2D):
 		#self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn").instantiate()
 		self.add_child(ResourceLoader.instance().load("res://scene/Player/player.tscn").instantiate())
 		self.player = self.get_node("player")
-		for i in range(500):
+		
+		for i in range(5):
 			self.add_child(self.slimeScene.instantiate())
 		#self.add_child(self.fireball)
 		pass
