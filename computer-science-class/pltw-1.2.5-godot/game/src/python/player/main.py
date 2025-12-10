@@ -4,14 +4,18 @@ from xml.dom import Node
 from py4godot.classes.CanvasItemMaterial import CanvasItemMaterial
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.InputEventMouseMotion import InputEventMouseMotion
+from py4godot.classes.Material import Material
 from py4godot.functions import print_verbose
 from py4godot.methods import private
-from py4godot.classes import InputEventMouse, gdclass
+from py4godot.classes import gdclass
 from py4godot.classes.Sprite2D import Sprite2D
 from py4godot.classes.core import Vector2
 from py4godot.classes.Node2D import Node2D
 from py4godot.classes.Input import Input
 from py4godot.enums.enums import Key
+from py4godot.classes.ShaderMaterial import ShaderMaterial
+from py4godot.classes.InputEventMouseButton import InputEventMouseButton
+from random import random
 
 
 @gdclass
@@ -24,23 +28,25 @@ class main(Node2D):
 	modifiers: dict = {}
 	input_instance: Input = Input().instance()
 	_moving:bool = False
-	test = 0.0
+	test = 1.0
 
 
 	def _ready(self) -> None:
 		self.aim_wheel:Sprite2D = self.get_node("aim_wheel")
 		self._mouse_position = Vector2.new3(0,0)
-		self.aim_wheel_shader:CanvasItemMaterial = self.aim_wheel.material
+		self.aim_wheel_shader:ShaderMaterial = self.aim_wheel.get_material()
 		pass
 
 	def _process(self, delta:float) -> None:
 		relitive_mouse_position = self._mouse_position + self.position
 		angle = self.get_angle_to(relitive_mouse_position)
 		self.aim_wheel.set_rotation(angle+(math.pi/2))
-		self.test = self.test+delta*0.2
-		if(self.test >= 1):
-			self.test = 0
+		self.test += delta
+		self.test = min(self.test, 1.0)
 		
+		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.test, 2))
+		
+		self.aim_wheel_shader = self.aim_wheel.get_material()
 		#self.aim_wheel.transform.rotated(self.aim_wheel.get_angle_to(self._mouse_position))
 		pass
 
@@ -52,6 +58,14 @@ class main(Node2D):
 			test = eventMouseMotion.position-Vector2.new3(320,240)
 			#print(math.atan(test.y/test.x))
 			self._mouse_position = eventMouseMotion.position-Vector2.new3(320,240)
+		elif(event.get_type() == InputEventMouseButton.get_type()):
+			eventMouseButton:InputEventMouseButton = InputEventMouseButton.cast(event)
+			if(eventMouseButton.is_pressed() and self.test >= 1.0):
+				self.test = 0.0
+			pass
+			#self.aim_wheel_shader.set_shader_parameter("fill_percent", random())
+		else:
+			print(event.get_type())
 			
 		
 		return super()._input(event)
