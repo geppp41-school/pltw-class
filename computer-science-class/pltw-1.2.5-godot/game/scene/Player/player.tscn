@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/python/player/player.py" id="1_7fv2l"]
 [ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="2_svavm"]
 [ext_resource type="Texture2D" uid="uid://c6i7cvr4hvr6s" path="res://assets/player/wizard/MovingWizardSpriteSheet.png" id="3_x456k"]
-[ext_resource type="Script" path="res://src/python/player/sprite.py" id="4_fra3v"]
+[ext_resource type="Script" path="res://src/python/player/Sprite.py" id="4_7fv2l"]
 [ext_resource type="Shader" uid="uid://2dix4hvllmqk" path="res://scene/Player/player.gdshader" id="5_7fv2l"]
 [ext_resource type="Texture2D" uid="uid://bvxe6epknlk3s" path="res://assets/player/aim_wheel_thin (1).png" id="6_7fv2l"]
 
@@ -135,19 +135,14 @@ shader_parameter/empty = Color(0.5, 0.5, 0.5, 0.2)
 
 [node name="player" type="Node2D"]
 _import_path = NodePath("")
-unique_name_in_owner = false
 process_mode = 0
-process_priority = 0
 process_physics_priority = 0
-process_thread_group = 0
 physics_interpolation_mode = 0
-auto_translate_mode = 0
 editor_description = ""
 visible = true
 modulate = Color(1, 1, 1, 1)
 self_modulate = Color(1, 1, 1, 1)
 show_behind_parent = false
-top_level = false
 clip_children = 0
 light_mask = 1
 visibility_layer = 1
@@ -160,47 +155,30 @@ use_parent_material = false
 position = Vector2(0, 0)
 rotation = 0.0
 scale = Vector2(2, 2)
-skew = 0.0
 script = ExtResource("1_7fv2l")
+speed = 32
+health = 100
+max_health = 100
+cooldown = 2.0
+attack_cooldown = 2.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-unique_name_in_owner = false
+_import_path = NodePath("")
 process_mode = 0
-process_priority = 0
 process_physics_priority = 0
-process_thread_group = 0
 physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
 top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-use_parent_material = false
 position = Vector2(0, 0)
 rotation = 0.0
 scale = Vector2(1, 1)
-skew = 0.0
 sprite_frames = SubResource("SpriteFrames_tfiom")
 animation = &"moving"
-autoplay = ""
 frame = 0
-frame_progress = 0.0
 speed_scale = 1.0
 centered = true
 offset = Vector2(0, 0)
-flip_h = false
 flip_v = false
-script = ExtResource("4_fra3v")
+script = ExtResource("4_7fv2l")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
