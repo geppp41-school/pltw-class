@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccypc3de2oavd"]
+
+[ext_resource type="Shader" uid="uid://ct5wn0ieg2iwx" path="res://scene/exp.gdshader" id="1_vte56"]
+[ext_resource type="Texture2D" uid="uid://dh7n23iacpgce" path="res://assets/exp/New Piskel-4.png (1).png" id="2_vte56"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wj65w"]
+shader = ExtResource("1_vte56")
+shader_parameter/r = 0.0
+shader_parameter/g = 0.0
+shader_parameter/b = 0.0
+shader_parameter/brightness = 1.0
+
+[node name="Exp" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_wj65w")
+texture = ExtResource("2_vte56")
