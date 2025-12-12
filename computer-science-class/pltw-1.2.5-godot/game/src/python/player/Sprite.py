@@ -21,7 +21,6 @@ class sprite(AnimatedSprite2D):
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
-		
 		if(self.get_parent().get_pyscript().is_moving()):
 			if not self.is_playing():
 				self.play("moving")
