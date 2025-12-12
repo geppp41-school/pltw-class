@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxahxyl0fuhwk"]
+
+[ext_resource type="Shader" uid="uid://ct5wn0ieg2iwx" path="res://scene/exp.gdshader" id="1_355ds"]
+[ext_resource type="Script" path="res://src/python/pickups/exp/exp.py" id="1_v10d2"]
+[ext_resource type="Texture2D" uid="uid://dh7n23iacpgce" path="res://assets/exp/New Piskel-4.png (1).png" id="2_v10d2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wj65w"]
+shader = ExtResource("1_355ds")
+shader_parameter/r = 0.0
+shader_parameter/g = 0.0
+shader_parameter/b = 1.0
+shader_parameter/brightness = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_go6jy"]
+radius = 100.0
+
+[node name="blue_exp" type="Node2D"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(0, 0)
+rotation = 0.0
+scale = Vector2(1, 1)
+skew = 0.0
+script = ExtResource("1_v10d2")
+test_int = 5
+test_float = 5.2
+test_bool = true
+test_vector = Vector3(1, 2, 3)
+metadata/exp_value = 5.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_wj65w")
+texture = ExtResource("2_v10d2")
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CircleShape2D_go6jy")
+
+[connection signal="area_entered" from="hitbox" to="." method="_pick_up_range_entered"]
