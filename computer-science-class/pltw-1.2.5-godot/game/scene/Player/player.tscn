@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cvwrfokt5v8ue"]
+[gd_scene load_steps=26 format=3 uid="uid://cvwrfokt5v8ue"]
 
 [ext_resource type="Script" path="res://src/python/player/player.py" id="1_7fv2l"]
 [ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="2_svavm"]
@@ -133,6 +133,9 @@ shader_parameter/empty = Color(0.5, 0.5, 0.5, 0.2)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbm5k"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fv2l"]
+radius = 50.0
+
 [node name="player" type="Node2D"]
 _import_path = NodePath("")
 unique_name_in_owner = false
@@ -215,7 +218,12 @@ material = SubResource("ShaderMaterial_fra3v")
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("6_7fv2l")
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="player_hitbox" type="Area2D" parent="."]
 
-[node name="hitboxShape" type="CollisionShape2D" parent="hitbox"]
+[node name="hitboxShape" type="CollisionShape2D" parent="player_hitbox"]
 shape = SubResource("CapsuleShape2D_wbm5k")
+
+[node name="pickup_range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pickup_range"]
+shape = SubResource("CircleShape2D_7fv2l")
