@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cvwrfokt5v8ue"]
+[gd_scene load_steps=29 format=3 uid="uid://cvwrfokt5v8ue"]
 
 [ext_resource type="Script" path="res://src/python/player/player.py" id="1_7fv2l"]
 [ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="2_svavm"]
@@ -125,6 +125,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dpmh7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8uvvx"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fv2l"]
+bg_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fra3v"]
 shader = ExtResource("5_7fv2l")
 shader_parameter/fill_percent = 1.0
@@ -213,6 +228,46 @@ script = ExtResource("4_7fv2l")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
+[node name="Hud" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -160.0
+offset_top = -120.0
+offset_right = 160.0
+offset_bottom = 120.0
+
+[node name="Background" type="Panel" parent="Camera2D/Hud"]
+material = SubResource("ShaderMaterial_dpmh7")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -30.0
+offset_right = 100.0
+offset_bottom = -10.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8uvvx")
+
+[node name="fill" type="Panel" parent="Camera2D/Hud"]
+material = SubResource("ShaderMaterial_dpmh7")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.5
+offset_top = -30.0
+offset_right = 99.5
+offset_bottom = -10.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7fv2l")
+
 [node name="aim_wheel" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_fra3v")
 scale = Vector2(0.7, 0.7)
@@ -227,3 +282,5 @@ shape = SubResource("CapsuleShape2D_wbm5k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pickup_range"]
 shape = SubResource("CircleShape2D_7fv2l")
+
+[connection signal="area_entered" from="player_hitbox" to="." method="_on_player_hitbox_area_entered"]

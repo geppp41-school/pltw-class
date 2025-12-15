@@ -12,7 +12,7 @@ shader_parameter/b = 0.0
 shader_parameter/brightness = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_go6jy"]
-radius = 100.0
+radius = 33.13608
 
 [node name="green_exp" type="Node2D"]
 _import_path = NodePath("")
@@ -43,10 +43,6 @@ rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
 script = ExtResource("1_quor8")
-test_int = 5
-test_float = 5.2
-test_bool = true
-test_vector = Vector3(1, 2, 3)
 metadata/exp_value = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

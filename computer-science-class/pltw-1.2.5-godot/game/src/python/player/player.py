@@ -1,4 +1,5 @@
 import math
+from py4godot.classes.Area2D import Area2D
 from py4godot.classes.CanvasItemMaterial import CanvasItemMaterial
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.InputEventMouseMotion import InputEventMouseMotion
@@ -29,6 +30,9 @@ class player(Node2D):
 	_moving:bool = False
 	cooldown = 2.0
 	attack_cooldown = 2.0
+	exp: float = 0.0
+	exp_to_next_level: float = 100.0
+	level: int = 0
 
 
 	def _ready(self) -> None:
@@ -108,6 +112,12 @@ class player(Node2D):
 	def is_moving(self) -> bool:
 		return self.__moving
 	
+	def _on_player_hitbox_area_entered(self, area:Area2D):
+		if(area.get_parent().get_name().contains("exp")):
+			self.exp += area.get_parent().get_meta("exp_value")
+			area.get_parent().set_meta("collected", True)
+			pass
+		pass
 
 	@private
 	def test_method(self):
