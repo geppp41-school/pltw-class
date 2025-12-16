@@ -17,7 +17,7 @@ class exp(Node2D):
 
 	def _ready(self) -> None:
 		self.target = None
-		self.position = Vector2.new3(random.randint(-300,300),random.randint(-300,300))
+		
 		self.set_meta("collected", False)
 		pass
 		# put initialization code here
