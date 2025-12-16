@@ -50,9 +50,9 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_wj65w")
 texture = ExtResource("2_mo0os")
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="exp_hitbox" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="exp_hitbox"]
 shape = SubResource("CircleShape2D_go6jy")
 
-[connection signal="area_entered" from="hitbox" to="." method="_pick_up_range_entered"]
+[connection signal="area_entered" from="exp_hitbox" to="." method="_pick_up_range_entered"]
