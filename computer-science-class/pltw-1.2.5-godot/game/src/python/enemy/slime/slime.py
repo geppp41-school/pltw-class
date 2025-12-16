@@ -1,6 +1,7 @@
 
 import random
 from py4godot.classes.Area2D import Area2D
+from py4godot.classes.ResourceLoader import ResourceLoader
 from py4godot.methods import private
 from py4godot.signals import signal, SignalArg
 from py4godot.classes import gdclass
@@ -31,12 +32,22 @@ class slime(Node2D):
 		if(self.get_parent() != None):
 			self.target = self.get_parent().get_pyscript().get_player()
 		self.position = Vector2.new3(random.randint(-300,300),random.randint(-300,300))
+		self.green_exp = ResourceLoader.instance().load("res://scene/exp/green_exp.tscn")
+		self.blue_exp = ResourceLoader.instance().load("res://scene/exp/blue_exp.tscn")
+		self.red_exp = ResourceLoader.instance().load("res://scene/exp/red_exp.tscn")
+		self.purple_exp = ResourceLoader.instance().load("res://scene/exp/purple_exp.tscn")
+		self.exp_list = [self.green_exp, self.blue_exp, self.red_exp, self.purple_exp]
+		self.exp_weights = [100, 50, 10, 1]
 		pass
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
 		if(self.health <=0):
 			print("killed a slime")
+			exp_to_spawn = random.choices(self.exp_list, self.exp_weights)[0]
+			exp_orb = exp_to_spawn.instantiate()
+			exp_orb.set_position(self.position)
+			self.get_parent().add_child(exp_orb)
 			self.queue_free()
 
 		# put dynamic code here
