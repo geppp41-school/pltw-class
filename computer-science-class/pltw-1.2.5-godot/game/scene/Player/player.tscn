@@ -185,6 +185,8 @@ health = 100
 max_health = 100
 cooldown = 2.0
 attack_cooldown = 2.0
+exp_to_next_level = 100.0
+level = 0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 _import_path = NodePath("")
@@ -260,10 +262,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -100.5
-offset_top = -30.0
-offset_right = 99.5
-offset_bottom = -10.5
+offset_left = -81.5
+offset_top = -30.5
+offset_right = -31.5
+offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_7fv2l")

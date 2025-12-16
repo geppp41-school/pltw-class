@@ -15,6 +15,7 @@ from py4godot.classes.Input import Input
 from py4godot.enums.enums import Key
 from py4godot.classes.ShaderMaterial import ShaderMaterial
 from py4godot.classes.InputEventMouseButton import InputEventMouseButton
+from py4godot.classes.Panel import Panel
 from random import random
 
 
@@ -40,6 +41,8 @@ class player(Node2D):
 		self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn")
 		self._mouse_position = Vector2.new3(0,0)
 		self.aim_wheel_shader:ShaderMaterial = self.aim_wheel.get_material()
+		self.camera = self.get_node("Camera2D")
+		self.exp_bar:Panel = self.camera.get_node("Hud").get_node("fill")
 		pass
 
 	def _process(self, delta:float) -> None:
@@ -52,6 +55,17 @@ class player(Node2D):
 		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.cooldown/self.attack_cooldown, 2))
 		
 		self.aim_wheel_shader = self.aim_wheel.get_material()
+		
+		self.exp_bar.set_size(Vector2.new3(200*(self.exp/self.exp_to_next_level), self.exp_bar.size.y))
+		
+		
+		if(self.exp_bar.size.x > 0):
+
+			new_bar_position = Vector2.new3(60+((200-self.exp_bar.size.x)/2), self.exp_bar.position.y)
+			self.exp_bar.set_position(new_bar_position)
+		
+		
+		
 		#self.aim_wheel.transform.rotated(self.aim_wheel.get_angle_to(self._mouse_position))
 		pass
 
@@ -107,6 +121,10 @@ class player(Node2D):
 			self.__moving = True
 
 		self.position += (positiopnChange.normalized()*delta) * self.speed
+
+		
+		
+		
 		return super()._physics_process(delta)
 	
 	def is_moving(self) -> bool:
