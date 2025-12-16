@@ -12,7 +12,7 @@ shader_parameter/b = 1.0
 shader_parameter/brightness = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_go6jy"]
-radius = 100.0
+radius = 33.14
 
 [node name="blue_exp" type="Node2D"]
 _import_path = NodePath("")
@@ -40,14 +40,10 @@ texture_repeat = 0
 use_parent_material = false
 position = Vector2(0, 0)
 rotation = 0.0
-scale = Vector2(1, 1)
+scale = Vector2(0.5, 0.5)
 skew = 0.0
 script = ExtResource("1_v10d2")
-test_int = 5
-test_float = 5.2
-test_bool = true
-test_vector = Vector3(1, 2, 3)
-metadata/exp_value = 5.0
+metadata/exp_value = 25.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

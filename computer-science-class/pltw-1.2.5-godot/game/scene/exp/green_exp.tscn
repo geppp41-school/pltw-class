@@ -40,10 +40,10 @@ texture_repeat = 0
 use_parent_material = false
 position = Vector2(0, 0)
 rotation = 0.0
-scale = Vector2(1, 1)
+scale = Vector2(0.5, 0.5)
 skew = 0.0
 script = ExtResource("1_quor8")
-metadata/exp_value = 1.0
+metadata/exp_value = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
