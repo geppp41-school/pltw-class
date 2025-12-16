@@ -32,8 +32,8 @@ class player(Node2D):
 	cooldown = 2.0
 	attack_cooldown = 2.0
 	exp: float = 0.0
-	exp_to_next_level: float = 100.0
-	level: int = 0
+	exp_to_next_level: float = 50.0
+	level: int = 1
 
 
 	def _ready(self) -> None:
@@ -55,7 +55,11 @@ class player(Node2D):
 		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.cooldown/self.attack_cooldown, 2))
 		
 		self.aim_wheel_shader = self.aim_wheel.get_material()
-		
+		if(self.exp >= self.exp_to_next_level):
+			self.level += 1
+			self.exp -= self.exp_to_next_level
+			self.exp_to_next_level = ((50.0/2)*pow(self.level, 2))+((25.0-(50.0/2))*self.level)
+			
 		self.exp_bar.set_size(Vector2.new3(200*(self.exp/self.exp_to_next_level), self.exp_bar.size.y))
 		
 		
@@ -63,6 +67,8 @@ class player(Node2D):
 
 			new_bar_position = Vector2.new3(60+((200-self.exp_bar.size.x)/2), self.exp_bar.position.y)
 			self.exp_bar.set_position(new_bar_position)
+
+		
 		
 		
 		
@@ -131,7 +137,7 @@ class player(Node2D):
 		return self.__moving
 	
 	def _on_player_hitbox_area_entered(self, area:Area2D):
-		if(area.get_parent().get_name().contains("exp")):
+		if(area.get_name().contains("exp")):
 			self.exp += area.get_parent().get_meta("exp_value")
 			area.get_parent().set_meta("collected", True)
 			pass
