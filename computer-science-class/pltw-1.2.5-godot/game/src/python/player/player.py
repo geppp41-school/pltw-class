@@ -32,7 +32,7 @@ class player(Node2D):
 	_moving:bool = False
 	cooldown = 2.0
 	attack_cooldown = 2.0
-	exp: float = 45.0
+	exp: float = 50.0
 	exp_to_next_level: float = 50.0
 	level: int = 1
 	luck: int = 0
