@@ -26,19 +26,22 @@ class player(Node2D):
 	speed: int = 32
 	health: int = 100
 	max_health: int = 100
-	modifiers: dict = {}
+	armor : float = 100
+	modifiers: list = []
 	input_instance: Input = Input().instance()
 	_moving:bool = False
 	cooldown = 2.0
 	attack_cooldown = 2.0
-	exp: float = 0.0
+	exp: float = 45.0
 	exp_to_next_level: float = 50.0
 	level: int = 1
+	luck: int = 0
 
 
 	def _ready(self) -> None:
 		self.aim_wheel:Sprite2D = self.get_node("aim_wheel")
 		self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn")
+		self.level_up_menu = ResourceLoader.instance().load("res://scene/player/level_up.tscn")
 		self._mouse_position = Vector2.new3(0,0)
 		self.aim_wheel_shader:ShaderMaterial = self.aim_wheel.get_material()
 		self.camera = self.get_node("Camera2D")
@@ -59,6 +62,7 @@ class player(Node2D):
 			self.level += 1
 			self.exp -= self.exp_to_next_level
 			self.exp_to_next_level = ((50.0/2)*pow(self.level, 2))+((25.0-(50.0/2))*self.level)
+			self.add_child(self.level_up_menu.instantiate())
 			
 		self.exp_bar.set_size(Vector2.new3(200*(self.exp/self.exp_to_next_level), self.exp_bar.size.y))
 		
@@ -142,6 +146,9 @@ class player(Node2D):
 			area.get_parent().set_meta("collected", True)
 			pass
 		pass
+
+	def get_luck(self):
+		return self.luck
 
 	@private
 	def test_method(self):
