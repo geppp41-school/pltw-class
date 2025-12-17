@@ -149,6 +149,9 @@ class player(Node2D):
 
 	def get_luck(self):
 		return self.luck
+	
+	def add_card(self, rarity, stats):
+		self.modifiers.append({"rarity": rarity, "stats": stats})
 
 	@private
 	def test_method(self):

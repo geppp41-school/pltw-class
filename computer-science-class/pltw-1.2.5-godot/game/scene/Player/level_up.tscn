@@ -42,58 +42,20 @@ offset_right = 640.0
 offset_bottom = 480.0
 color = Color(0.36659443, 0.36659467, 0.36659458, 0.78431374)
 
-[node name="card_1" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 213.0
-offset_top = 240.0
-offset_right = 213.0
-offset_bottom = 240.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="card_1"]
-position = Vector2(-46, 0)
+[node name="card_1" type="AnimatedSprite2D" parent="."]
+position = Vector2(167, 240)
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_q4r0h")
 animation = &"cards"
 
-[node name="card_2" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 319.5
-offset_top = 240.0
-offset_right = 319.5
-offset_bottom = 240.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="card_2"]
+[node name="card_2" type="AnimatedSprite2D" parent="."]
+position = Vector2(319.5, 240)
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_q4r0h")
 animation = &"cards"
 
-[node name="card_3" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 426.0
-offset_top = 240.0
-offset_right = 426.0
-offset_bottom = 240.0
-grow_vertical = 2
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="card_3"]
-position = Vector2(46, 0)
+[node name="card_3" type="AnimatedSprite2D" parent="."]
+position = Vector2(472, 240)
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_q4r0h")
 animation = &"cards"
