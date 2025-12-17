@@ -43,7 +43,6 @@ class slime(Node2D):
 
 	def _process(self, delta:float) -> None:
 		if(self.health <=0):
-			print("killed a slime")
 			exp_to_spawn = random.choices(self.exp_list, self.exp_weights)[0]
 			exp_orb = exp_to_spawn.instantiate()
 			exp_orb.set_position(self.position)
@@ -84,7 +83,6 @@ class slime(Node2D):
 	# Hide the method in the godot editor
 
 	def _collision(self, area2D:Area2D) -> None:
-		print(area2D.get_parent().name)
 		target:Node2D = area2D.get_parent()
 		if(target.name.contains("fireball")):
 			self.health -= target.get_meta("damage")
