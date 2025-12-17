@@ -41,7 +41,7 @@ class player(Node2D):
 	def _ready(self) -> None:
 		self.aim_wheel:Sprite2D = self.get_node("aim_wheel")
 		self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn")
-		self.level_up_menu = ResourceLoader.instance().load("res://scene/player/level_up.tscn")
+		self.level_up_menu = ResourceLoader.instance().load("res://scene/Player/level_up.tscn")
 		self._mouse_position = Vector2.new3(0,0)
 		self.aim_wheel_shader:ShaderMaterial = self.aim_wheel.get_material()
 		self.camera = self.get_node("Camera2D")
