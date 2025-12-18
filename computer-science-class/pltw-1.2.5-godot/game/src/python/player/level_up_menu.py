@@ -29,15 +29,14 @@ class level_up_menu(Node2D):
 		self.card_1 = self.get_node("card_1")
 		self.card_2 = self.get_node("card_2")
 		self.card_3 = self.get_node("card_3")
-		#self.card_object = 
-		self.load_level_cards()
+		self.card_object = self.load_level_cards()
 		parent:Node2D = self.get_parent()
 		print(parent.call("get_luck"))
 		Engine.instance().set_time_scale(0)
 		
-		#self.card_1.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
-		#self.card_2.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
-		#self.card_3.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
+		self.card_1.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
+		self.card_2.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
+		self.card_3.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
 		pass
 		# put initialization code here
 
@@ -62,8 +61,10 @@ class level_up_menu(Node2D):
 		self.card_rarities = list(jsonObject.keys())
 		for i in range(len(self.card_rarities)):
 			self.card_weights.append(jsonObject.get(self.card_rarities[i]).get("weight")) # type: ignore
-		print(self.card_weights)
-		print(jsonObject.get("common").get("weight")) # type: ignore
+
+		return jsonObject
+		# print(self.card_weights)
+		# print(jsonObject.get("common").get("weight")) # type: ignore
 		
 		pass
 	# Hide the method in the godot editor
