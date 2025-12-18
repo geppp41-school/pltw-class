@@ -42,7 +42,7 @@
         }
     },
     "rare":{
-        "weight": 175,
+        "weight": 75,
         "stats": {
             "attack_cd": {
                 "min": [0.05],
@@ -67,7 +67,7 @@
         }
     },
     "epic":{
-        "weight": 175,
+        "weight": 35,
         "stats": {
             "attack_cd": {
                 "min": [0.08],
@@ -96,7 +96,7 @@
         }
     },
     "legendary":{
-        "weight": 175,
+        "weight": 20,
         "stats": {
             "attack_cd": {
                 "min": [0.15],
@@ -133,7 +133,7 @@
         }
     },
     "mythic":{
-        "weight": 175,
+        "weight": 10,
         "stats": {
             "attack_cd": {
                 "min": [0.15],
@@ -170,7 +170,7 @@
         }
     },
     "ultimate":{
-        "weight": 175,
+        "weight": 5,
         "stats": {
             "attack_cd": {
                 "min": [0.25],
@@ -207,7 +207,7 @@
         }
     },
     "godly":{
-        "weight": 175,
+        "weight": 1,
         "stats": {
             "attack_cd": {
                 "min": [0.4],
