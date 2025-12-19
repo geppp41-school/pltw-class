@@ -84,7 +84,7 @@ class slime(Node2D):
 
 	def _collision(self, area2D:Area2D) -> None:
 		target:Node2D = area2D.get_parent()
-		if(target.name.contains("fireball")):
+		if(area2D.name.contains("fireball")):
 			self.health -= target.get_meta("damage")
 			target.queue_free()
 		pass

@@ -46,7 +46,7 @@ class player(Node2D):
 	selecting_card = False
 	collection_range: float = 50
 	collection_range_modifier: float = 1.0
-	multy_shot: int = 3
+	multy_shot: int = 0
 	remaining_projectiles:int = 1
 
 
@@ -65,9 +65,9 @@ class player(Node2D):
 		angle = self.get_angle_to(relitive_mouse_position)
 		self.aim_wheel.set_rotation(angle+(math.pi/2))
 		self.cooldown += delta
-		self.cooldown = min(self.cooldown, self.attack_cooldown)
+		self.cooldown = min(self.cooldown, self.attack_cooldown*self.cooldown_modifier)
 		
-		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.cooldown/self.attack_cooldown, 2))
+		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.cooldown/self.attack_cooldown*self.cooldown_modifier, 2))
 		
 		self.aim_wheel_shader = self.aim_wheel.get_material()
 		if(self.exp >= self.exp_to_next_level and not self.selecting_card):
@@ -86,7 +86,7 @@ class player(Node2D):
 			new_bar_position = Vector2.new3(60+((200-self.exp_bar.size.x)/2), self.exp_bar.position.y)
 			self.exp_bar.set_position(new_bar_position)
 
-		if(self.cooldown == self.attack_cooldown*self.cooldown_modifier):
+		if(self.cooldown >= self.attack_cooldown*self.cooldown_modifier and self.remaining_projectiles <= 0):
 			self.remaining_projectiles = 1+self.multy_shot
 		
 		
@@ -116,7 +116,8 @@ class player(Node2D):
 				projectile.set_meta("speed", 100)
 				projectile.set_meta("direction",self.aim_wheel.get_rotation()-(math.pi/2))
 				projectile.set_meta("damage", self.damage*self.damage_modifier)
-				self.remaining_projectiles -= 1
+				self.remaining_projectiles = self.remaining_projectiles -1
+				print(self.remaining_projectiles)
 				if(self.remaining_projectiles == 0):
 					self.cooldown = 0.0
 			pass

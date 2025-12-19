@@ -39,7 +39,6 @@ _data = {
 }
 
 [node name="fireball" type="Node2D"]
-_import_path = NodePath("")
 unique_name_in_owner = false
 process_mode = 0
 process_priority = 0
@@ -76,10 +75,9 @@ noise_offset = Vector3(0, 0, 0)
 material = SubResource("ShaderMaterial_fkmv1")
 texture = ExtResource("2_g38xx")
 
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
+[node name="fireball" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fireball"]
 shape = SubResource("CircleShape2D_g54f7")
 
 [node name="PanelContainer" type="Panel" parent="."]
