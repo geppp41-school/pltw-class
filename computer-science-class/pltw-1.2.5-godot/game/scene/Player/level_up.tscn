@@ -1,7 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://cr0nv3004k231"]
+[gd_scene load_steps=9 format=3 uid="uid://cr0nv3004k231"]
 
 [ext_resource type="Script" path="res://src/python/player/level_up_menu.py" id="1_2jyi5"]
 [ext_resource type="SpriteFrames" uid="uid://riu8ea00mmwf" path="res://assets/level_cards/cards.tres" id="1_q4r0h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jyi5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_urh3c"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfb7e"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vrma8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmmjx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayfsh"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="LevelUp" type="Node2D"]
 _import_path = NodePath("")
@@ -43,6 +61,7 @@ position = Vector2(167, 240)
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_q4r0h")
 animation = &"cards"
+metadata/stats = PackedStringArray()
 
 [node name="name" type="RichTextLabel" parent="card_1"]
 offset_left = -7.75
@@ -96,11 +115,20 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="card_1" type="Button" parent="card_1"]
+offset_left = -11.416668
+offset_top = -16.333334
+offset_right = 11.583332
+offset_bottom = 16.333334
+theme_override_styles/normal = SubResource("StyleBoxFlat_2jyi5")
+theme_override_styles/focus = SubResource("StyleBoxFlat_urh3c")
+
 [node name="card_2" type="AnimatedSprite2D" parent="."]
 position = Vector2(319.5, 240)
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_q4r0h")
 animation = &"cards"
+metadata/stats = PackedStringArray()
 
 [node name="name" type="RichTextLabel" parent="card_2"]
 offset_left = -7.75
@@ -154,11 +182,20 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="card_2" type="Button" parent="card_2"]
+offset_left = -11.416668
+offset_top = -16.333334
+offset_right = 11.583332
+offset_bottom = 16.333334
+theme_override_styles/normal = SubResource("StyleBoxFlat_sfb7e")
+theme_override_styles/focus = SubResource("StyleBoxFlat_vrma8")
+
 [node name="card_3" type="AnimatedSprite2D" parent="."]
 position = Vector2(472, 240)
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_q4r0h")
 animation = &"cards"
+metadata/stats = PackedStringArray()
 
 [node name="name" type="RichTextLabel" parent="card_3"]
 offset_left = -7.75
@@ -211,3 +248,15 @@ text = "increase pickup range by x0.xx"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="card_3" type="Button" parent="card_3"]
+offset_left = -11.416668
+offset_top = -16.333334
+offset_right = 11.583332
+offset_bottom = 16.333334
+theme_override_styles/normal = SubResource("StyleBoxFlat_nmmjx")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ayfsh")
+
+[connection signal="pressed" from="card_1/card_1" to="." method="_on_card_1_pressed"]
+[connection signal="pressed" from="card_2/card_2" to="." method="_on_card_2_pressed"]
+[connection signal="pressed" from="card_3/card_3" to="." method="_on_card_3_pressed"]

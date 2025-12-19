@@ -1,6 +1,7 @@
 import math
 from py4godot.classes.Area2D import Area2D
 from py4godot.classes.CanvasItemMaterial import CanvasItemMaterial
+from py4godot.classes.Engine import Engine
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.InputEventMouseMotion import InputEventMouseMotion
 from py4godot.classes.Material import Material
@@ -32,10 +33,11 @@ class player(Node2D):
 	_moving:bool = False
 	cooldown = 2.0
 	attack_cooldown = 2.0
-	exp: float = 50.0
+	exp: float = 200
 	exp_to_next_level: float = 50.0
 	level: int = 1
 	luck: int = 0
+	selecting_card = False
 
 
 	def _ready(self) -> None:
@@ -58,7 +60,8 @@ class player(Node2D):
 		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.cooldown/self.attack_cooldown, 2))
 		
 		self.aim_wheel_shader = self.aim_wheel.get_material()
-		if(self.exp >= self.exp_to_next_level):
+		if(self.exp >= self.exp_to_next_level and not self.selecting_card):
+			self.selecting_card = True
 			self.level += 1
 			self.exp -= self.exp_to_next_level
 			self.exp_to_next_level = ((50.0/2)*pow(self.level, 2))+((25.0-(50.0/2))*self.level)
@@ -152,6 +155,10 @@ class player(Node2D):
 	
 	def add_card(self, rarity, stats):
 		self.modifiers.append({"rarity": rarity, "stats": stats})
+		Engine.instance().set_time_scale(1)
+		self.get_children().pop_back().queue_free()
+		self.selecting_card = False
+
 
 	@private
 	def test_method(self):

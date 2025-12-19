@@ -5,7 +5,7 @@ from py4godot.classes.AnimatedSprite2D import AnimatedSprite2D
 from py4godot.methods import private
 from py4godot.signals import signal, SignalArg
 from py4godot.classes import gdclass
-from py4godot.classes.core import Vector3
+from py4godot.classes.core import Array, PackedStringArray, Vector3
 from py4godot.classes.Node2D import Node2D
 from py4godot.classes.Engine import Engine
 from py4godot.classes.FileAccess import FileAccess
@@ -16,25 +16,24 @@ from py4godot.classes.FileAccess import ModeFlags
 class level_up_menu(Node2D):
 
 	# define properties like this
-	card_1: AnimatedSprite2D
-	card_2: AnimatedSprite2D
-	card_3: AnimatedSprite2D
-	card_weights = []
-	card_rarities = []#might also add primed variants
+	#might also add primed variants
 
 	# define signals like this
 	test_signal = signal([SignalArg("test_arg", int)])
 
 
 	def _ready(self) -> None:
-		self.card_1 = self.get_node("card_1")
-		self.card_2 = self.get_node("card_2")
-		self.card_3 = self.get_node("card_3")
+		self.card_1: AnimatedSprite2D = self.get_node("card_1")
+		self.card_2: AnimatedSprite2D = self.get_node("card_2")
+		self.card_3: AnimatedSprite2D = self.get_node("card_3")
+		self.card_weights = []
+		self.card_rarities = []
 		self.card_object = self.load_level_cards()
-		parent:Node2D = self.get_parent()
-		print(parent.call("get_luck"))
+		self.parent:Node2D = self.get_parent()
+
 		Engine.instance().set_time_scale(0)
-		
+		print(self.card_weights)
+		print(self.card_rarities)
 		self.card_1.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
 		self.card_2.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
 		self.card_3.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
@@ -42,7 +41,9 @@ class level_up_menu(Node2D):
 		self.card_1.get_node("name").set_text(self.card_rarities[self.card_1.get_frame()])
 		self.card_2.get_node("name").set_text(self.card_rarities[self.card_2.get_frame()])
 		self.card_3.get_node("name").set_text(self.card_rarities[self.card_3.get_frame()])
+
 		
+
 		self.set_card_text(self.card_1)
 		self.set_card_text(self.card_2)
 		self.set_card_text(self.card_3)
@@ -71,7 +72,7 @@ class level_up_menu(Node2D):
 		self.card_rarities = list(jsonObject.keys())
 		for i in range(len(self.card_rarities)):
 			self.card_weights.append(jsonObject.get(self.card_rarities[i]).get("weight")) # type: ignore
-
+		file.close()
 		return jsonObject
 		# print(self.card_weights)
 		# print(jsonObject.get("common").get("weight")) # type: ignore
@@ -130,7 +131,9 @@ class level_up_menu(Node2D):
 				card.get_node("modifier_2").text = text
 			elif(i == 3):
 				card.get_node("modifier_3").text = text
-
+			meta = card.get_meta("stats")
+			meta.append("{\"stat\": " + stat+ ", \"change\":" +  str(change) + "}")
+			card.set_meta("stats", meta)
 		
 		pass
 
@@ -151,6 +154,20 @@ class level_up_menu(Node2D):
 			return "Pickup Range"
 		elif(var == "exp_gain"):
 			return "Exp Gain"
+		
+	def _on_card_1_pressed(self):
+		self.parent.call("add_card", self.card_rarities[self.card_1.get_frame()], self.card_1.get_meta("stats"))
+		pass
+
+	def _on_card_2_pressed(self):
+		self.parent.call("add_card", self.card_rarities[self.card_2.get_frame()], self.card_2.get_meta("stats"))
+		Engine.instance().set_time_scale(1)
+		pass
+
+	def _on_card_3_pressed(self):
+		self.parent.call("add_card", self.card_rarities[self.card_3.get_frame()], self.card_3.get_meta("stats"))
+		Engine.instance().set_time_scale(1)
+		pass
 	# Hide the method in the godot editor
 	@private
 	def test_method(self):
