@@ -1,3 +1,4 @@
+import json
 import math
 from py4godot.classes.Area2D import Area2D
 from py4godot.classes.CanvasItemMaterial import CanvasItemMaterial
@@ -10,7 +11,7 @@ from py4godot.functions import print_verbose
 from py4godot.methods import private
 from py4godot.classes import gdclass
 from py4godot.classes.Sprite2D import Sprite2D
-from py4godot.classes.core import Vector2
+from py4godot.classes.core import PackedStringArray, Vector2
 from py4godot.classes.Node2D import Node2D
 from py4godot.classes.Input import Input
 from py4godot.enums.enums import Key
@@ -35,7 +36,7 @@ class player(Node2D):
 	cooldown:float = 2.0
 	attack_cooldown:float = 2.0
 	cooldown_modifier:float = 1.0
-	exp: float = 0
+	exp: float = 100.0
 	exp_modifier:float = 1.0
 	exp_to_next_level: float = 100.0
 	base_damage: float = 50.0
@@ -61,6 +62,7 @@ class player(Node2D):
 		pass
 
 	def _process(self, delta:float) -> None:
+		
 		relitive_mouse_position = self._mouse_position + self.position
 		angle = self.get_angle_to(relitive_mouse_position)
 		self.aim_wheel.set_rotation(angle+(math.pi/2))
@@ -98,12 +100,12 @@ class player(Node2D):
 
 	
 	def _input(self, event: InputEvent) -> None:
-		if(event.get_type() == InputEventMouseMotion.get_type()):
+		if(event.get_type() == InputEventMouseMotion.get_type() and not self.selecting_card):
 			eventMouseMotion:InputEventMouseMotion = InputEventMouseMotion.cast(event)
 			test = eventMouseMotion.position-Vector2.new3(320,240)
 			#print(math.atan(test.y/test.x))
 			self._mouse_position = eventMouseMotion.position-Vector2.new3(320,240)
-		elif(event.get_type() == InputEventMouseButton.get_type()):
+		elif(event.get_type() == InputEventMouseButton.get_type() and not self.selecting_card):
 			eventMouseButton:InputEventMouseButton = InputEventMouseButton.cast(event)
 			#print(f"{eventMouseButton.as_text()}: {eventMouseButton.is_pressed()}, {eventMouseButton.get_button_index()}")
 			#button indexes |  1: left mouse button | 2: right mouse button | 3: scroll wheel press | 4-5 scrolling up and down
@@ -173,11 +175,41 @@ class player(Node2D):
 		self.modifiers.append({"rarity": rarity, "stats": stats})
 		Engine.instance().set_time_scale(1)
 		self.get_children().pop_back().queue_free()
+		self.process_buffs()
 		self.selecting_card = False
+		
 
 
 	def process_buffs(self):
-		print(self.modifiers)
+		self.exp_modifier = 1.0
+		self.damage_modifier = 1.0
+		self.damage = 50.0
+		self.cooldown_modifier = 1.0
+		self.health_modifier = 1.0
+		self.collection_range_modifier = 1.0
+		self.multy_shot= 0
+		
+		for i in range(len(self.modifiers)):
+			object:dict[str, PackedStringArray | str] = self.modifiers[i]
+			stats:PackedStringArray = object.get("stats") # type: ignore
+			for x in range(stats.size()):
+				stat_as_dict = json.loads(stats.get(x))
+				if(stat_as_dict.get("stat") == "attack_cd"):
+					self.cooldown_modifier = self.cooldown_modifier - float(stat_as_dict.get("change"))
+					self.cooldown_modifier = max(self.cooldown_modifier, 0.25)
+				elif(stat_as_dict.get("stat") == "damage"):
+					if(float(stat_as_dict.get("change")) > 1):
+						self.damage = self.damage + float(stat_as_dict.get("change"))
+					else:
+						self.damage_modifier = self.damage_modifier + float(stat_as_dict.get("change"))
+				elif(stat_as_dict.get("stat") == "hp"):
+					self.health_modifier += float(stat_as_dict.get("change"))
+				elif(stat_as_dict.get("stat") == "multy_shot"):
+					self.multy_shot = self.multy_shot + int(stat_as_dict.get("change"))
+				elif(stat_as_dict.get("stat") == "collection_range"):	
+					self.collection_range_modifier = self.collection_range_modifier + float(stat_as_dict.get("change"))
+				elif(stat_as_dict.get("stat") == "exp_gain"):
+					self.exp_modifier = self.exp_modifier + float(stat_as_dict.get("change"))
 
 	@private
 	def test_method(self):
