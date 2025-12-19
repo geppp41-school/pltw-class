@@ -43,7 +43,7 @@ rotation = 0.0
 scale = Vector2(0.5, 0.5)
 skew = 0.0
 script = ExtResource("1_ucwdq")
-metadata/exp_value = 1000.0
+metadata/exp_value = 5000.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

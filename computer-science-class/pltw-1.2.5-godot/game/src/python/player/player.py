@@ -26,18 +26,28 @@ class player(Node2D):
 	# define properties like this
 	speed: int = 32
 	health: int = 100
+	health_modifier: float = 1.0
 	max_health: int = 100
 	armor : float = 100
 	modifiers: list = []
 	input_instance: Input = Input().instance()
 	_moving:bool = False
-	cooldown = 2.0
-	attack_cooldown = 2.0
-	exp: float = 200
-	exp_to_next_level: float = 50.0
+	cooldown:float = 2.0
+	attack_cooldown:float = 2.0
+	cooldown_modifier:float = 1.0
+	exp: float = 0
+	exp_modifier:float = 1.0
+	exp_to_next_level: float = 100.0
+	base_damage: float = 50.0
+	damage: float = 50.0
+	damage_modifier:float = 1.0
 	level: int = 1
 	luck: int = 0
 	selecting_card = False
+	collection_range: float = 50
+	collection_range_modifier: float = 1.0
+	multy_shot: int = 3
+	remaining_projectiles:int = 1
 
 
 	def _ready(self) -> None:
@@ -64,7 +74,8 @@ class player(Node2D):
 			self.selecting_card = True
 			self.level += 1
 			self.exp -= self.exp_to_next_level
-			self.exp_to_next_level = ((50.0/2)*pow(self.level, 2))+((25.0-(50.0/2))*self.level)
+			#self.exp_to_next_level = ((25/2)*pow(self.level, 2))+((10-(25/2))*self.level)
+			self.exp_to_next_level = 100.0*(pow(1.25, self.level-1))
 			self.add_child(self.level_up_menu.instantiate())
 			
 		self.exp_bar.set_size(Vector2.new3(200*(self.exp/self.exp_to_next_level), self.exp_bar.size.y))
@@ -75,6 +86,8 @@ class player(Node2D):
 			new_bar_position = Vector2.new3(60+((200-self.exp_bar.size.x)/2), self.exp_bar.position.y)
 			self.exp_bar.set_position(new_bar_position)
 
+		if(self.cooldown == self.attack_cooldown*self.cooldown_modifier):
+			self.remaining_projectiles = 1+self.multy_shot
 		
 		
 		
@@ -94,7 +107,7 @@ class player(Node2D):
 			eventMouseButton:InputEventMouseButton = InputEventMouseButton.cast(event)
 			#print(f"{eventMouseButton.as_text()}: {eventMouseButton.is_pressed()}, {eventMouseButton.get_button_index()}")
 			#button indexes |  1: left mouse button | 2: right mouse button | 3: scroll wheel press | 4-5 scrolling up and down
-			if(eventMouseButton.is_pressed() and eventMouseButton.get_button_index() == 1 and self.cooldown >= self.attack_cooldown):
+			if(eventMouseButton.is_pressed() and eventMouseButton.get_button_index() == 1 and self.cooldown >= self.attack_cooldown*self.cooldown_modifier):
 				projectile:Node2D = self.fireball.instantiate()
 				if(self.get_parent() != None):
 					self.get_parent().add_child(projectile)
@@ -102,8 +115,10 @@ class player(Node2D):
 					self.add_child(projectile)
 				projectile.set_meta("speed", 100)
 				projectile.set_meta("direction",self.aim_wheel.get_rotation()-(math.pi/2))
-				
-				self.cooldown = 0.0
+				projectile.set_meta("damage", self.damage*self.damage_modifier)
+				self.remaining_projectiles -= 1
+				if(self.remaining_projectiles == 0):
+					self.cooldown = 0.0
 			pass
 			#self.aim_wheel_shader.set_shader_parameter("fill_percent", random())
 		
@@ -145,7 +160,7 @@ class player(Node2D):
 	
 	def _on_player_hitbox_area_entered(self, area:Area2D):
 		if(area.get_name().contains("exp")):
-			self.exp += area.get_parent().get_meta("exp_value")
+			self.exp += area.get_parent().get_meta("exp_value")*self.exp_modifier
 			area.get_parent().set_meta("collected", True)
 			pass
 		pass
@@ -159,6 +174,9 @@ class player(Node2D):
 		self.get_children().pop_back().queue_free()
 		self.selecting_card = False
 
+
+	def process_buffs(self):
+		print(self.modifiers)
 
 	@private
 	def test_method(self):
