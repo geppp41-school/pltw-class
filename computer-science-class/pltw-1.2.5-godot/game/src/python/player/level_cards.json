@@ -1,6 +1,6 @@
 {
     "common":{
-        "weight": 175,
+        "weight": 500,
         "stats": {
             "attack_cd": {
                 "min": [0.01],
@@ -21,7 +21,7 @@
         }
     },
     "uncommon":{
-        "weight": 100,
+        "weight": 350,
         "stats": {
             "attack_cd": {
                 "min": [0.03],
@@ -42,7 +42,7 @@
         }
     },
     "rare":{
-        "weight": 75,
+        "weight": 250,
         "stats": {
             "attack_cd": {
                 "min": [0.05],
@@ -67,7 +67,7 @@
         }
     },
     "epic":{
-        "weight": 35,
+        "weight": 75,
         "stats": {
             "attack_cd": {
                 "min": [0.08],
@@ -96,7 +96,7 @@
         }
     },
     "legendary":{
-        "weight": 20,
+        "weight": 30,
         "stats": {
             "attack_cd": {
                 "min": [0.15],
@@ -133,7 +133,7 @@
         }
     },
     "mythic":{
-        "weight": 10,
+        "weight": 15,
         "stats": {
             "attack_cd": {
                 "min": [0.15],
@@ -170,7 +170,7 @@
         }
     },
     "ultimate":{
-        "weight": 5,
+        "weight": 10,
         "stats": {
             "attack_cd": {
                 "min": [0.25],
@@ -220,9 +220,6 @@
             "attack_size": {
                 "min": [0.8],
                 "max": [0.8]
-            },
-            "auto_target": {
-                "yes": "yes"
             },
             "multi_shot": {
                 "min": [8],
