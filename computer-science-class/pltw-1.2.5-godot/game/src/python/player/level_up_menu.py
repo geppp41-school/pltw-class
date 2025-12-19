@@ -1,5 +1,6 @@
 import json
-from random import choice, choices
+from random import choice, choices, randint, uniform
+from typing import Any
 from py4godot.classes.AnimatedSprite2D import AnimatedSprite2D
 from py4godot.methods import private
 from py4godot.signals import signal, SignalArg
@@ -37,6 +38,15 @@ class level_up_menu(Node2D):
 		self.card_1.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
 		self.card_2.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
 		self.card_3.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
+		
+		self.card_1.get_node("name").set_text(self.card_rarities[self.card_1.get_frame()])
+		self.card_2.get_node("name").set_text(self.card_rarities[self.card_2.get_frame()])
+		self.card_3.get_node("name").set_text(self.card_rarities[self.card_3.get_frame()])
+		
+		self.set_card_text(self.card_1)
+		self.set_card_text(self.card_2)
+		self.set_card_text(self.card_3)
+
 		pass
 		# put initialization code here
 
@@ -65,8 +75,82 @@ class level_up_menu(Node2D):
 		return jsonObject
 		# print(self.card_weights)
 		# print(jsonObject.get("common").get("weight")) # type: ignore
+		pass
+	
+	def set_card_text(self, card:AnimatedSprite2D):
+		count = 0
+		if(card.get_frame() < 2):
+			count = 1
+		elif(card.get_frame() == 2):
+			count = randint(1, 2)
+		elif(card.get_frame() < 4):
+			count = 2
+		elif(card.get_frame() < 7):
+			count = randint(2,3)
+		else:
+			count = 3
+
+		if(count == 1):
+			card.get_node("modifier_2").visible = False
+			card.get_node("modifier_3").visible = False
+		elif(count == 2):
+			card.get_node("modifier_3").visible = False
+
+		for i in range(count):
+			card_rarity:dict[Any, Any] | Any = self.card_object.get(self.card_rarities[card.get_frame()])
+			possible_stats = card_rarity.get("stats")
+			stat = choice(list(possible_stats.keys()))# type: ignore
+			min = possible_stats.get(stat).get("min")
+			max = possible_stats.get(stat).get("max")
+			change = 0
+
+			if(len(min) == 1):
+				print("3.1.1")
+				print(min[0])
+				print(max[0])
+				
+				change = round(uniform(min[0], max[0]), 2)
+				print("3.1.2")
+				text = f"+{change*100}% {self.get_stat_name_from_var(stat)}"
+			else:
+				mod = randint(0, 1)
+				print("3.2.1")
+				if(mod == 0):
+					print("3.2.2")
+					change = round(uniform(min[0], max[0]), 2)
+					text = f"+{change} {self.get_stat_name_from_var(stat)}"
+				else:
+					print("3.2.3")
+					change = round(uniform(min[1], max[1]), 2)
+					text = f"+{change*100}% {self.get_stat_name_from_var(stat)}"
+
+			if(i == 0):
+				card.get_node("modifier_1").text = text
+			elif(i == 1):
+				card.get_node("modifier_2").text = text
+			elif(i == 3):
+				card.get_node("modifier_3").text = text
+
 		
 		pass
+
+	def get_stat_name_from_var(self, var):
+		if(var == "attack_cd"):
+			return "Attack CD"
+		elif(var == "damage"):
+			return "Damage"
+		elif(var == "attack_size"):
+			return "Attack Size"
+		elif(var == "multi_shot"):
+			return "Multi Shot"
+		elif(var == "dodge"):
+			return "Dodge"
+		elif(var == "hp"):
+			return "HP"
+		elif(var == "collection_range"):
+			return "Pickup Range"
+		elif(var == "exp_gain"):
+			return "Exp Gain"
 	# Hide the method in the godot editor
 	@private
 	def test_method(self):
