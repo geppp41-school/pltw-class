@@ -24,12 +24,14 @@ class fireball(Node2D):
 		self.set_meta("direction", 0.0)
 		self.set_meta("speed", 16.0)
 		self.set_meta("damage", 50)
+		self.set_meta("size", 1.0)
 		if(self.get_parent().get_node("player") != None):
 			self.position = self.get_parent().get_node("player").position
 		pass
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
+		self.scale = Vector2.new3(0.5, 0.5) * self.get_meta("size")
 		self.time_passed += delta
 		self.noise_offset += Vector3.new3(-16*delta, 16*delta, 0)
 		self.noise_object.texture.noise.offset = self.noise_offset

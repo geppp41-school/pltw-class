@@ -49,6 +49,7 @@ class player(Node2D):
 	collection_range_modifier: float = 1.0
 	multy_shot: int = 0
 	remaining_projectiles:int = 1
+	attack_size = 1.0
 
 
 	def _ready(self) -> None:
@@ -118,6 +119,7 @@ class player(Node2D):
 				projectile.set_meta("speed", 100)
 				projectile.set_meta("direction",self.aim_wheel.get_rotation()-(math.pi/2))
 				projectile.set_meta("damage", self.damage*self.damage_modifier)
+				projectile.set_meta("size", self.attack_size)
 				self.remaining_projectiles = self.remaining_projectiles -1
 				print(self.remaining_projectiles)
 				if(self.remaining_projectiles == 0):
@@ -188,6 +190,7 @@ class player(Node2D):
 		self.health_modifier = 1.0
 		self.collection_range_modifier = 1.0
 		self.multy_shot= 0
+		self.attack_size = 1.0
 		
 		for i in range(len(self.modifiers)):
 			object:dict[str, PackedStringArray | str] = self.modifiers[i]
@@ -212,6 +215,9 @@ class player(Node2D):
 					self.collection_range_modifier = self.collection_range_modifier + float(stat_as_dict.get("change"))
 				elif(stat_as_dict.get("stat") == "exp_gain"):
 					self.exp_modifier = self.exp_modifier + float(stat_as_dict.get("change"))
+				elif(stat_as_dict.get("stat") == "attack_size"):
+					self.attack_size = self.attack_size + float(stat_as_dict.get("change"))
+
 
 	@private
 	def test_method(self):
