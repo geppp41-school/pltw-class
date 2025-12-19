@@ -15,6 +15,7 @@ class test(Node2D):
 	test_bool: bool = True
 	test_vector: Vector3 = Vector3.new3(1,2,3)
 	player = None
+	time_passed = 0.0
 	
 
 	# define signals like this
@@ -36,6 +37,10 @@ class test(Node2D):
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
+		self.time_passed += delta
+		if(self.time_passed >= 2.0):
+			self.add_child(self.slimeScene.instantiate())
+			self.time_passed = 0.0
 		pass
 		# put dynamic code here
 	def get_player(self):
