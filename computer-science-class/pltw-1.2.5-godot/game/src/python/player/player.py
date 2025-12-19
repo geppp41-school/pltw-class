@@ -69,7 +69,7 @@ class player(Node2D):
 		self.cooldown += delta
 		self.cooldown = min(self.cooldown, self.attack_cooldown*self.cooldown_modifier)
 		
-		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.cooldown/self.attack_cooldown*self.cooldown_modifier, 2))
+		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.cooldown/(self.attack_cooldown*self.cooldown_modifier), 2))
 		
 		self.aim_wheel_shader = self.aim_wheel.get_material()
 		if(self.exp >= self.exp_to_next_level and not self.selecting_card):
@@ -193,6 +193,8 @@ class player(Node2D):
 			object:dict[str, PackedStringArray | str] = self.modifiers[i]
 			stats:PackedStringArray = object.get("stats") # type: ignore
 			for x in range(stats.size()):
+				print(x)
+				print(stats.get(x))
 				stat_as_dict = json.loads(stats.get(x))
 				if(stat_as_dict.get("stat") == "attack_cd"):
 					self.cooldown_modifier = self.cooldown_modifier - float(stat_as_dict.get("change"))

@@ -132,7 +132,7 @@ class level_up_menu(Node2D):
 			elif(i == 3):
 				card.get_node("modifier_3").text = text
 			meta = card.get_meta("stats")
-			meta.append("{\"stat\": " + stat+ ", \"change\":" +  str(change) + "}")
+			meta.append("{\"stat\": \"" + stat+ "\", \"change\":" +  str(change) + "}")
 			card.set_meta("stats", meta)
 		
 		pass
