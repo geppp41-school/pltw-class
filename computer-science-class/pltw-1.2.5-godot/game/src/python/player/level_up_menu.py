@@ -106,22 +106,20 @@ class level_up_menu(Node2D):
 			change = 0
 
 			if(len(min) == 1):
-				print("3.1.1")
-				print(min[0])
-				print(max[0])
+				
 				
 				change = round(uniform(min[0], max[0]), 2)
-				print("3.1.2")
+				
 				text = f"+{change*100}% {self.get_stat_name_from_var(stat)}"
 			else:
 				mod = randint(0, 1)
-				print("3.2.1")
+				
 				if(mod == 0):
-					print("3.2.2")
+					
 					change = round(uniform(min[0], max[0]), 2)
 					text = f"+{change} {self.get_stat_name_from_var(stat)}"
 				else:
-					print("3.2.3")
+					
 					change = round(uniform(min[1], max[1]), 2)
 					text = f"+{change*100}% {self.get_stat_name_from_var(stat)}"
 

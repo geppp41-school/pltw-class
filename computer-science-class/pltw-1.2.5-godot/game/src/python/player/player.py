@@ -36,7 +36,7 @@ class player(Node2D):
 	cooldown:float = 2.0
 	attack_cooldown:float = 2.0
 	cooldown_modifier:float = 1.0
-	exp: float = 100.0
+	exp: float = 5000000.0
 	exp_modifier:float = 1.0
 	exp_to_next_level: float = 100.0
 	base_damage: float = 50.0
@@ -46,7 +46,7 @@ class player(Node2D):
 	luck: int = 0
 	selecting_card = False
 	collection_range: float = 50
-	collection_range_modifier: float = 1.0
+	collection_range_modifier: float = 1.1
 	multy_shot: int = 0
 	remaining_projectiles:int = 1
 	attack_size = 1.0
@@ -69,6 +69,8 @@ class player(Node2D):
 		self.aim_wheel.set_rotation(angle+(math.pi/2))
 		self.cooldown += delta
 		self.cooldown = min(self.cooldown, self.attack_cooldown*self.cooldown_modifier)
+
+		self.get_node("pickup_range").get_node("CollisionShape2D").shape.set_radius(self.collection_range*self.collection_range_modifier)
 		
 		self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.cooldown/(self.attack_cooldown*self.cooldown_modifier), 2))
 		
@@ -120,8 +122,9 @@ class player(Node2D):
 				projectile.set_meta("direction",self.aim_wheel.get_rotation()-(math.pi/2))
 				projectile.set_meta("damage", self.damage*self.damage_modifier)
 				projectile.set_meta("size", self.attack_size)
+				print(projectile.get_meta("size"))
 				self.remaining_projectiles = self.remaining_projectiles -1
-				print(self.remaining_projectiles)
+				
 				if(self.remaining_projectiles == 0):
 					self.cooldown = 0.0
 			pass
@@ -178,6 +181,7 @@ class player(Node2D):
 		Engine.instance().set_time_scale(1)
 		self.get_children().pop_back().queue_free()
 		self.process_buffs()
+		print("selected buff")
 		self.selecting_card = False
 		
 
@@ -211,12 +215,15 @@ class player(Node2D):
 					self.health_modifier += float(stat_as_dict.get("change"))
 				elif(stat_as_dict.get("stat") == "multy_shot"):
 					self.multy_shot = self.multy_shot + int(stat_as_dict.get("change"))
+					print(stat_as_dict.get("change"))
 				elif(stat_as_dict.get("stat") == "collection_range"):	
 					self.collection_range_modifier = self.collection_range_modifier + float(stat_as_dict.get("change"))
 				elif(stat_as_dict.get("stat") == "exp_gain"):
 					self.exp_modifier = self.exp_modifier + float(stat_as_dict.get("change"))
 				elif(stat_as_dict.get("stat") == "attack_size"):
 					self.attack_size = self.attack_size + float(stat_as_dict.get("change"))
+					print(self.attack_size)
+			print(f"collection_range: {self.collection_range_modifier}")
 
 
 	@private
