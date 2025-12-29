@@ -31,7 +31,7 @@ class fireball(Node2D):
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
-		self.scale = Vector2.new3(0.5, 0.5) * self.get_meta("size")
+		self.scale = Vector2.new3(0.5 * self.get_meta("size"), 0.5 * self.get_meta("size"))
 		self.time_passed += delta
 		self.noise_offset += Vector3.new3(-16*delta, 16*delta, 0)
 		self.noise_object.texture.noise.offset = self.noise_offset
