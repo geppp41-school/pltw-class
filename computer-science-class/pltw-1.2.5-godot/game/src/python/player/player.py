@@ -1,6 +1,10 @@
+from tkinter import Y
 from py4godot import gdclass
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.Node2D import Node2D
+from py4godot.classes.Input import Input
+from py4godot.classes.core import Vector2
+from py4godot.enums.enums import Key
 
 @gdclass
 class player(Node2D):
@@ -38,6 +42,7 @@ class player(Node2D):
     
     # other
     __cards: list = []
+    __input_instance: Input = Input().instance()
 
     def _ready(self) -> None:
         pass
@@ -46,9 +51,35 @@ class player(Node2D):
         return super()._process(delta)
     
     def _physics_process(self, delta: float) -> None:
+        # movement handeling 
+        position_change = Vector2.new3(0, 0)
+
+        if(self.__input_instance.is_key_pressed(Key.KEY_W)):
+            position_change.y -= 1
+
+        if(self.__input_instance.is_key_pressed(Key.KEY_S)):
+            position_change.y += 1
+
+        if(self.__input_instance.is_key_pressed(Key.KEY_A)):
+            position_change.x -= 1
+            #flips the direction that the player is facing
+            self.get_children()[0].flip_h = True
+
+        if(self.__input_instance.is_key_pressed(Key.KEY_A)):
+            position_change.x += 1
+            self.get_children()[0].flip_h = True
+
+        self.__moving = True if(position_change.x != 0 and position_change.y != 0) else False
+
+        
+
         return super()._physics_process(delta)
     
     def _input(self, event: InputEvent) -> None:
+
+        # TODO: remake the aimwheel moving
+        # TODO: remake the fireball shooting 
+
         return super()._input(event)
     
     def add_card(self, card):
@@ -100,4 +131,7 @@ class player(Node2D):
         used by running varuable.call("get_attack_size_modifier", args)
         """
         return self.__attack_size_modifier
+    
+    # TODO: add buff processing logic and function
+    # TODO: add create card logic and function
 
