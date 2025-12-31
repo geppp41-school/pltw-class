@@ -1,4 +1,3 @@
-from tkinter import Y
 from py4godot import gdclass
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.Node2D import Node2D
