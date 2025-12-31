@@ -1,8 +1,10 @@
+import json
 from py4godot import gdclass
+from py4godot.classes.Engine import Engine
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.Node2D import Node2D
 from py4godot.classes.Input import Input
-from py4godot.classes.core import Vector2
+from py4godot.classes.core import PackedStringArray, Vector2
 from py4godot.enums.enums import Key
 
 @gdclass
@@ -40,6 +42,8 @@ class player(Node2D):
     __exp_modifier: float = 1.0
     
     # other
+    __selected_cards = 0
+    __unselected_cards = 0
     __cards: list = []
     __input_instance: Input = Input().instance()
 
@@ -47,6 +51,11 @@ class player(Node2D):
         pass
 
     def _process(self, delta: float) -> None:
+        if(self.is_selecting_card()):
+            Engine.instance().set_time_scale(0)
+        else:
+            Engine.instance().set_time_scale(1)
+        
         return super()._process(delta)
     
     def _physics_process(self, delta: float) -> None:
@@ -81,28 +90,8 @@ class player(Node2D):
 
         return super()._input(event)
     
-    def add_card(self, card):
-        """
-        used to add a card to the players selected cards
 
-        :param card: the card to be added to the list of cards the player has
-        """
-        pass
-
-    def process_buffs(self):
-        """
-        used to process the buffs that come from the cards
-        """
-
-        self.__exp_modifier = 1.0
-        self.__damage_modifier = 0
-        self.__damage_mutiplier = 1.0
-        self.__attack_size_modifier = 1.0
-        self.__cooldown_modifier = 1.0
-        self.__hp_modifier = 1.0
-        self.__multy_shot = 0
-        
-        pass
+    
 
     def is_moving(self):
         """
@@ -131,6 +120,59 @@ class player(Node2D):
         """
         return self.__attack_size_modifier
     
-    # TODO: add buff processing logic and function
-    # TODO: add create card logic and function
+    # TODO: add create card 
+    def add_card(self, stats):
+        """
+        used to add a card to the players selected cards
+
+        :param stats: the card to be added to the list of cards the player has
+        """
+        self.__cards.append({"stats": stats})
+        self.__unselected_cards -= 1
+        self.__selected_cards += 1
+
+    def is_selecting_card(self):
+        return True if self.__unselected_cards > 0 else False
+
+
+    
+
+    def process_buffs(self):
+        """
+        used to process the buffs that come from the cards
+        """
+
+        self.__exp_modifier = 1.0
+        self.__damage_modifier = 0
+        self.__damage_mutiplier = 1.0
+        self.__attack_size_modifier = 1.0
+        self.__cooldown_modifier = 1.0
+        self.__hp_modifier = 1.0
+        self.__multy_shot = 0
+
+
+        for item in self.__cards:
+            stats:PackedStringArray = item.get("stats") # type: ignore
+            for x in range(stats.size()):
+                stat_as_dict = json.loads(stats.get(x))
+                if(stat_as_dict.get("stat") == "attack_cd"):
+                    self.__cooldown_modifier = self.__cooldown_modifier - float(stat_as_dict.get("change"))
+                    self.__cooldown_modifier = max(self.__cooldown_modifier, 0.25)
+                elif(stat_as_dict.get("stat") == "damage"):
+                    if(float(stat_as_dict.get("change")) > 1):
+                        self.__damage_modifier = self.__damage_modifier + float(stat_as_dict.get("change")) # type: ignore
+                    else:
+                        self.__damage_mutiplier = self.__damage_mutiplier + float(stat_as_dict.get("change"))
+                elif(stat_as_dict.get("stat") == "hp"):
+                    self.__health_modifier += float(stat_as_dict.get("change"))
+                elif(stat_as_dict.get("stat") == "multy_shot"):
+                    self.__multy_shot = self.__multy_shot + int(stat_as_dict.get("change"))
+                elif(stat_as_dict.get("stat") == "collection_range"):	
+                    self.__collection_range_modifier = self.__collection_range_modifier + float(stat_as_dict.get("change"))
+                elif(stat_as_dict.get("stat") == "exp_gain"):
+                    self.__exp_modifier = self.__exp_modifier + float(stat_as_dict.get("change"))
+                elif(stat_as_dict.get("stat") == "attack_size"):
+                    self.__attack_size = self.__attack_size + float(stat_as_dict.get("change"))
+        
+    
 
