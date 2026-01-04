@@ -44,6 +44,12 @@ class exp(Node2D):
 			
 		pass
 
+	def collected(self):
+		self.queue_free()
+	
+	def get_exp_value(self):
+		return self.get_meta("exp_value")
+
 	
 	# Hide the method in the godot editor
 	@private

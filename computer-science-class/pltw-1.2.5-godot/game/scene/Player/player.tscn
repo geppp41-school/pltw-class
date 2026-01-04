@@ -182,6 +182,7 @@ skew = 0.0
 script = ExtResource("1_7fv2l")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+_import_path = NodePath("")
 unique_name_in_owner = false
 process_mode = 0
 process_priority = 0

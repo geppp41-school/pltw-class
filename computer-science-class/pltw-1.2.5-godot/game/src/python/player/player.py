@@ -2,6 +2,7 @@ import json
 import math
 from typing import get_type_hints
 from py4godot import gdclass
+from py4godot.classes.Area2D import Area2D
 from py4godot.classes.Engine import Engine
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.InputEventMouseButton import InputEventMouseButton
@@ -69,6 +70,7 @@ class player(Node2D):
 
     def _process(self, delta: float) -> None:
         if(self.is_selecting_card()):
+
             Engine.instance().set_time_scale(0)
         else:
             Engine.instance().set_time_scale(1)
@@ -88,11 +90,13 @@ class player(Node2D):
             self.__cooldown_time_passed = 0
 
         while self.__exp >= self.__exp_for_next_level:
+           
             self.__unselected_cards += 1
             self.__level += 1
             self.__exp -= self.__exp_for_next_level
             self.__exp_for_next_level = 100.0*(pow(1.25, self.__level-1))
-
+        if(self.__unselected_cards > 0):
+            self.add_child(self.level_up_menu)
 
         self.exp_bar.set_size(Vector2.new3(200*(self.__exp/self.__exp_for_next_level), self.exp_bar.size.y))
 
@@ -246,10 +250,20 @@ class player(Node2D):
 
         for i in range(count):
             projectiles[i].call("set_speed", 100)
-            projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-(math.pi/2)-(90+(180/count)*(i+1)))
+            if(count == 1):
+                projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-(math.pi/2)-(90))
+            else:
+                projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-((90/count)*(i+1)))
             projectiles[i].call("set_damage_modifier", self.__damage_modifier)
             projectiles[i].call("set_damage_mutiplier", self.__damage_mutiplier)
             projectiles[i].call("set_size", self.__attack_size_modifier)
+        pass
+
+
+    def _on_player_hitbox_area_entered(self, area:Area2D):
+        if(area.get_name().contains("exp")):
+            self.__exp += area.get_parent().call("get_exp_value")*self.__exp_modifier
+            area.get_parent().call("collected")
         pass
     
 
