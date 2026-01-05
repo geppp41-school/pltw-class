@@ -95,8 +95,10 @@ class player(Node2D):
             self.__level += 1
             self.__exp -= self.__exp_for_next_level
             self.__exp_for_next_level = 100.0*(pow(1.25, self.__level-1))
-        if(self.__unselected_cards > 0):
-            self.add_child(self.level_up_menu)
+        if(self.__unselected_cards > 0 and not self.get_children().pop_back().name.contains("LevelUp") ):
+            self.add_child(self.level_up_menu.instantiate())
+        else:
+            self.get_children().pop_back().visible = True # type: ignore
 
         self.exp_bar.set_size(Vector2.new3(200*(self.__exp/self.__exp_for_next_level), self.exp_bar.size.y))
 
