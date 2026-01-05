@@ -45,7 +45,7 @@ class player(Node2D):
 
 
     #exp
-    __exp: float = 0.0
+    __exp: float = 1000.0
     __exp_for_next_level: float = 100.0
     __level: int = 1
     __exp_modifier: float = 1.0
@@ -53,6 +53,7 @@ class player(Node2D):
     # other
     __selected_cards = 0
     __unselected_cards = 0
+    __last_unselected_card_count = 0
     __cards: list = []
     __input_instance: Input = Input().instance()
 
@@ -62,6 +63,9 @@ class player(Node2D):
         self.aim_wheel:Sprite2D = self.get_node("aim_wheel")
         self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn")
         self.level_up_menu = ResourceLoader.instance().load("res://scene/Player/level_up.tscn")
+        self.level_up_menu_instance = self.level_up_menu.instantiate()
+        self.add_child(self.level_up_menu_instance)
+        self.level_up_menu_instance.visible = False
         self._mouse_position = Vector2.new3(0,0)
         self.aim_wheel_shader:ShaderMaterial = self.aim_wheel.get_material()
         self.camera = self.get_node("Camera2D")
@@ -95,10 +99,19 @@ class player(Node2D):
             self.__level += 1
             self.__exp -= self.__exp_for_next_level
             self.__exp_for_next_level = 100.0*(pow(1.25, self.__level-1))
-        if(self.__unselected_cards > 0 and not self.get_children().pop_back().name.contains("LevelUp") ):
-            self.add_child(self.level_up_menu.instantiate())
-        else:
+            self.__last_unselected_card_count = self.__unselected_cards
+        
+        
+        if(self.__unselected_cards > 0):
             self.get_children().pop_back().visible = True # type: ignore
+            print(f"last unselected card count: {self.__last_unselected_card_count}, unselected card count {self.__unselected_cards}")
+            if(self.__last_unselected_card_count > self.__unselected_cards):
+                self.__last_unselected_card_count = self.__unselected_cards
+                self.level_up_menu_instance.call("roll_cards") # type: ignore
+        else:
+            self.level_up_menu_instance.visible = False
+
+
 
         self.exp_bar.set_size(Vector2.new3(200*(self.__exp/self.__exp_for_next_level), self.exp_bar.size.y))
 

@@ -13,7 +13,7 @@ from py4godot.classes.FileAccess import ModeFlags
 
 
 @gdclass
-class level_up_menu(Node2D):
+class level_up_men(Node2D):
 
 	# define properties like this
 	#might also add primed variants
@@ -75,11 +75,11 @@ class level_up_menu(Node2D):
 			self.card_weights.append(jsonObject.get(self.card_rarities[i]).get("weight")) # type: ignore
 		file.close()
 		return jsonObject
-		# print(self.card_weights)
-		# print(jsonObject.get("common").get("weight")) # type: ignore
+		
 		pass
 	
 	def set_card_text(self, card:AnimatedSprite2D):
+		print("e")
 		count = 0
 		if(card.get_frame() < 2):
 			count = 1

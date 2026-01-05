@@ -22,7 +22,7 @@ from random import random
 
 
 @gdclass
-class player(Node2D):
+class playe(Node2D):
 
 	# define properties like this
 	speed: int = 32
