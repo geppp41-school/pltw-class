@@ -146,7 +146,7 @@ class player(Node2D):
             position_change.x += 1
             self.get_children()[0].flip_h = False
 
-        self.__moving = True if(position_change.x != 0 and position_change.y != 0) else False
+        self.__moving = True if(position_change.x != 0 or position_change.y != 0) else False
         self.position += (position_change.normalized()*delta) * self.__speed
         
 
