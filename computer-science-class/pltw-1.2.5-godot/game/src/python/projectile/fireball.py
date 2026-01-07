@@ -1,3 +1,4 @@
+from math import cos, sin
 from turtle import speed
 from py4godot.methods import private
 from py4godot.classes import gdclass
@@ -28,6 +29,7 @@ class fireball(Node2D):
 		self.noise_offset = Vector3.new3(16*self.life_span, -16*self.life_span, 0)
 		if(self.get_parent().get_node("player") != None):
 			self.position = self.get_parent().get_node("player").position
+			
 		pass
 		# put initialization code here
 
@@ -38,7 +40,11 @@ class fireball(Node2D):
 		self.noise_object.texture.noise.offset = self.noise_offset
 		if(self.time_passed >= self.life_span):
 			self.queue_free()
-		self.position += Vector2.RIGHT.rotated(self.direction).normalized()*self.speed*delta
+		self.position += Vector2.new3(
+			1*cos(self.direction)-0*sin(self.direction),
+			1*sin(self.direction)+0*cos(self.direction)
+			).normalized()*self.speed*delta
+		#self.position += Vector2.RIGHT.rotated(self.direction).normalized()*self.speed*delta
 		pass
 		# put dynamic code here
 
@@ -46,7 +52,13 @@ class fireball(Node2D):
 		self.speed = speed
 
 	def set_direction(self, direction):
+		
 		self.direction = direction
+		self.position += Vector2.new3(
+			1*cos(self.direction)-0*sin(self.direction),
+			1*sin(self.direction)+0*cos(self.direction)
+			).normalized()*16
+		
 	def set_damage_modifier(self, modifier):
 		self.damage_modifier = modifier
 	def set_damage_mutiplier(self, mutiplier):

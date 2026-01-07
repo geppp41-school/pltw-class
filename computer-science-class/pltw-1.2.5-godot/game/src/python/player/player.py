@@ -15,6 +15,7 @@ from py4godot.classes.ShaderMaterial import ShaderMaterial
 from py4godot.classes.Sprite2D import Sprite2D
 from py4godot.classes.core import PackedStringArray, Vector2
 from py4godot.enums.enums import Key
+from py4godot.classes.RayCast2D import RayCast2D
 
 @gdclass
 class player(Node2D):
@@ -43,9 +44,11 @@ class player(Node2D):
     __attack_size_modifier: float = 1.0 # incrase the attack size of the fireball
     __multy_shot: int = 3 # the amount of extra projectiles the player can shoot
 
+    __spread: float = 15
+
 
     #exp
-    __exp: float = 1000.0
+    __exp: float = 0.0
     __exp_for_next_level: float = 100.0
     __level: int = 1
     __exp_modifier: float = 1.0
@@ -82,7 +85,7 @@ class player(Node2D):
 
         relitive_mouse_position = self._mouse_position + self.position
         angle = self.get_angle_to(relitive_mouse_position)
-        self.aim_wheel.set_rotation(angle+(math.pi/2))
+        self.aim_wheel.rotation = (angle+(math.pi/2))
         self.__cooldown_time_passed += delta
         self.__cooldown_time_passed = min(self.__cooldown_time_passed, self.__attack_cooldown*self.__cooldown_modifier)
 
@@ -104,7 +107,6 @@ class player(Node2D):
         
         if(self.__unselected_cards > 0):
             self.get_children().pop_back().visible = True # type: ignore
-            print(f"last unselected card count: {self.__last_unselected_card_count}, unselected card count {self.__unselected_cards}")
             if(self.__last_unselected_card_count > self.__unselected_cards):
                 self.__last_unselected_card_count = self.__unselected_cards
                 self.level_up_menu_instance.call("roll_cards") # type: ignore
@@ -154,6 +156,7 @@ class player(Node2D):
         if(event.get_type() == InputEventMouseMotion.get_type()):
             eventMouseMotion:InputEventMouseMotion = InputEventMouseMotion.cast(event)
             self._mouse_position = eventMouseMotion.position-Vector2.new3(320, 240)
+            
         elif(event.get_type() == InputEventMouseButton.get_type()):
             eventMouseButton:InputEventMouseButton = InputEventMouseButton.cast(event)
 
@@ -259,16 +262,27 @@ class player(Node2D):
         if(self.get_parent() != None):
             for i in range(count):
                 self.get_parent().add_child(projectiles[i])
+                
         else:
             for i in range(count):
                 self.add_child(projectiles[i])
 
         for i in range(count):
+            debug_direction = RayCast2D.new()
+            debug_direction.target_position = Vector2.new3(0, -50)
             projectiles[i].call("set_speed", 100)
+            
             if(count == 1):
                 projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-(math.pi/2)-(90))
             else:
-                projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-((90/count)*(i+1)))
+                projectiles[i].call(
+                    "set_direction", 
+                     self.aim_wheel.get_rotation()-(math.pi/2)-math.radians(self.__spread*(count/2.0)-(self.__spread*i))
+                    )
+                debug_direction.rotation = self.aim_wheel.get_rotation()-math.radians(self.__spread*(count/2.0)-(self.__spread*i))
+                #self.add_child(debug_direction)
+                #print(f"spawning fireball {i} at angle {self.aim_wheel.get_rotation()+(self.__spread*(count/2)-(self.__spread*i))}")
+                #projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-((90/count)*(i+1)))
             projectiles[i].call("set_damage_modifier", self.__damage_modifier)
             projectiles[i].call("set_damage_mutiplier", self.__damage_mutiplier)
             projectiles[i].call("set_size", self.__attack_size_modifier)
