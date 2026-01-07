@@ -10,7 +10,7 @@ from py4godot.classes.Sprite2D import Sprite2D
 class fireball(Node2D):
 
 	# define properties like this
-	life_span : float = 5
+	life_span : float = 3
 	speed: float = 16.0
 	direction: float = 0.0
 	damage_modifier = 0.0
@@ -18,6 +18,9 @@ class fireball(Node2D):
 	size = 0.5
 	size_modifier = 1.0
 	noise_offset : Vector3 = Vector3.new3(0, 0, 0)#32x for 1 second, -32y for 1 second
+	damage_tick_time : float = 0.1
+	
+	tick_time: float = 0
 	
 
 	# define signals like this
@@ -34,6 +37,7 @@ class fireball(Node2D):
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
+		self.tick_time += delta
 		self.scale = Vector2.new3(self.size * self.size_modifier, self.size * self.size_modifier)
 		self.time_passed += delta
 		self.noise_offset += Vector3.new3(-16*delta, 16*delta, 0)
@@ -44,6 +48,11 @@ class fireball(Node2D):
 			1*cos(self.direction)-0*sin(self.direction),
 			1*sin(self.direction)+0*cos(self.direction)
 			).normalized()*self.speed*delta
+		if(self.tick_time >= self.damage_tick_time):
+			self.tick_time = 0
+			self.get_child(1).get_child(0).get_shape().radius = 32
+		elif(self.tick_time >= 0.05):
+			self.get_child(1).get_child(0).get_shape().radius = 0
 		#self.position += Vector2.RIGHT.rotated(self.direction).normalized()*self.speed*delta
 		pass
 		# put dynamic code here
@@ -61,14 +70,17 @@ class fireball(Node2D):
 		
 	def set_damage_modifier(self, modifier):
 		self.damage_modifier = modifier
+
 	def set_damage_mutiplier(self, mutiplier):
 		self.damage_mutiplier = mutiplier
+
 	def set_size(self, size):
 		self.size_modifier = size
 
 	def get_damage(self):
-		return (50+self.damage_modifier)*self.damage_mutiplier
+		return (50+self.damage_modifier)*self.damage_mutiplier*self.damage_tick_time
 	
+
 	
 
 	# Hide the method in the godot editor

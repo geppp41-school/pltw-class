@@ -86,7 +86,7 @@ class slime(Node2D):
 		target:Node2D = area2D.get_parent()
 		if(area2D.name.contains("fireball")):
 			self.health -= target.call("get_damage")
-			target.queue_free()
+			
 		pass
 	@private
 	def test_method(self):
