@@ -18,7 +18,7 @@ class fireball(Node2D):
 	size = 0.5
 	size_modifier = 1.0
 	noise_offset : Vector3 = Vector3.new3(0, 0, 0)#32x for 1 second, -32y for 1 second
-	damage_tick_time : float = 0.1
+	damage_tick_time : float = 1/16#0.1
 	
 	tick_time: float = 0
 	
@@ -51,7 +51,7 @@ class fireball(Node2D):
 		if(self.tick_time >= self.damage_tick_time):
 			self.tick_time = 0
 			self.get_child(1).get_child(0).get_shape().radius = 32
-		elif(self.tick_time >= 0.05):
+		elif(self.tick_time >= self.damage_tick_time*0.8):
 			self.get_child(1).get_child(0).get_shape().radius = 0
 		#self.position += Vector2.RIGHT.rotated(self.direction).normalized()*self.speed*delta
 		pass
@@ -78,7 +78,7 @@ class fireball(Node2D):
 		self.size_modifier = size
 
 	def get_damage(self):
-		return (50+self.damage_modifier)*self.damage_mutiplier*self.damage_tick_time
+		return (100+self.damage_modifier)*self.damage_mutiplier*self.damage_tick_time
 	
 
 	
