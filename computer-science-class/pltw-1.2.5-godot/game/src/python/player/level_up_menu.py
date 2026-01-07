@@ -22,9 +22,17 @@ class level_up_menu(Node2D):
 		self.card_rarities = []
 		self.card_object = self.load_level_cards()
 		self.parent:Node2D = self.get_parent()
+		self.was_visible = False
 		print(self.card_weights)
 		print(self.card_rarities)
 		self.roll_cards()
+
+	def _process(self, delta):
+		if self.was_visible == False and self.visible:
+			self.was_visible = True
+			self.roll_cards()
+		elif(not self.visible):
+			self.was_visible = self.visible
 		
 
 	def roll_cards(self) -> None: 
@@ -147,14 +155,17 @@ class level_up_menu(Node2D):
 		
 	def _on_card_1_pressed(self):
 		self.parent.call("add_card", self.card_1.get_meta("stats"))
+		self.roll_cards()
 		pass
 
 	def _on_card_2_pressed(self):
 		self.parent.call("add_card", self.card_2.get_meta("stats"))
+		self.roll_cards()
 		pass
 
 	def _on_card_3_pressed(self):
 		self.parent.call("add_card", self.card_3.get_meta("stats"))
+		self.roll_cards()
 		pass
 	pass
 

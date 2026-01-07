@@ -107,9 +107,9 @@ class player(Node2D):
         
         if(self.__unselected_cards > 0):
             self.get_children().pop_back().visible = True # type: ignore
-            if(self.__last_unselected_card_count > self.__unselected_cards):
-                self.__last_unselected_card_count = self.__unselected_cards
-                self.level_up_menu_instance.call("roll_cards") # type: ignore
+            # if(self.__last_unselected_card_count > self.__unselected_cards):
+            #     self.__last_unselected_card_count = self.__unselected_cards
+            #     self.level_up_menu_instance.call("roll_cards") # type: ignore
         else:
             self.level_up_menu_instance.visible = False
 
