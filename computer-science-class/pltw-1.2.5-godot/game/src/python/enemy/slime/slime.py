@@ -36,6 +36,7 @@ class slime(Node2D):
 		self.blue_exp = ResourceLoader.instance().load("res://scene/exp/blue_exp.tscn")
 		self.red_exp = ResourceLoader.instance().load("res://scene/exp/red_exp.tscn")
 		self.purple_exp = ResourceLoader.instance().load("res://scene/exp/purple_exp.tscn")
+		self.damage_display = ResourceLoader.instance().load("res://scene/damage_display.tscn")
 		self.exp_list = [self.green_exp, self.blue_exp, self.red_exp, self.purple_exp]
 		self.exp_weights = [100, 50, 10, 1]
 		pass
@@ -85,7 +86,12 @@ class slime(Node2D):
 	def _collision(self, area2D:Area2D) -> None:
 		target:Node2D = area2D.get_parent()
 		if(area2D.name.contains("fireball")):
-			self.health -= target.call("get_damage")
+			damage = target.call("get_damage")
+			damage_display_instance = self.damage_display.instantiate()
+			damage_display_instance.call("set_damage_display_text", damage, self.position)
+			self.health -= damage
+			self.get_parent().add_child(damage_display_instance)
+			print(f"damage: {damage}")
 			
 		pass
 	@private

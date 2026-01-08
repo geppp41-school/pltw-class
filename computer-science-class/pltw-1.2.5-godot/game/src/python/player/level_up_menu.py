@@ -23,8 +23,7 @@ class level_up_menu(Node2D):
 		self.card_object = self.load_level_cards()
 		self.parent:Node2D = self.get_parent()
 		self.was_visible = False
-		print(self.card_weights)
-		print(self.card_rarities)
+
 		self.roll_cards()
 
 	def _process(self, delta):
@@ -36,7 +35,7 @@ class level_up_menu(Node2D):
 		
 
 	def roll_cards(self) -> None: 
-		print("rolling cards")
+		
 		#sets card rarities
 		self.card_1.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
 		self.card_2.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
@@ -69,7 +68,7 @@ class level_up_menu(Node2D):
 		else:
 			count = 3
 
-		print(count)
+		
 
 		#changes the amount of visible modifier texts
 		if(count == 1):
@@ -113,12 +112,12 @@ class level_up_menu(Node2D):
 			
 			if(i == 0):
 				card.get_node("modifier_1").text = text
-				print("changing modifier 1 text")
+				
 			elif(i == 1):
-				print("changing modifier 2 text")
+				
 				card.get_node("modifier_2").text = text
 			elif(i == 3):
-				print("changing modifier 3 text")
+				
 				card.get_node("modifier_3").text = text
 			meta = card.get_meta("stats")
 			meta.append("{\"stat\": \"" + stat+ "\", \"change\":" +  str(change) + "}")
