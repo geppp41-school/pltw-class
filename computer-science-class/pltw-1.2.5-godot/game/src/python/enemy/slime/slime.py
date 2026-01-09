@@ -91,7 +91,7 @@ class slime(Node2D):
 			damage_display_instance.call("set_damage_display_text", damage, self.position)
 			self.health -= damage
 			self.get_parent().add_child(damage_display_instance)
-			print(f"damage: {damage}")
+			
 			
 		pass
 	@private
