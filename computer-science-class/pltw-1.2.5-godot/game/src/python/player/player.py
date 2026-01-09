@@ -52,6 +52,7 @@ class player(Node2D):
     __exp_for_next_level: float = 100.0
     __level: int = 1
     __exp_modifier: float = 1.0
+    __collection_range_modifier = 1.0
     
     # other
     __selected_cards = 0
@@ -76,6 +77,8 @@ class player(Node2D):
 
 
     def _process(self, delta: float) -> None:
+        if(self.__collection_range_modifier*50 != self.get_node("pickup_range/hitbox").get_shape().radius):
+            self.get_node("pickup_range/hitbox").get_shape().radius = self.__collection_range_modifier*50
         if(self.is_selecting_card()):
 
             Engine.instance().set_time_scale(0)
@@ -110,8 +113,9 @@ class player(Node2D):
             # if(self.__last_unselected_card_count > self.__unselected_cards):
             #     self.__last_unselected_card_count = self.__unselected_cards
             #     self.level_up_menu_instance.call("roll_cards") # type: ignore
-        else:
+        elif(self.level_up_menu_instance.visible):
             self.level_up_menu_instance.visible = False
+            self.process_buffs()
 
 
 
@@ -229,6 +233,7 @@ class player(Node2D):
         self.__cooldown_modifier = 1.0
         self.__hp_modifier = 1.0
         self.__multy_shot = 0
+        
 
 
         for item in self.__cards:
@@ -244,7 +249,7 @@ class player(Node2D):
                     else:
                         self.__damage_mutiplier = self.__damage_mutiplier + float(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "hp"):
-                    self.__health_modifier += float(stat_as_dict.get("change"))
+                    self.__hp_modifier += float(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "multy_shot"):
                     self.__multy_shot = self.__multy_shot + int(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "collection_range"):	
@@ -252,7 +257,7 @@ class player(Node2D):
                 elif(stat_as_dict.get("stat") == "exp_gain"):
                     self.__exp_modifier = self.__exp_modifier + float(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "attack_size"):
-                    self.__attack_size = self.__attack_size + float(stat_as_dict.get("change"))
+                    self.__attack_size_modifier = self.__attack_size_modifier + float(stat_as_dict.get("change"))
         
     def fire_fireball(self, count:int):
         projectiles = []
@@ -272,14 +277,12 @@ class player(Node2D):
             debug_direction.target_position = Vector2.new3(0, -50)
             projectiles[i].call("set_speed", 100)
             
-            if(count == 1):
-                projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-(math.pi/2)-(90))
-            else:
-                projectiles[i].call(
-                    "set_direction", 
-                     self.aim_wheel.get_rotation()-(math.pi/2)-math.radians(self.__spread*(count/2.0)-(self.__spread*i))
-                    )
-                debug_direction.rotation = self.aim_wheel.get_rotation()-math.radians(self.__spread*(count/2.0)-(self.__spread*i))
+            
+            projectiles[i].call(
+                "set_direction", 
+                self.aim_wheel.get_rotation()-(math.pi/2)-math.radians(self.__spread*(count/2.0)-(self.__spread*i))
+            )
+            debug_direction.rotation = self.aim_wheel.get_rotation()-math.radians(self.__spread*(count/2.0)-(self.__spread*i))
                 #self.add_child(debug_direction)
                 #print(f"spawning fireball {i} at angle {self.aim_wheel.get_rotation()+(self.__spread*(count/2)-(self.__spread*i))}")
                 #projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-((90/count)*(i+1)))
