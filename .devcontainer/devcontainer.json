@@ -1,28 +1,29 @@
 {
-  "name": "macOS 14 (Sonoma)",
-  "service": "macos",
-  "containerEnv": {
-    "VERSION": "14"
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
   },
-  "customizations":{
-    "vscode": {
-        "extensions": [
-            "ms-python.python",
-            "usernamehw.errorlens",
-            "zhuangtongfa.material-theme"
-        ]
-    }
-  },
-  "forwardPorts": [8006],
+  "forwardPorts": [6080],
   "portsAttributes": {
-    "8006": {
-      "label": "Web",
-      "onAutoForward": "notify"
+    "6080": {
+      "label": "desktop"
     }
   },
-  "otherPortsAttributes": {
-    "onAutoForward": "ignore"
-  }, 
-  "dockerComposeFile": "codespaces.yml",
-  "initializeCommand": "docker system prune --all --force"
+  "postCreateCommand": "apt-get update && apt-get install -y xvfb x11-apps tigervnc-standalone-server tigervnc-tools && echo 'export LP_NUM_THREADS=$(nproc)' >> /etc/profile && echo 'export DISPLAY=:1' >> /etc/profile && (Xvfb :1 -screen 0 1024x768x24 &)",
+  "remoteEnv": {
+    "VNC_COMPRESSION": "tight",
+    "VNC_QUALITY": "8",
+    "VNC_COL_DEPTH": "24",
+    "NOVNC_HEARTBEAT": "5"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "usernamehw.errorlens",
+        "ttoowa.in-your-face-incredible",
+        "zhuangtongfa.material-theme",
+        "vscjava.vscode-java-pack"
+      ]
+    }
+  }
 }
