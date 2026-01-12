@@ -24,6 +24,7 @@ class damage_display(Node2D):
 	def _process(self, delta:float) -> None:
 		#self.modulate.a = 255*(self.time_tell_despawn/3)
 		
+		## makes the damage display slowly fade 
 		self.time_passed += delta
 		self.modulate = Color.new4(1.0, 1.0, 1.0, ((255*(math.pow(math.e, -2.8*self.time_passed)))/255))
 		
@@ -39,6 +40,7 @@ class damage_display(Node2D):
 		# put dynamic code here
 
 	def set_damage_display_text(self, damage: float, position):
+		## moves the damage display and sets its text
 		self.position = position
 		self.get_node("Label").text = str(round(damage, 2))
 		

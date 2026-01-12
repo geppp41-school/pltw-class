@@ -282,6 +282,10 @@ class player(Node2D):
     
         
     def fire_fireball(self, count:int):
+        """
+        used to shoot a fireball
+        :param count: the amount of fireballs to shoot
+        """
         projectiles = []
         for i in range(count):
             projectiles.append(self.fireball.instantiate())
@@ -315,6 +319,10 @@ class player(Node2D):
 
 
     def _on_player_hitbox_area_entered(self, area:Area2D):
+        """
+        runs when another Area2D enters the connected Area2D
+        :pram area: the area that entered the connected area
+        """
         if(area.get_name().contains("exp")):
             self.__exp += area.get_parent().call("get_exp_value")*self.__exp_modifier
             area.get_parent().call("collected")

@@ -44,6 +44,7 @@ class test(Node2D):
 	def _process(self, delta:float) -> None:
 		self.time_passed += delta
 		self.current_play_time += delta
+		#makes more enemies spawn at once the longer the game has run for. also makes enemies spawn faster 
 		if(self.time_passed >= 2.0*math.pow(0.9, self.current_play_time/60) and self.enemies < 1000):
 			for i in range(random.randint(1, round(min(self.current_play_time/20, 1000-self.enemies)) if self.current_play_time > 20 else 1)):
 				self.add_child(self.slimeScene.instantiate())
