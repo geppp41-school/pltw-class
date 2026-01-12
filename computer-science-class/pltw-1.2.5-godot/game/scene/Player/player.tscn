@@ -263,6 +263,30 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_7fv2l")
 
+[node name="timer" type="Label" parent="Camera2D/Hud"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -119.0
+offset_right = 33.0
+offset_bottom = -96.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hp_Level" type="Label" parent="Camera2D/Hud"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "HP: 
+Level: "
+
 [node name="aim_wheel" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_fra3v")
 scale = Vector2(0.7, 0.7)

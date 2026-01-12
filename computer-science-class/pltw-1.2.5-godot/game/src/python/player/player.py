@@ -16,6 +16,7 @@ from py4godot.classes.Sprite2D import Sprite2D
 from py4godot.classes.core import PackedStringArray, Vector2
 from py4godot.enums.enums import Key
 from py4godot.classes.RayCast2D import RayCast2D
+from py4godot.classes.Label import Label
 
 @gdclass
 class player(Node2D):
@@ -27,6 +28,7 @@ class player(Node2D):
 
     #hp stuff
     __hp: float = 100.0
+    __base_hp: float = 100.0
     __max_hp: float = 100.0
     __armor: int = 100
 
@@ -74,9 +76,24 @@ class player(Node2D):
         self.aim_wheel_shader:ShaderMaterial = self.aim_wheel.get_material()
         self.camera = self.get_node("Camera2D")
         self.exp_bar:Panel = self.camera.get_node("Hud").get_node("fill")
+        self.timer:Label = self.camera.get_node("Hud/timer")
+        self.Hp_level:Label = self.camera.get_node("Hud/Hp_Level")
+        self.current_play_time = {"minute": 0, "second": 0.0}
 
 
     def _process(self, delta: float) -> None:
+        self.current_play_time["second"] += delta
+        if(self.current_play_time["second"] >= 60):
+            self.current_play_time["second"] -= 60
+            self.current_play_time["minute"] += 1
+        if(self.current_play_time["second"] > 9):
+            self.timer.text = f"{self.current_play_time["minute"]}:{round(self.current_play_time["second"])}"
+        else:
+            self.timer.text = f"{self.current_play_time["minute"]}:0{round(self.current_play_time["second"])}"
+
+            
+        self.Hp_level.text = f"HP: {self.__hp}/{self.__max_hp}\nLevel: {self.__level}"
+        
         if(self.__collection_range_modifier*50 != self.get_node("pickup_range/hitbox").get_shape().radius):
             self.get_node("pickup_range/hitbox").get_shape().radius = self.__collection_range_modifier*50
         if(self.is_selecting_card()):
@@ -205,12 +222,13 @@ class player(Node2D):
         return self.__attack_size_modifier
     
     # TODO: add create card 
-    def add_card(self, stats):
+    def add_card(self, stats:PackedStringArray):
         """
         used to add a card to the players selected cards
 
         :param stats: the card to be added to the list of cards the player has
         """
+        self.set_meta("last_added_card", stats)
         self.__cards.append({"stats": stats})
         self.__unselected_cards -= 1
         self.__selected_cards += 1

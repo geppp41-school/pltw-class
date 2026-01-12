@@ -12,7 +12,7 @@ from py4godot.classes.core import Color
 @gdclass
 class damage_display(Node2D):
 
-	life_span = 3
+	life_span = 5
 	time_passed = 0
 	
 

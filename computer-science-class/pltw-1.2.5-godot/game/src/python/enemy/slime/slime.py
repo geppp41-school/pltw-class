@@ -48,6 +48,7 @@ class slime(Node2D):
 			exp_orb = exp_to_spawn.instantiate()
 			exp_orb.set_position(self.position)
 			self.get_parent().add_child(exp_orb)
+			self.get_parent().call("enemy_died")
 			self.queue_free()
 
 		# put dynamic code here

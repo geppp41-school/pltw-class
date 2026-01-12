@@ -1,3 +1,5 @@
+import math
+import random
 from py4godot.methods import private
 from py4godot.signals import signal, SignalArg
 from py4godot.classes import gdclass
@@ -23,28 +25,37 @@ class test(Node2D):
 
 
 	def _ready(self) -> None:
+		self.current_play_time= 0
 		self.slimeScene = ResourceLoader.instance().load("res://scene/enemy/slime/slime.tscn")
 		#self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn").instantiate()
 		self.add_child(ResourceLoader.instance().load("res://scene/Player/player.tscn").instantiate())
 		self.exp = ResourceLoader.instance().load("res://scene/exp/green_exp.tscn")
 		#self.add_child(self.exp.instantiate())
 		self.player = self.get_node("player")
+		self.enemies = 0
 		
 		for i in range(25):
 			self.add_child(self.slimeScene.instantiate())
+			self.enemies += 1
 		#self.add_child(self.fireball)
 		pass
 		# put initialization code here
 
 	def _process(self, delta:float) -> None:
 		self.time_passed += delta
-		if(self.time_passed >= 2.0):
-			self.add_child(self.slimeScene.instantiate())
-			self.time_passed = 0.0
+		self.current_play_time += delta
+		if(self.time_passed >= 2.0*math.pow(0.9, self.current_play_time/60) and self.enemies < 1000):
+			for i in range(random.randint(1, round(min(self.current_play_time/20, 1000-self.enemies)) if self.current_play_time > 20 else 1)):
+				self.add_child(self.slimeScene.instantiate())
+				self.time_passed = 0.0
+				self.enemies += 1
 		pass
 		# put dynamic code here
 	def get_player(self):
 		return self.player
+	
+	def enemy_died(self):
+		self.enemies -= 1
 
 	# Hide the method in the godot editor
 	@private

@@ -39,8 +39,6 @@ class exp(Node2D):
 		item_name = str(area.get_name())
 		if(item_name == "pickup_range"):
 			self.target = area.get_parent()
-		elif(item_name == "player_hitbox"):
-			print("collected")
 			
 		pass
 
