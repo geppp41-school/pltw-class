@@ -44,7 +44,7 @@ class player(Node2D):
     __damage_modifier: int = 0 # the amount of damage to be added to the base damage
     __damage_mutiplier: float = 1.0 # the amount that the damage should be mutiplied by 
     __attack_size_modifier: float = 1.0 # incrase the attack size of the fireball
-    __multy_shot: int = 3 # the amount of extra projectiles the player can shoot
+    __multy_shot: int = 0 # the amount of extra projectiles the player can shoot
 
     __spread: float = 15
 
