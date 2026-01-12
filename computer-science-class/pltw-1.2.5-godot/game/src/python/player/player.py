@@ -91,7 +91,7 @@ class player(Node2D):
         else:
             self.timer.text = f"{self.current_play_time["minute"]}:0{round(self.current_play_time["second"])}"
 
-            
+
         self.Hp_level.text = f"HP: {self.__hp}/{self.__max_hp}\nLevel: {self.__level}"
         
         if(self.__collection_range_modifier*50 != self.get_node("pickup_range/hitbox").get_shape().radius):
@@ -268,7 +268,7 @@ class player(Node2D):
                         self.__damage_mutiplier = self.__damage_mutiplier + float(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "hp"):
                     self.__hp_modifier += float(stat_as_dict.get("change"))
-                elif(stat_as_dict.get("stat") == "multy_shot"):
+                elif(stat_as_dict.get("stat") == "multi_shot"):
                     self.__multy_shot = self.__multy_shot + int(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "collection_range"):	
                     self.__collection_range_modifier = self.__collection_range_modifier + float(stat_as_dict.get("change"))
@@ -276,6 +276,10 @@ class player(Node2D):
                     self.__exp_modifier = self.__exp_modifier + float(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "attack_size"):
                     self.__attack_size_modifier = self.__attack_size_modifier + float(stat_as_dict.get("change"))
+        
+        self.__max_hp = self.__base_hp * self.__hp_modifier
+        self.__hp = self.__max_hp if self.__hp == self.__max_hp / self.__hp_modifier else self.__hp
+    
         
     def fire_fireball(self, count:int):
         projectiles = []
