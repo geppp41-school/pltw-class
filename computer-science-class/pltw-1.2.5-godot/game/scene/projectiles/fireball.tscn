@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bfn0u5s2yhm84"]
+[gd_scene load_steps=6 format=3 uid="uid://bfn0u5s2yhm84"]
 
 [ext_resource type="Script" path="res://src/python/projectile/fireball.py" id="1_fkmv1"]
 [ext_resource type="Shader" uid="uid://6yy3obujfjgr" path="res://scene/projectiles/fireball.gdshader" id="1_g54f7"]
@@ -14,31 +14,8 @@ shader_parameter/bg_color = Color(0, 0, 0, 0)
 [sub_resource type="CircleShape2D" id="CircleShape2D_g54f7"]
 radius = 32.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g54f7"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-corner_radius_top_left = 90
-corner_radius_top_right = 90
-corner_radius_bottom_right = 90
-corner_radius_bottom_left = 90
-
-[sub_resource type="Animation" id="Animation_362mi"]
-length = 0.001
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_p2ds8"]
-_data = {
-&"RESET": SubResource("Animation_362mi")
-}
-
-[sub_resource type="Animation" id="Animation_7xasx"]
-loop_mode = 1
-step = 0.0
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_j6puc"]
-_data = {
-&"default": SubResource("Animation_7xasx")
-}
-
 [node name="fireball" type="Node2D"]
+_import_path = NodePath("")
 unique_name_in_owner = false
 process_mode = 0
 process_priority = 0
@@ -69,34 +46,21 @@ script = ExtResource("1_fkmv1")
 life_span = 5
 speed = 16.0
 direction = 0.0
+damage_modifier = 0.0
+damage_mutiplier = 1.0
+size = 0.5
+size_modifier = 1.0
 noise_offset = Vector3(0, 0, 0)
+damage_tick_time = 0.0625
+tick_time = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_fkmv1")
 texture = ExtResource("2_g38xx")
 
 [node name="fireball" type="Area2D" parent="."]
+input_pickable = false
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fireball"]
 shape = SubResource("CircleShape2D_g54f7")
-
-[node name="PanelContainer" type="Panel" parent="."]
-clip_contents = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -25.0
-offset_right = 25.0
-offset_bottom = 25.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_g54f7")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_p2ds8"),
-&"fireball": SubResource("AnimationLibrary_j6puc")
-}

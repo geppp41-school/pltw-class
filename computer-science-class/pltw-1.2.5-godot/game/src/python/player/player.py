@@ -92,7 +92,7 @@ class player(Node2D):
             self.timer.text = f"{self.current_play_time["minute"]}:0{round(self.current_play_time["second"])}"
 
 
-        self.Hp_level.text = f"HP: {self.__hp}/{self.__max_hp}\nLevel: {self.__level}"
+        self.Hp_level.text = f"HP: {round(self.__hp, 2)}/{round(self.__max_hp, 2)}\nLevel: {self.__level}"
         
         if(self.__collection_range_modifier*50 != self.get_node("pickup_range/hitbox").get_shape().radius):
             self.get_node("pickup_range/hitbox").get_shape().radius = self.__collection_range_modifier*50
@@ -112,7 +112,7 @@ class player(Node2D):
         self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.__cooldown_time_passed/(self.__attack_cooldown*self.__cooldown_modifier), 2))
 
         self.aim_wheel_shader = self.aim_wheel.get_material()
-        if(self.__left_mouse_button_pressed and self.__cooldown_time_passed >= self.__attack_cooldown*self.__cooldown_modifier):
+        if(self.__left_mouse_button_pressed and self.__cooldown_time_passed >= self.__attack_cooldown*self.__cooldown_modifier and self.__unselected_cards == 0):
             self.fire_fireball(self.__multy_shot+1)
             self.__cooldown_time_passed = 0
 
@@ -277,8 +277,10 @@ class player(Node2D):
                 elif(stat_as_dict.get("stat") == "attack_size"):
                     self.__attack_size_modifier = self.__attack_size_modifier + float(stat_as_dict.get("change"))
         
+        if(self.__hp == self.__max_hp):
+            self.__hp = self.__base_hp * self.__hp_modifier
         self.__max_hp = self.__base_hp * self.__hp_modifier
-        self.__hp = self.__max_hp if self.__hp == self.__max_hp / self.__hp_modifier else self.__hp
+        
     
         
     def fire_fireball(self, count:int):
@@ -326,6 +328,8 @@ class player(Node2D):
         if(area.get_name().contains("exp")):
             self.__exp += area.get_parent().call("get_exp_value")*self.__exp_modifier
             area.get_parent().call("collected")
+        elif(area.get_name().contains("slime")):
+            self.__hp -= 5
         pass
     
 

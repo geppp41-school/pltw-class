@@ -18,8 +18,8 @@ class slime(Node2D):
 	speed: int = 60
 	_can_move:bool = True
 	target_angle:float = 0
-	health:float = 100.0
-	max_health:float = 100.0
+	health:float = 30.0
+	max_health:float = 30.0
 	# define signals like this
 
 
@@ -27,11 +27,11 @@ class slime(Node2D):
 	def _ready(self) -> None:
 		self.animated_body = self.get_node("AnimatedSprite2D")  # type: ignore
 		self.animation_node = self.get_node("AnimationPlayer")
-		#self.animated_body.play("Moving")
-		self.animation_node.play("slime/moving")
+		self.animated_body.play("Moving")
+		#self.animation_node.play("slime/moving")
 		if(self.get_parent() != None):
 			self.target = self.get_parent().get_pyscript().get_player()
-		self.position = Vector2.new3(random.randint(-300,300),random.randint(-300,300))
+		#self.position = Vector2.new3(random.randint(-300,300),random.randint(-300,300))
 		self.green_exp = ResourceLoader.instance().load("res://scene/exp/green_exp.tscn")
 		self.blue_exp = ResourceLoader.instance().load("res://scene/exp/blue_exp.tscn")
 		self.red_exp = ResourceLoader.instance().load("res://scene/exp/red_exp.tscn")
