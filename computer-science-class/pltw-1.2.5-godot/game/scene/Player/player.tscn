@@ -224,6 +224,7 @@ script = ExtResource("4_7fv2l")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Hud" type="Control" parent="Camera2D"]
+z_index = 5
 layout_mode = 3
 anchors_preset = 0
 offset_left = -160.0

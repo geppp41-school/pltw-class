@@ -207,7 +207,7 @@
         }
     },
     "godly":{
-        "weight": 1000,
+        "weight": 1,
         "stats": {
             "attack_cd": {
                 "min": [0.4],

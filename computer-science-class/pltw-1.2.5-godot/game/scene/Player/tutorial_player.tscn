@@ -287,6 +287,39 @@ offset_bottom = 23.0
 text = "HP: 
 Level: "
 
+[node name="Tutorial" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -160.0
+offset_top = -120.0
+offset_right = 160.0
+offset_bottom = 120.0
+
+[node name="Highlight_Player" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="Highlight_Exp_Bar" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="Highlight_Level" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="Highlight_Hp" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="Highlight_Timer" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
 [node name="aim_wheel" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_fra3v")
 scale = Vector2(0.7, 0.7)
