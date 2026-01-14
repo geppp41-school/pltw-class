@@ -35,7 +35,9 @@ class level_up_menu(Node2D):
 		
 
 	def roll_cards(self) -> None: 
-		
+		self.card_1.set_meta("stats", PackedStringArray())
+		self.card_2.set_meta("stats", PackedStringArray())
+		self.card_3.set_meta("stats", PackedStringArray())
 		#sets card rarities
 		self.card_1.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
 		self.card_2.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
@@ -84,7 +86,9 @@ class level_up_menu(Node2D):
 			card.get_node("modifier_2").visible = True
 			card.get_node("modifier_3").visible = True
 		
+		
 		for i in range(count):
+		
 			card_rarity:dict[Any, Any] | Any = self.card_object.get(self.card_rarities[card.get_frame()])
 			possible_stats = card_rarity.get("stats")
 			stat = choice(list(possible_stats.keys()))# type: ignore
@@ -116,12 +120,15 @@ class level_up_menu(Node2D):
 			elif(i == 1):
 				
 				card.get_node("modifier_2").text = text
-			elif(i == 3):
+			elif(i == 2):
 				
 				card.get_node("modifier_3").text = text
+
 			meta = card.get_meta("stats")
 			meta.append("{\"stat\": \"" + stat+ "\", \"change\":" +  str(change) + "}")
 			card.set_meta("stats", meta)
+			
+		
 
 
 

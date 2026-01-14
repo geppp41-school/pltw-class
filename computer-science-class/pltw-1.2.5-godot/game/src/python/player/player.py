@@ -31,6 +31,7 @@ class player(Node2D):
     __base_hp: float = 100.0
     __max_hp: float = 100.0
     __armor: int = 100
+    __dodge: float = 0
 
     __hp_modifier: float = 1.0 # the modifier for the maximum hp of the player
 
@@ -50,7 +51,7 @@ class player(Node2D):
 
 
     #exp
-    __exp: float = 0.0
+    __exp: float = 100.0
     __exp_for_next_level: float = 100.0
     __level: int = 1
     __exp_modifier: float = 1.0
@@ -132,7 +133,7 @@ class player(Node2D):
             #     self.level_up_menu_instance.call("roll_cards") # type: ignore
         elif(self.level_up_menu_instance.visible):
             self.level_up_menu_instance.visible = False
-            self.process_buffs()
+            #self.process_buffs()
 
 
 
@@ -228,16 +229,48 @@ class player(Node2D):
 
         :param stats: the card to be added to the list of cards the player has
         """
-        self.set_meta("last_added_card", stats)
         self.__cards.append({"stats": stats})
         self.__unselected_cards -= 1
         self.__selected_cards += 1
+        self.process_card({"stats": stats})
 
     def is_selecting_card(self):
         return True if self.__unselected_cards > 0 else False
 
 
-    
+    def process_card(self, stats):
+        stat = stats.get("stats")
+        stats_size = stat.size()
+        for i in range(stats_size):
+            print(stat.get(i))
+        for i in range(stats_size):
+            stat_as_dict = json.loads(stat.get(i))
+            if(stat_as_dict.get("stat") == "attack_cd"):
+                self.__cooldown_modifier -= float(stat_as_dict.get("change"))
+                self.__cooldown_modifier = max(self.__cooldown_modifier, 0.25)
+            elif(stat_as_dict.get("stat") == "damage"):
+                if(float(stat_as_dict.get("change")) > 1):
+                    self.__damage_modifier += float(stat_as_dict.get("change")) # type: ignore
+                else:
+                    self.__damage_mutiplier += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "dodge"):
+                self.__dodge += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "hp"):
+                self.__hp_modifier += float(stat_as_dict.get("change"))
+                if(self.__hp == self.__max_hp):
+                    self.__hp = self.__base_hp*self.__hp_modifier
+                self.__max_hp = self.__base_hp*self.__hp_modifier
+            elif(stat_as_dict.get("stat") == "attack_size"):
+                self.__attack_size_modifier  += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "exp_gain"):
+                self.__exp_modifier += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "collection_range"):
+                self.__collection_range_modifier += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "multi_shot"):
+                self.__multy_shot += int(stat_as_dict.get("change"))
+        pass
+            
+
 
     def process_buffs(self):
         """
