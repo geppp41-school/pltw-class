@@ -1,5 +1,6 @@
 import json
 import math
+from random import choices
 from typing import get_type_hints
 from py4godot import gdclass
 from py4godot.classes.Area2D import Area2D
@@ -17,6 +18,7 @@ from py4godot.classes.core import PackedStringArray, Vector2
 from py4godot.enums.enums import Key
 from py4godot.classes.RayCast2D import RayCast2D
 from py4godot.classes.Label import Label
+from py4godot.classes.InputEventKey import InputEventKey
 
 @gdclass
 class player(Node2D):
@@ -32,7 +34,7 @@ class player(Node2D):
     __max_hp: float = 100.0
     __armor: int = 100
     __dodge: float = 0
-
+    __heal_delay:float = 0
     __hp_modifier: float = 1.0 # the modifier for the maximum hp of the player
 
 
@@ -66,10 +68,12 @@ class player(Node2D):
 
     __left_mouse_button_pressed = False
 
+
     def _ready(self) -> None:
         self.aim_wheel:Sprite2D = self.get_node("aim_wheel")
         self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn")
         self.level_up_menu = ResourceLoader.instance().load("res://scene/Player/level_up.tscn")
+        self.damage_display = ResourceLoader.instance().load("res://scene/damage_display.tscn")
         self.level_up_menu_instance = self.level_up_menu.instantiate()
         self.add_child(self.level_up_menu_instance)
         self.level_up_menu_instance.visible = False
@@ -82,7 +86,12 @@ class player(Node2D):
         self.current_play_time = {"minute": 0, "second": 0.0}
 
 
+        self.stats_display_object = self.camera.get_node("Hud/stats_display")
+        self.stats_display_object.visible = False
+
+
     def _process(self, delta: float) -> None:
+        self.__heal_delay -= delta
         self.current_play_time["second"] += delta
         if(self.current_play_time["second"] >= 60):
             self.current_play_time["second"] -= 60
@@ -143,6 +152,10 @@ class player(Node2D):
             new_bar_position = Vector2.new3(60+((200-self.exp_bar.size.x)/2), self.exp_bar.position.y)
             self.exp_bar.set_position(new_bar_position)
 
+        if(self.__heal_delay <= 0 and self.__hp < self.__max_hp):
+            self.__hp += 0.1*self.__hp_modifier
+            self.__hp = min(self.__hp, self.__max_hp)
+            self.__heal_delay = 0.01
         
 
         
@@ -186,6 +199,24 @@ class player(Node2D):
                 self.__left_mouse_button_pressed = True
             elif(eventMouseButton.is_released() and eventMouseButton.get_button_index() == 1):
                 self.__left_mouse_button_pressed = False
+        elif(event.get_type() == InputEventKey.get_type()):
+            eventKey: InputEventKey = InputEventKey.cast(event)
+            if(eventKey.is_pressed() and eventKey.get_keycode() == Key.KEY_TAB and not self.stats_display_object.visible):
+                self.stats_display_object.get_node("AnimationPlayer").play("show")
+                children = self.stats_display_object.get_node("container").get_children()
+                children[0].text = f"max hp: {round(self.__max_hp, 2)}"
+                children[1].text = f"dodge: {round(self.__dodge*100, 2)}%"
+                children[2].text = f"attack cd: {round(self.__attack_cooldown*self.__cooldown_modifier, 1)}s"
+                children[3].text = f"base damage: {round(self.__damage_modifier+100, 2)}"
+                children[4].text = f"damage multi: {round(self.__damage_mutiplier, 1)}x"
+                children[5].text = f"attack size: {round(self.__attack_size_modifier, 1)}x"
+                children[6].text = f"multi shot: {self.__multy_shot}"
+                children[7].text = f"exp gain: {round(self.__exp_modifier, 1)}x"
+                children[8].text = f"collection range: {round(self.__collection_range_modifier, 2)}x"
+
+            elif(eventKey.is_released() and eventKey.get_keycode() == Key.KEY_TAB and self.stats_display_object.visible):
+                self.stats_display_object.get_node("AnimationPlayer").play("hide")
+
 
         # TODO: remake the aimwheel moving
         # TODO: remake the fireball shooting 
@@ -241,8 +272,6 @@ class player(Node2D):
     def process_card(self, stats):
         stat = stats.get("stats")
         stats_size = stat.size()
-        for i in range(stats_size):
-            print(stat.get(i))
         for i in range(stats_size):
             stat_as_dict = json.loads(stat.get(i))
             if(stat_as_dict.get("stat") == "attack_cd"):
@@ -362,7 +391,13 @@ class player(Node2D):
             self.__exp += area.get_parent().call("get_exp_value")*self.__exp_modifier
             area.get_parent().call("collected")
         elif(area.get_name().contains("slime")):
+            damage_display_instance = self.damage_display.instantiate()
+            doged = choices([True, False], [self.__dodge, 1.0-self.__dodge])
+            damage_display_instance.call("set_damage_display_text", 5, self.position, doged[0])
+            self.get_parent().add_child(damage_display_instance)
             self.__hp -= 5
+            self.__heal_delay = 3
+            
         pass
     
 

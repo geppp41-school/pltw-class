@@ -89,7 +89,7 @@ class slime(Node2D):
 		if(area2D.name.contains("fireball")):
 			damage = target.call("get_damage")
 			damage_display_instance = self.damage_display.instantiate()
-			damage_display_instance.call("set_damage_display_text", damage, self.position)
+			damage_display_instance.call("set_damage_display_text", damage, self.position, False)
 			self.health -= damage
 			self.get_parent().add_child(damage_display_instance)
 			
