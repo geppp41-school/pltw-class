@@ -136,7 +136,7 @@ class player(Node2D):
         
         
         if(self.__unselected_cards > 0):
-            self.get_children().pop_back().visible = True # type: ignore
+            self.level_up_menu_instance.visible = True # type: ignore
             # if(self.__last_unselected_card_count > self.__unselected_cards):
             #     self.__last_unselected_card_count = self.__unselected_cards
             #     self.level_up_menu_instance.call("roll_cards") # type: ignore
@@ -175,11 +175,11 @@ class player(Node2D):
         if(self.__input_instance.is_key_pressed(Key.KEY_A)):
             position_change.x -= 1
             #flips the direction that the player is facing
-            self.get_children()[0].flip_h = True
+            self.get_node("Sprite").flip_h = True
 
         if(self.__input_instance.is_key_pressed(Key.KEY_D)):
             position_change.x += 1
-            self.get_children()[0].flip_h = False
+            self.get_node("Sprite").flip_h = False
 
         self.__moving = True if(position_change.x != 0 or position_change.y != 0) else False
         self.position += (position_change.normalized()*delta) * self.__speed
@@ -202,19 +202,32 @@ class player(Node2D):
         elif(event.get_type() == InputEventKey.get_type()):
             eventKey: InputEventKey = InputEventKey.cast(event)
             if(eventKey.is_pressed() and eventKey.get_keycode() == Key.KEY_TAB and not self.stats_display_object.visible):
+                print(0)
                 self.stats_display_object.get_node("AnimationPlayer").play("show")
-                children = self.stats_display_object.get_node("container").get_children()
-                children[0].text = f"max hp: {round(self.__max_hp, 2)}"
-                children[1].text = f"dodge: {round(self.__dodge*100, 2)}%"
-                children[2].text = f"attack cd: {round(self.__attack_cooldown*self.__cooldown_modifier, 1)}s"
-                children[3].text = f"base damage: {round(self.__damage_modifier+100, 2)}"
-                children[4].text = f"damage multi: {round(self.__damage_mutiplier, 1)}x"
-                children[5].text = f"attack size: {round(self.__attack_size_modifier, 1)}x"
-                children[6].text = f"multi shot: {self.__multy_shot}"
-                children[7].text = f"exp gain: {round(self.__exp_modifier, 1)}x"
-                children[8].text = f"collection range: {round(self.__collection_range_modifier, 2)}x"
+                print(1)
+                children = self.stats_display_object.get_node("container")
+                print(2)
+                children.get_child(0).text = f"max hp: {round(self.__max_hp, 2)}"
+                print(3)
+                children.get_child(1).text = f"dodge: {round(self.__dodge*100, 2)}%"
+                print(4)
+                children.get_child(2).text = f"attack cd: {round(self.__attack_cooldown*self.__cooldown_modifier, 1)}s"
+                print(5)
+                children.get_child(3).text = f"base damage: {round(self.__damage_modifier+100, 2)}"
+                print(6)
+                children.get_child(4).text = f"damage multi: {round(self.__damage_mutiplier, 1)}x"
+                print(7)
+                children.get_child(5).text = f"attack size: {round(self.__attack_size_modifier, 1)}x"
+                print(8)
+                children.get_child(6).text = f"multi shot: {self.__multy_shot}"
+                print(9)
+                children.get_child(7).text = f"exp gain: {round(self.__exp_modifier, 1)}x"
+                print(10)
+                children.get_child(8).text = f"collection range: {round(self.__collection_range_modifier, 2)}x"
+                print(11)
 
             elif(eventKey.is_released() and eventKey.get_keycode() == Key.KEY_TAB and self.stats_display_object.visible):
+                print(2222)
                 self.stats_display_object.get_node("AnimationPlayer").play("hide")
 
 
