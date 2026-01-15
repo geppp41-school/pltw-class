@@ -51,7 +51,7 @@ class player(Node2D):
 
 
     #exp
-    __exp: float = 100.0
+    __exp: float = 0.0
     __exp_for_next_level: float = 100.0
     __level: int = 1
     __exp_modifier: float = 1.0
