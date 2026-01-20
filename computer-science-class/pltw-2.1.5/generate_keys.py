@@ -7,6 +7,10 @@ print("Public key: ", keys[0])
 print("Private key: ", keys[1])
 print("Modulus: ",keys[2])
 
+
+#encript with public
+#decript with private
+
 #179
 #239
 #public 31961
