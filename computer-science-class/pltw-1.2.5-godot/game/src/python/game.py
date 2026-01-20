@@ -1,8 +1,11 @@
+from random import randint
 from py4godot.classes.InputEvent import InputEvent
 from py4godot.classes.ResourceLoader import ResourceLoader
 from py4godot.methods import private
 from py4godot.classes import gdclass
 from py4godot.classes.Node import Node
+from py4godot.classes.core import Vector2
+
 
 @gdclass
 class game(Node):
@@ -11,6 +14,7 @@ class game(Node):
 	# define signals like this
 	player:Node = Node.new()
 	start_screen:Node = Node.new()
+	spawned_enemies = 0
 
 	def _ready(self) -> None:
 		self.player = ResourceLoader.instance().load("res://scene/Player/player.tscn").instantiate()
@@ -21,6 +25,8 @@ class game(Node):
 		#self.get_node("start_screen").get_node("play_button").connect("pressed", self.play)
 		self.play_button = self.get_node("start_screen").get_node("play_button")
 		self.play_button.pressed.connect(self.play)
+
+		self.slime_scene = ResourceLoader.instance().load("res://scene/enemy/slime/slime.tscn")
 		
 		
 		
@@ -42,6 +48,18 @@ class game(Node):
 		self.add_child(self.player)
 		
 		pass
+
+	def spawn_slime(self, player_position):
+		if(self.spawned_enemies < 1000):
+			slime = self.slime_scene.instantiate()
+			slime.position = player_position + Vector2.new3(randint(300, 500), 0).rotated(randint(0, 360))
+			self.add_child(slime)
+
+	def enemy_died(self):
+		self.spawned_enemies -= 1
+
+	def get_player(self):
+		return self.player
 
 	# Hide the method in the godot editor
 	@private

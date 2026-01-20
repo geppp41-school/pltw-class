@@ -1,8 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://y8en0co8km4"]
+[gd_scene load_steps=21 format=3 uid="uid://y8en0co8km4"]
 
 [ext_resource type="Script" path="res://src/python/enemy/slime/slime.py" id="1_hywa7"]
 [ext_resource type="Texture2D" uid="uid://drf6u0vigy1wg" path="res://assets/enemy/slime/sprite-sheet.png" id="1_w6yge"]
-[ext_resource type="Script" path="res://src/python/enemy/slime/sprite.py" id="3_bhcty"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bhcty"]
 atlas = ExtResource("1_w6yge")
@@ -117,7 +116,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Area2D/CollisionShape2D:rotation")
+tracks/1/path = NodePath("slime/CollisionShape2D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -129,7 +128,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Area2D/CollisionShape2D:position")
+tracks/2/path = NodePath("slime/CollisionShape2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -141,7 +140,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Area2D/CollisionShape2D:shape:radius")
+tracks/3/path = NodePath("slime/CollisionShape2D:shape:radius")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -153,7 +152,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Area2D/CollisionShape2D:shape:height")
+tracks/4/path = NodePath("slime/CollisionShape2D:shape:height")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -187,7 +186,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Area2D/CollisionShape2D:rotation")
+tracks/1/path = NodePath("slime/CollisionShape2D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -199,7 +198,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Area2D/CollisionShape2D:position")
+tracks/2/path = NodePath("slime/CollisionShape2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -211,7 +210,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Area2D/CollisionShape2D:shape:radius")
+tracks/3/path = NodePath("slime/CollisionShape2D:shape:radius")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -223,7 +222,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Area2D/CollisionShape2D:shape:height")
+tracks/4/path = NodePath("slime/CollisionShape2D:shape:height")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -239,7 +238,6 @@ _data = {
 }
 
 [node name="Slime" type="Node2D"]
-_import_path = NodePath("")
 unique_name_in_owner = false
 process_mode = 0
 process_priority = 0
@@ -269,54 +267,18 @@ skew = 0.0
 script = ExtResource("1_hywa7")
 speed = 24
 target_angle = 0
+health = 100.0
+max_health = 100.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-use_parent_material = false
-position = Vector2(0, 0)
-rotation = 0.0
-scale = Vector2(1, 1)
-skew = 0.0
 sprite_frames = SubResource("SpriteFrames_vj003")
 animation = &"Moving"
-autoplay = ""
 frame = 11
-frame_progress = 0.0
-speed_scale = 1.0
-centered = true
-offset = Vector2(0, 0)
-flip_h = false
-flip_v = false
-script = ExtResource("3_bhcty")
-test_int = 5
-test_float = 5.2
-test_bool = true
-test_vector = Vector3(1, 2, 3)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="slime" type="Area2D" parent="."]
+input_pickable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="slime"]
 position = Vector2(2.1316282e-14, 9.333334)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_bhcty")
@@ -327,4 +289,4 @@ libraries = {
 &"slime": SubResource("AnimationLibrary_pcgfp")
 }
 
-[connection signal="area_entered" from="Area2D" to="." method="_collision"]
+[connection signal="area_entered" from="slime" to="." method="_collision"]

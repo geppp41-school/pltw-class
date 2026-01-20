@@ -22,13 +22,22 @@ class level_up_menu(Node2D):
 		self.card_rarities = []
 		self.card_object = self.load_level_cards()
 		self.parent:Node2D = self.get_parent()
-		print(self.card_weights)
-		print(self.card_rarities)
+		self.was_visible = False
+
 		self.roll_cards()
+
+	def _process(self, delta):
+		if self.was_visible == False and self.visible:
+			self.was_visible = True
+			self.roll_cards()
+		elif(not self.visible):
+			self.was_visible = self.visible
 		
 
 	def roll_cards(self) -> None: 
-		print("rolling cards")
+		self.card_1.set_meta("stats", PackedStringArray())
+		self.card_2.set_meta("stats", PackedStringArray())
+		self.card_3.set_meta("stats", PackedStringArray())
 		#sets card rarities
 		self.card_1.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
 		self.card_2.set_frame(self.card_rarities.index(choices(self.card_rarities, self.card_weights)[0]))
@@ -61,7 +70,7 @@ class level_up_menu(Node2D):
 		else:
 			count = 3
 
-		print(count)
+		
 
 		#changes the amount of visible modifier texts
 		if(count == 1):
@@ -77,7 +86,9 @@ class level_up_menu(Node2D):
 			card.get_node("modifier_2").visible = True
 			card.get_node("modifier_3").visible = True
 		
+		
 		for i in range(count):
+		
 			card_rarity:dict[Any, Any] | Any = self.card_object.get(self.card_rarities[card.get_frame()])
 			possible_stats = card_rarity.get("stats")
 			stat = choice(list(possible_stats.keys()))# type: ignore
@@ -105,16 +116,19 @@ class level_up_menu(Node2D):
 			
 			if(i == 0):
 				card.get_node("modifier_1").text = text
-				print("changing modifier 1 text")
+				
 			elif(i == 1):
-				print("changing modifier 2 text")
+				
 				card.get_node("modifier_2").text = text
-			elif(i == 3):
-				print("changing modifier 3 text")
+			elif(i == 2):
+				
 				card.get_node("modifier_3").text = text
+
 			meta = card.get_meta("stats")
 			meta.append("{\"stat\": \"" + stat+ "\", \"change\":" +  str(change) + "}")
 			card.set_meta("stats", meta)
+			
+		
 
 
 
@@ -147,14 +161,17 @@ class level_up_menu(Node2D):
 		
 	def _on_card_1_pressed(self):
 		self.parent.call("add_card", self.card_1.get_meta("stats"))
+		self.roll_cards()
 		pass
 
 	def _on_card_2_pressed(self):
 		self.parent.call("add_card", self.card_2.get_meta("stats"))
+		self.roll_cards()
 		pass
 
 	def _on_card_3_pressed(self):
 		self.parent.call("add_card", self.card_3.get_meta("stats"))
+		self.roll_cards()
 		pass
 	pass
 

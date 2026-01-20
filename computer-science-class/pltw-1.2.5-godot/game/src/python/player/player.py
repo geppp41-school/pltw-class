@@ -1,5 +1,6 @@
 import json
 import math
+from random import choices
 from typing import get_type_hints
 from py4godot import gdclass
 from py4godot.classes.Area2D import Area2D
@@ -15,6 +16,9 @@ from py4godot.classes.ShaderMaterial import ShaderMaterial
 from py4godot.classes.Sprite2D import Sprite2D
 from py4godot.classes.core import PackedStringArray, Vector2
 from py4godot.enums.enums import Key
+from py4godot.classes.RayCast2D import RayCast2D
+from py4godot.classes.Label import Label
+from py4godot.classes.InputEventKey import InputEventKey
 
 @gdclass
 class player(Node2D):
@@ -26,9 +30,11 @@ class player(Node2D):
 
     #hp stuff
     __hp: float = 100.0
+    __base_hp: float = 100.0
     __max_hp: float = 100.0
     __armor: int = 100
-
+    __dodge: float = 0
+    __heal_delay:float = 0
     __hp_modifier: float = 1.0 # the modifier for the maximum hp of the player
 
 
@@ -41,14 +47,17 @@ class player(Node2D):
     __damage_modifier: int = 0 # the amount of damage to be added to the base damage
     __damage_mutiplier: float = 1.0 # the amount that the damage should be mutiplied by 
     __attack_size_modifier: float = 1.0 # incrase the attack size of the fireball
-    __multy_shot: int = 3 # the amount of extra projectiles the player can shoot
+    __multy_shot: int = 0 # the amount of extra projectiles the player can shoot
+
+    __spread: float = 15
 
 
     #exp
-    __exp: float = 1000.0
+    __exp: float = 0.0
     __exp_for_next_level: float = 100.0
     __level: int = 1
     __exp_modifier: float = 1.0
+    __collection_range_modifier = 1.0
     
     # other
     __selected_cards = 0
@@ -59,10 +68,12 @@ class player(Node2D):
 
     __left_mouse_button_pressed = False
 
+
     def _ready(self) -> None:
         self.aim_wheel:Sprite2D = self.get_node("aim_wheel")
         self.fireball = ResourceLoader.instance().load("res://scene/projectiles/fireball.tscn")
         self.level_up_menu = ResourceLoader.instance().load("res://scene/Player/level_up.tscn")
+        self.damage_display = ResourceLoader.instance().load("res://scene/damage_display.tscn")
         self.level_up_menu_instance = self.level_up_menu.instantiate()
         self.add_child(self.level_up_menu_instance)
         self.level_up_menu_instance.visible = False
@@ -70,9 +81,31 @@ class player(Node2D):
         self.aim_wheel_shader:ShaderMaterial = self.aim_wheel.get_material()
         self.camera = self.get_node("Camera2D")
         self.exp_bar:Panel = self.camera.get_node("Hud").get_node("fill")
+        self.timer:Label = self.camera.get_node("Hud/timer")
+        self.Hp_level:Label = self.camera.get_node("Hud/Hp_Level")
+        self.current_play_time = {"minute": 0, "second": 0.0}
+
+
+        self.stats_display_object = self.camera.get_node("Hud/stats_display")
+        self.stats_display_object.visible = False
 
 
     def _process(self, delta: float) -> None:
+        self.__heal_delay -= delta
+        self.current_play_time["second"] += delta
+        if(self.current_play_time["second"] >= 60):
+            self.current_play_time["second"] -= 60
+            self.current_play_time["minute"] += 1
+        if(self.current_play_time["second"] > 9):
+            self.timer.text = f"{self.current_play_time["minute"]}:{round(self.current_play_time["second"])}"
+        else:
+            self.timer.text = f"{self.current_play_time["minute"]}:0{round(self.current_play_time["second"])}"
+
+
+        self.Hp_level.text = f"HP: {round(self.__hp, 2)}/{round(self.__max_hp, 2)}\nLevel: {self.__level}"
+        
+        if(self.__collection_range_modifier*50 != self.get_node("pickup_range/hitbox").get_shape().radius):
+            self.get_node("pickup_range/hitbox").get_shape().radius = self.__collection_range_modifier*50
         if(self.is_selecting_card()):
 
             Engine.instance().set_time_scale(0)
@@ -82,14 +115,14 @@ class player(Node2D):
 
         relitive_mouse_position = self._mouse_position + self.position
         angle = self.get_angle_to(relitive_mouse_position)
-        self.aim_wheel.set_rotation(angle+(math.pi/2))
+        self.aim_wheel.rotation = (angle+(math.pi/2))
         self.__cooldown_time_passed += delta
         self.__cooldown_time_passed = min(self.__cooldown_time_passed, self.__attack_cooldown*self.__cooldown_modifier)
 
         self.aim_wheel_shader.set_shader_parameter("fill_percent", round(self.__cooldown_time_passed/(self.__attack_cooldown*self.__cooldown_modifier), 2))
 
         self.aim_wheel_shader = self.aim_wheel.get_material()
-        if(self.__left_mouse_button_pressed and self.__cooldown_time_passed >= self.__attack_cooldown*self.__cooldown_modifier):
+        if(self.__left_mouse_button_pressed and self.__cooldown_time_passed >= self.__attack_cooldown*self.__cooldown_modifier and self.__unselected_cards == 0):
             self.fire_fireball(self.__multy_shot+1)
             self.__cooldown_time_passed = 0
 
@@ -103,13 +136,13 @@ class player(Node2D):
         
         
         if(self.__unselected_cards > 0):
-            self.get_children().pop_back().visible = True # type: ignore
-            print(f"last unselected card count: {self.__last_unselected_card_count}, unselected card count {self.__unselected_cards}")
-            if(self.__last_unselected_card_count > self.__unselected_cards):
-                self.__last_unselected_card_count = self.__unselected_cards
-                self.level_up_menu_instance.call("roll_cards") # type: ignore
-        else:
+            self.level_up_menu_instance.visible = True # type: ignore
+            # if(self.__last_unselected_card_count > self.__unselected_cards):
+            #     self.__last_unselected_card_count = self.__unselected_cards
+            #     self.level_up_menu_instance.call("roll_cards") # type: ignore
+        elif(self.level_up_menu_instance.visible):
             self.level_up_menu_instance.visible = False
+            #self.process_buffs()
 
 
 
@@ -119,6 +152,10 @@ class player(Node2D):
             new_bar_position = Vector2.new3(60+((200-self.exp_bar.size.x)/2), self.exp_bar.position.y)
             self.exp_bar.set_position(new_bar_position)
 
+        if(self.__heal_delay <= 0 and self.__hp < self.__max_hp):
+            self.__hp += 0.1*self.__hp_modifier
+            self.__hp = min(self.__hp, self.__max_hp)
+            self.__heal_delay = 0.01
         
 
         
@@ -138,13 +175,13 @@ class player(Node2D):
         if(self.__input_instance.is_key_pressed(Key.KEY_A)):
             position_change.x -= 1
             #flips the direction that the player is facing
-            self.get_children()[0].flip_h = True
+            self.get_node("Sprite").flip_h = True
 
         if(self.__input_instance.is_key_pressed(Key.KEY_D)):
             position_change.x += 1
-            self.get_children()[0].flip_h = False
+            self.get_node("Sprite").flip_h = False
 
-        self.__moving = True if(position_change.x != 0 and position_change.y != 0) else False
+        self.__moving = True if(position_change.x != 0 or position_change.y != 0) else False
         self.position += (position_change.normalized()*delta) * self.__speed
         
 
@@ -154,6 +191,7 @@ class player(Node2D):
         if(event.get_type() == InputEventMouseMotion.get_type()):
             eventMouseMotion:InputEventMouseMotion = InputEventMouseMotion.cast(event)
             self._mouse_position = eventMouseMotion.position-Vector2.new3(320, 240)
+            
         elif(event.get_type() == InputEventMouseButton.get_type()):
             eventMouseButton:InputEventMouseButton = InputEventMouseButton.cast(event)
 
@@ -161,6 +199,37 @@ class player(Node2D):
                 self.__left_mouse_button_pressed = True
             elif(eventMouseButton.is_released() and eventMouseButton.get_button_index() == 1):
                 self.__left_mouse_button_pressed = False
+        elif(event.get_type() == InputEventKey.get_type()):
+            eventKey: InputEventKey = InputEventKey.cast(event)
+            if(eventKey.is_pressed() and eventKey.get_keycode() == Key.KEY_TAB and not self.stats_display_object.visible):
+                print(0)
+                self.stats_display_object.get_node("AnimationPlayer").play("show")
+                print(1)
+                children = self.stats_display_object.get_node("container")
+                print(2)
+                children.get_child(0).text = f"max hp: {round(self.__max_hp, 2)}"
+                print(3)
+                children.get_child(1).text = f"dodge: {round(self.__dodge*100, 2)}%"
+                print(4)
+                children.get_child(2).text = f"attack cd: {round(self.__attack_cooldown*self.__cooldown_modifier, 1)}s"
+                print(5)
+                children.get_child(3).text = f"base damage: {round(self.__damage_modifier+100, 2)}"
+                print(6)
+                children.get_child(4).text = f"damage multi: {round(self.__damage_mutiplier, 1)}x"
+                print(7)
+                children.get_child(5).text = f"attack size: {round(self.__attack_size_modifier, 1)}x"
+                print(8)
+                children.get_child(6).text = f"multi shot: {self.__multy_shot}"
+                print(9)
+                children.get_child(7).text = f"exp gain: {round(self.__exp_modifier, 1)}x"
+                print(10)
+                children.get_child(8).text = f"collection range: {round(self.__collection_range_modifier, 2)}x"
+                print(11)
+
+            elif(eventKey.is_released() and eventKey.get_keycode() == Key.KEY_TAB and self.stats_display_object.visible):
+                print(2222)
+                self.stats_display_object.get_node("AnimationPlayer").play("hide")
+
 
         # TODO: remake the aimwheel moving
         # TODO: remake the fireball shooting 
@@ -198,7 +267,7 @@ class player(Node2D):
         return self.__attack_size_modifier
     
     # TODO: add create card 
-    def add_card(self, stats):
+    def add_card(self, stats:PackedStringArray):
         """
         used to add a card to the players selected cards
 
@@ -207,12 +276,43 @@ class player(Node2D):
         self.__cards.append({"stats": stats})
         self.__unselected_cards -= 1
         self.__selected_cards += 1
+        self.process_card({"stats": stats})
 
     def is_selecting_card(self):
         return True if self.__unselected_cards > 0 else False
 
 
-    
+    def process_card(self, stats):
+        stat = stats.get("stats")
+        stats_size = stat.size()
+        for i in range(stats_size):
+            stat_as_dict = json.loads(stat.get(i))
+            if(stat_as_dict.get("stat") == "attack_cd"):
+                self.__cooldown_modifier -= float(stat_as_dict.get("change"))
+                self.__cooldown_modifier = max(self.__cooldown_modifier, 0.25)
+            elif(stat_as_dict.get("stat") == "damage"):
+                if(float(stat_as_dict.get("change")) > 1):
+                    self.__damage_modifier += float(stat_as_dict.get("change")) # type: ignore
+                else:
+                    self.__damage_mutiplier += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "dodge"):
+                self.__dodge += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "hp"):
+                self.__hp_modifier += float(stat_as_dict.get("change"))
+                if(self.__hp == self.__max_hp):
+                    self.__hp = self.__base_hp*self.__hp_modifier
+                self.__max_hp = self.__base_hp*self.__hp_modifier
+            elif(stat_as_dict.get("stat") == "attack_size"):
+                self.__attack_size_modifier  += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "exp_gain"):
+                self.__exp_modifier += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "collection_range"):
+                self.__collection_range_modifier += float(stat_as_dict.get("change"))
+            elif(stat_as_dict.get("stat") == "multi_shot"):
+                self.__multy_shot += int(stat_as_dict.get("change"))
+        pass
+            
+
 
     def process_buffs(self):
         """
@@ -226,6 +326,7 @@ class player(Node2D):
         self.__cooldown_modifier = 1.0
         self.__hp_modifier = 1.0
         self.__multy_shot = 0
+        
 
 
         for item in self.__cards:
@@ -241,17 +342,27 @@ class player(Node2D):
                     else:
                         self.__damage_mutiplier = self.__damage_mutiplier + float(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "hp"):
-                    self.__health_modifier += float(stat_as_dict.get("change"))
-                elif(stat_as_dict.get("stat") == "multy_shot"):
+                    self.__hp_modifier += float(stat_as_dict.get("change"))
+                elif(stat_as_dict.get("stat") == "multi_shot"):
                     self.__multy_shot = self.__multy_shot + int(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "collection_range"):	
                     self.__collection_range_modifier = self.__collection_range_modifier + float(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "exp_gain"):
                     self.__exp_modifier = self.__exp_modifier + float(stat_as_dict.get("change"))
                 elif(stat_as_dict.get("stat") == "attack_size"):
-                    self.__attack_size = self.__attack_size + float(stat_as_dict.get("change"))
+                    self.__attack_size_modifier = self.__attack_size_modifier + float(stat_as_dict.get("change"))
+        
+        if(self.__hp == self.__max_hp):
+            self.__hp = self.__base_hp * self.__hp_modifier
+        self.__max_hp = self.__base_hp * self.__hp_modifier
+        
+    
         
     def fire_fireball(self, count:int):
+        """
+        used to shoot a fireball
+        :param count: the amount of fireballs to shoot
+        """
         projectiles = []
         for i in range(count):
             projectiles.append(self.fireball.instantiate())
@@ -259,16 +370,25 @@ class player(Node2D):
         if(self.get_parent() != None):
             for i in range(count):
                 self.get_parent().add_child(projectiles[i])
+                
         else:
             for i in range(count):
                 self.add_child(projectiles[i])
 
         for i in range(count):
+            debug_direction = RayCast2D.new()
+            debug_direction.target_position = Vector2.new3(0, -50)
             projectiles[i].call("set_speed", 100)
-            if(count == 1):
-                projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-(math.pi/2)-(90))
-            else:
-                projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-((90/count)*(i+1)))
+            
+            
+            projectiles[i].call(
+                "set_direction", 
+                self.aim_wheel.get_rotation()-(math.pi/2)-math.radians(self.__spread*(count/2.0)-(self.__spread*i))
+            )
+            debug_direction.rotation = self.aim_wheel.get_rotation()-math.radians(self.__spread*(count/2.0)-(self.__spread*i))
+                #self.add_child(debug_direction)
+                #print(f"spawning fireball {i} at angle {self.aim_wheel.get_rotation()+(self.__spread*(count/2)-(self.__spread*i))}")
+                #projectiles[i].call("set_direction", self.aim_wheel.get_rotation()-((90/count)*(i+1)))
             projectiles[i].call("set_damage_modifier", self.__damage_modifier)
             projectiles[i].call("set_damage_mutiplier", self.__damage_mutiplier)
             projectiles[i].call("set_size", self.__attack_size_modifier)
@@ -276,9 +396,21 @@ class player(Node2D):
 
 
     def _on_player_hitbox_area_entered(self, area:Area2D):
+        """
+        runs when another Area2D enters the connected Area2D
+        :pram area: the area that entered the connected area
+        """
         if(area.get_name().contains("exp")):
             self.__exp += area.get_parent().call("get_exp_value")*self.__exp_modifier
             area.get_parent().call("collected")
+        elif(area.get_name().contains("slime")):
+            damage_display_instance = self.damage_display.instantiate()
+            doged = choices([True, False], [self.__dodge, 1.0-self.__dodge])
+            damage_display_instance.call("set_damage_display_text", 5, self.position, doged[0])
+            self.get_parent().add_child(damage_display_instance)
+            self.__hp -= 5
+            self.__heal_delay = 3
+            
         pass
     
 

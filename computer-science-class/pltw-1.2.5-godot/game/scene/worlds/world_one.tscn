@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://d4hleqnjc4kgy"]
+[gd_scene load_steps=5 format=3 uid="uid://d4hleqnjc4kgy"]
 
 [ext_resource type="Gradient" uid="uid://fa1uhyhfsqp4" path="res://assets/color ramps/world_one_color_ramp.tres" id="1_b8f1g"]
+[ext_resource type="Script" path="res://src/python/worlds/world.py" id="2_5qp4v"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ht25q"]
 noise_type = 3
@@ -13,4 +14,46 @@ noise = SubResource("FastNoiseLite_ht25q")
 color_ramp = ExtResource("1_b8f1g")
 
 [node name="world_one" type="Sprite2D"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(0, 0)
+rotation = 0.0
+scale = Vector2(1, 1)
+skew = 0.0
 texture = SubResource("NoiseTexture2D_dp0kx")
+centered = true
+offset = Vector2(0, 0)
+flip_h = false
+flip_v = false
+hframes = 1
+vframes = 1
+frame = 0
+region_enabled = false
+region_rect = Rect2(0, 0, 0, 0)
+region_filter_clip_enabled = false
+script = ExtResource("2_5qp4v")
+test_int = 5
+test_float = 5.2
+test_bool = true
+test_vector = Vector3(1, 2, 3)

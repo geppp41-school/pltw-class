@@ -18,8 +18,8 @@ class slime(Node2D):
 	speed: int = 60
 	_can_move:bool = True
 	target_angle:float = 0
-	health:float = 100.0
-	max_health:float = 100.0
+	health:float = 30.0
+	max_health:float = 30.0
 	# define signals like this
 
 
@@ -27,15 +27,16 @@ class slime(Node2D):
 	def _ready(self) -> None:
 		self.animated_body = self.get_node("AnimatedSprite2D")  # type: ignore
 		self.animation_node = self.get_node("AnimationPlayer")
-		#self.animated_body.play("Moving")
-		self.animation_node.play("slime/moving")
+		self.animated_body.play("Moving")
+		#self.animation_node.play("slime/moving")
 		if(self.get_parent() != None):
 			self.target = self.get_parent().get_pyscript().get_player()
-		self.position = Vector2.new3(random.randint(-300,300),random.randint(-300,300))
+		#self.position = Vector2.new3(random.randint(-300,300),random.randint(-300,300))
 		self.green_exp = ResourceLoader.instance().load("res://scene/exp/green_exp.tscn")
 		self.blue_exp = ResourceLoader.instance().load("res://scene/exp/blue_exp.tscn")
 		self.red_exp = ResourceLoader.instance().load("res://scene/exp/red_exp.tscn")
 		self.purple_exp = ResourceLoader.instance().load("res://scene/exp/purple_exp.tscn")
+		self.damage_display = ResourceLoader.instance().load("res://scene/damage_display.tscn")
 		self.exp_list = [self.green_exp, self.blue_exp, self.red_exp, self.purple_exp]
 		self.exp_weights = [100, 50, 10, 1]
 		pass
@@ -47,6 +48,7 @@ class slime(Node2D):
 			exp_orb = exp_to_spawn.instantiate()
 			exp_orb.set_position(self.position)
 			self.get_parent().add_child(exp_orb)
+			self.get_parent().call("enemy_died")
 			self.queue_free()
 
 		# put dynamic code here
@@ -85,8 +87,13 @@ class slime(Node2D):
 	def _collision(self, area2D:Area2D) -> None:
 		target:Node2D = area2D.get_parent()
 		if(area2D.name.contains("fireball")):
-			self.health -= target.call("get_damage")
-			target.queue_free()
+			damage = target.call("get_damage")
+			damage_display_instance = self.damage_display.instantiate()
+			damage_display_instance.call("set_damage_display_text", damage, self.position, False)
+			self.health -= damage
+			self.get_parent().add_child(damage_display_instance)
+			
+			
 		pass
 	@private
 	def test_method(self):

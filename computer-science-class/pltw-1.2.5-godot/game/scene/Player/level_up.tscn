@@ -116,6 +116,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="card_1" type="Button" parent="card_1"]
+z_index = 5
 offset_left = -11.416668
 offset_top = -16.333334
 offset_right = 11.583332
@@ -183,6 +184,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="card_2" type="Button" parent="card_2"]
+z_index = 5
 offset_left = -11.416668
 offset_top = -16.333334
 offset_right = 11.583332
@@ -250,6 +252,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="card_3" type="Button" parent="card_3"]
+z_index = 5
 offset_left = -11.416668
 offset_top = -16.333334
 offset_right = 11.583332
