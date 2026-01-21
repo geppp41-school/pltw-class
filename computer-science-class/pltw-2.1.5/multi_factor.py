@@ -18,10 +18,12 @@ while(len(username) < min_length or len(username) > max_length):
     elif(len(username) > max_length):
         print("Username too long")
 
-while(len(password) < min_length or len(password) > max_length):
+while(len(password) < min_length or len(password) > max_length or not password_has_digit or not password_has_alpha):
     print("Password must be between 8 and 24 characters long and contain letters and numbers")
     password = input("Enter the password for the Restricted App: ")
-    for char in password:
+    password_has_alpha = False
+    password_has_digit = False
+    for char in password:#try let it go 2   and  to be or not to be 70
         if(char.isalpha()):
             password_has_alpha = True
         if(char.isdigit()):
