@@ -5,4 +5,13 @@
     "python.analysis.typeCheckingMode": "standard",
     "python-envs.defaultEnvManager": "ms-python.python:system",
     "python-envs.pythonProjects": [],
+    "files.associations": {
+        "time.h": "c"
+    },
+    "python.analysis.extraPaths": [
+        "./computer-science-class/pltw-1.2.5-godot/game/addons/py4godot/cpython-3.12.4-linux64/python/lib/python3.12/site-packages"
+    ],
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true,
 }

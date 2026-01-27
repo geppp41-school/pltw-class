@@ -8,7 +8,13 @@
       "label": "desktop"
     }
   },
-  "postCreateCommand": "apt-get update && apt-get install -y xvfb x11-apps && echo 'export DISPLAY=:1' >> /etc/profile && (Xvfb :1 -screen 0 1024x768x16 &)",
+  "postCreateCommand": "apt-get update && apt-get install -y xvfb x11-apps tigervnc-standalone-server tigervnc-tools && echo 'export LP_NUM_THREADS=$(nproc)' >> /etc/profile && echo 'export DISPLAY=:1' >> /etc/profile && (Xvfb :1 -screen 0 1024x768x24 &)",
+  "remoteEnv": {
+    "VNC_COMPRESSION": "tight",
+    "VNC_QUALITY": "8",
+    "VNC_COL_DEPTH": "24",
+    "NOVNC_HEARTBEAT": "5"
+  },
   "customizations": {
     "vscode": {
       "extensions": [

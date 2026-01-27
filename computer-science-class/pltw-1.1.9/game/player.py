@@ -5,7 +5,7 @@ from util.Vector2 import *
 from util.Time import *
 class Player:
     def __init__(self, Turtle : turtle.Turtle):
-        self.__speed : float = 16
+        self.__speed : float = 160
         self.__turtle : turtle.Turtle = Turtle
         self.__lastTime = time_ms()
         self.__deltaTime = time_ms()-self.__lastTime
@@ -29,7 +29,7 @@ class Player:
         )
 
         turtleMovement = turtleMovement.normalized()
-        turtleMovement *= self.__speed/self.__deltaTime
+        turtleMovement *= self.__speed*self.__deltaTime
         self.__turtle.setpos(
             turtlePosition[0]+turtleMovement[1],
             turtlePosition[1]+turtleMovement[0]

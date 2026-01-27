@@ -1,0 +1,14 @@
+{
+    "python.analysis.autoImportCompletions": true,
+    "oneDarkPro.bold": false,
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.typeCheckingMode": "standard",
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": [],
+    "python.analysis.extraPaths": [
+        "./addons/py4godot/cpython-3.12.4-windows64/python/Lib/site-packages"
+    ],
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true
+}

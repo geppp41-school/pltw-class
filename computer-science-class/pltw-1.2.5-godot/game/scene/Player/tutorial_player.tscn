@@ -1,0 +1,338 @@
+[gd_scene load_steps=29 format=3 uid="uid://bukldhiagj64g"]
+
+[ext_resource type="Script" path="res://src/python/player/player.py" id="1_mwjuu"]
+[ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="2_dkjl8"]
+[ext_resource type="Texture2D" uid="uid://c6i7cvr4hvr6s" path="res://assets/player/wizard/MovingWizardSpriteSheet.png" id="3_iv8r7"]
+[ext_resource type="Script" path="res://src/python/player/sprite.py" id="4_18u0w"]
+[ext_resource type="Shader" uid="uid://2dix4hvllmqk" path="res://scene/Player/player.gdshader" id="5_ttp87"]
+[ext_resource type="Texture2D" uid="uid://bvxe6epknlk3s" path="res://assets/player/aim_wheel_thin (1).png" id="6_d6icb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul6r3"]
+atlas = ExtResource("2_dkjl8")
+region = Rect2(0, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qgjq"]
+atlas = ExtResource("2_dkjl8")
+region = Rect2(43, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puips"]
+atlas = ExtResource("2_dkjl8")
+region = Rect2(86, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlp82"]
+atlas = ExtResource("2_dkjl8")
+region = Rect2(129, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hvj6"]
+atlas = ExtResource("2_dkjl8")
+region = Rect2(172, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igimb"]
+atlas = ExtResource("2_dkjl8")
+region = Rect2(215, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vbes"]
+atlas = ExtResource("2_dkjl8")
+region = Rect2(258, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sklui"]
+atlas = ExtResource("2_dkjl8")
+region = Rect2(301, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1oib"]
+atlas = ExtResource("3_iv8r7")
+region = Rect2(0, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4jtx"]
+atlas = ExtResource("3_iv8r7")
+region = Rect2(23, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqbp3"]
+atlas = ExtResource("3_iv8r7")
+region = Rect2(46, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6riq7"]
+atlas = ExtResource("3_iv8r7")
+region = Rect2(69, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vto0h"]
+atlas = ExtResource("3_iv8r7")
+region = Rect2(92, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6f34m"]
+atlas = ExtResource("3_iv8r7")
+region = Rect2(115, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7i22"]
+atlas = ExtResource("3_iv8r7")
+region = Rect2(138, 0, 23, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tfiom"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ul6r3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qgjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puips")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlp82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hvj6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igimb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vbes")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sklui")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1oib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4jtx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqbp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6riq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vto0h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6f34m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7i22")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dpmh7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8uvvx"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fv2l"]
+bg_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fra3v"]
+shader = ExtResource("5_ttp87")
+shader_parameter/fill_percent = 1.0
+shader_parameter/full = Color(1, 1, 1, 1)
+shader_parameter/empty = Color(0.5, 0.5, 0.5, 0.2)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbm5k"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fv2l"]
+radius = 50.0
+
+[node name="player" type="Node2D"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(0, 0)
+rotation = 0.0
+scale = Vector2(2, 2)
+skew = 0.0
+script = ExtResource("1_mwjuu")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(0, 0)
+rotation = 0.0
+scale = Vector2(1, 1)
+skew = 0.0
+sprite_frames = SubResource("SpriteFrames_tfiom")
+animation = &"moving"
+autoplay = ""
+frame = 0
+frame_progress = 0.0
+speed_scale = 1.0
+centered = true
+offset = Vector2(0, 0)
+flip_h = false
+flip_v = false
+script = ExtResource("4_18u0w")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Hud" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -160.0
+offset_top = -120.0
+offset_right = 160.0
+offset_bottom = 120.0
+
+[node name="Background" type="Panel" parent="Camera2D/Hud"]
+material = SubResource("ShaderMaterial_dpmh7")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -30.0
+offset_right = 100.0
+offset_bottom = -10.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8uvvx")
+
+[node name="fill" type="Panel" parent="Camera2D/Hud"]
+material = SubResource("ShaderMaterial_dpmh7")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -81.5
+offset_top = -30.5
+offset_right = -31.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7fv2l")
+
+[node name="timer" type="Label" parent="Camera2D/Hud"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -119.0
+offset_right = 33.0
+offset_bottom = -96.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hp_Level" type="Label" parent="Camera2D/Hud"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "HP: 
+Level: "
+
+[node name="Tutorial" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -160.0
+offset_top = -120.0
+offset_right = 160.0
+offset_bottom = 120.0
+
+[node name="Highlight_Player" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="Highlight_Exp_Bar" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="Highlight_Level" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="Highlight_Hp" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="Highlight_Timer" type="Control" parent="Camera2D/Tutorial"]
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="aim_wheel" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fra3v")
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("6_d6icb")
+
+[node name="player_hitbox" type="Area2D" parent="."]
+
+[node name="hitboxShape" type="CollisionShape2D" parent="player_hitbox"]
+shape = SubResource("CapsuleShape2D_wbm5k")
+
+[node name="pickup_range" type="Area2D" parent="."]
+
+[node name="hitbox" type="CollisionShape2D" parent="pickup_range"]
+shape = SubResource("CircleShape2D_7fv2l")
+
+[connection signal="area_entered" from="player_hitbox" to="." method="_on_player_hitbox_area_entered"]

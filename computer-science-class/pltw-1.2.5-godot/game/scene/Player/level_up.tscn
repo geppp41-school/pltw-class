@@ -1,0 +1,265 @@
+[gd_scene load_steps=9 format=3 uid="uid://cr0nv3004k231"]
+
+[ext_resource type="Script" path="res://src/python/player/level_up_menu.py" id="1_2jyi5"]
+[ext_resource type="SpriteFrames" uid="uid://riu8ea00mmwf" path="res://assets/level_cards/cards.tres" id="1_q4r0h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jyi5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_urh3c"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfb7e"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vrma8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmmjx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayfsh"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="LevelUp" type="Node2D"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 10
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(-240, -180)
+rotation = 0.0
+scale = Vector2(0.75, 0.75)
+skew = 0.0
+script = ExtResource("1_2jyi5")
+
+[node name="section_1" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(0.36659443, 0.36659467, 0.36659458, 0.78431374)
+
+[node name="card_1" type="AnimatedSprite2D" parent="."]
+position = Vector2(167, 240)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("1_q4r0h")
+animation = &"cards"
+metadata/stats = PackedStringArray()
+
+[node name="name" type="RichTextLabel" parent="card_1"]
+offset_left = -7.75
+offset_top = -15.0
+offset_right = 169.39284
+offset_bottom = 30.0
+scale = Vector2(0.09, 0.09)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "uncommon"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier_1" type="RichTextLabel" parent="card_1"]
+offset_left = -10.250001
+offset_top = -9.0
+offset_right = 362.47726
+offset_bottom = 81.0
+scale = Vector2(0.055, 0.055)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "increase pickup range by x0.xx"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier_2" type="RichTextLabel" parent="card_1"]
+offset_left = -10.250001
+offset_top = -2.0
+offset_right = 362.47726
+offset_bottom = 88.0
+scale = Vector2(0.055, 0.055)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "increase pickup range by x0.xx"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier_3" type="RichTextLabel" parent="card_1"]
+offset_left = -10.250001
+offset_top = 5.0
+offset_right = 362.47726
+offset_bottom = 95.0
+scale = Vector2(0.055, 0.055)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "increase pickup range by x0.xx"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="card_1" type="Button" parent="card_1"]
+z_index = 5
+offset_left = -11.416668
+offset_top = -16.333334
+offset_right = 11.583332
+offset_bottom = 16.333334
+theme_override_styles/normal = SubResource("StyleBoxFlat_2jyi5")
+theme_override_styles/focus = SubResource("StyleBoxFlat_urh3c")
+
+[node name="card_2" type="AnimatedSprite2D" parent="."]
+position = Vector2(319.5, 240)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("1_q4r0h")
+animation = &"cards"
+metadata/stats = PackedStringArray()
+
+[node name="name" type="RichTextLabel" parent="card_2"]
+offset_left = -7.75
+offset_top = -15.0
+offset_right = 169.39284
+offset_bottom = 30.0
+scale = Vector2(0.09, 0.09)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "uncommon"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier_1" type="RichTextLabel" parent="card_2"]
+offset_left = -10.375
+offset_top = -9.0
+offset_right = 362.35226
+offset_bottom = 81.0
+scale = Vector2(0.055, 0.055)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "increase pickup range by x0.xx"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier_2" type="RichTextLabel" parent="card_2"]
+offset_left = -10.375
+offset_top = -2.0
+offset_right = 362.35226
+offset_bottom = 88.0
+scale = Vector2(0.055, 0.055)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "increase pickup range by x0.xx"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier_3" type="RichTextLabel" parent="card_2"]
+offset_left = -10.375
+offset_top = 5.0
+offset_right = 362.35226
+offset_bottom = 95.0
+scale = Vector2(0.055, 0.055)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "increase pickup range by x0.xx"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="card_2" type="Button" parent="card_2"]
+z_index = 5
+offset_left = -11.416668
+offset_top = -16.333334
+offset_right = 11.583332
+offset_bottom = 16.333334
+theme_override_styles/normal = SubResource("StyleBoxFlat_sfb7e")
+theme_override_styles/focus = SubResource("StyleBoxFlat_vrma8")
+
+[node name="card_3" type="AnimatedSprite2D" parent="."]
+position = Vector2(472, 240)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("1_q4r0h")
+animation = &"cards"
+metadata/stats = PackedStringArray()
+
+[node name="name" type="RichTextLabel" parent="card_3"]
+offset_left = -7.75
+offset_top = -15.0
+offset_right = 169.39284
+offset_bottom = 30.0
+scale = Vector2(0.09, 0.09)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "uncommon"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier_1" type="RichTextLabel" parent="card_3"]
+offset_left = -10.0
+offset_top = -9.0
+offset_right = 353.63638
+offset_bottom = 81.0
+scale = Vector2(0.055, 0.055)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "increase pickup range by x0.xx"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier_2" type="RichTextLabel" parent="card_3"]
+offset_left = -9.999998
+offset_top = -2.0
+offset_right = 353.63635
+offset_bottom = 88.0
+scale = Vector2(0.055, 0.055)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "increase pickup range by x0.xx"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier_3" type="RichTextLabel" parent="card_3"]
+offset_left = -9.999998
+offset_top = 5.0
+offset_right = 353.63635
+offset_bottom = 95.90909
+scale = Vector2(0.055, 0.055)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "increase pickup range by x0.xx"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="card_3" type="Button" parent="card_3"]
+z_index = 5
+offset_left = -11.416668
+offset_top = -16.333334
+offset_right = 11.583332
+offset_bottom = 16.333334
+theme_override_styles/normal = SubResource("StyleBoxFlat_nmmjx")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ayfsh")
+
+[connection signal="pressed" from="card_1/card_1" to="." method="_on_card_1_pressed"]
+[connection signal="pressed" from="card_2/card_2" to="." method="_on_card_2_pressed"]
+[connection signal="pressed" from="card_3/card_3" to="." method="_on_card_3_pressed"]

@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfn0u5s2yhm84"]
+
+[ext_resource type="Script" path="res://src/python/projectile/fireball.py" id="1_fkmv1"]
+[ext_resource type="Shader" uid="uid://6yy3obujfjgr" path="res://scene/projectiles/fireball.gdshader" id="1_g54f7"]
+[ext_resource type="Texture2D" uid="uid://cn8e37k0dc0vl" path="res://scene/projectiles/fireball.tres" id="2_g38xx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fkmv1"]
+shader = ExtResource("1_g54f7")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.12
+shader_parameter/circle_color = Color(1, 0, 0, 1)
+shader_parameter/bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g54f7"]
+radius = 32.0
+
+[node name="fireball" type="Node2D"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+position = Vector2(0, 0)
+rotation = 0.0
+scale = Vector2(0.5, 0.5)
+skew = 0.0
+script = ExtResource("1_fkmv1")
+life_span = 5
+speed = 16.0
+direction = 0.0
+damage_modifier = 0.0
+damage_mutiplier = 1.0
+size = 0.5
+size_modifier = 1.0
+noise_offset = Vector3(0, 0, 0)
+damage_tick_time = 0.0625
+tick_time = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fkmv1")
+texture = ExtResource("2_g38xx")
+
+[node name="fireball" type="Area2D" parent="."]
+input_pickable = false
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fireball"]
+shape = SubResource("CircleShape2D_g54f7")

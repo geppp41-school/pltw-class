@@ -1,0 +1,249 @@
+[gd_scene load_steps=26 format=3 uid="uid://cot1c74htjkxq"]
+
+[ext_resource type="Texture2D" uid="uid://6xco4fvekqhw" path="res://assets/player/wizard/WizardDeathSpriteSheet.png" id="1_cmsy7"]
+[ext_resource type="Script" path="res://src/python/start_screen/start_screen.py" id="1_p8amv"]
+[ext_resource type="Texture2D" uid="uid://c6i7cvr4hvr6s" path="res://assets/player/wizard/MovingWizardSpriteSheet.png" id="2_p8amv"]
+[ext_resource type="Gradient" uid="uid://fa1uhyhfsqp4" path="res://assets/color ramps/world_one_color_ramp.tres" id="2_x64hx"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gkif4"]
+noise_type = 5
+frequency = 0.0134
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3273u"]
+width = 640
+height = 480
+noise = SubResource("FastNoiseLite_gkif4")
+color_ramp = ExtResource("2_x64hx")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul6r3"]
+atlas = ExtResource("1_cmsy7")
+region = Rect2(0, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qgjq"]
+atlas = ExtResource("1_cmsy7")
+region = Rect2(43, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puips"]
+atlas = ExtResource("1_cmsy7")
+region = Rect2(86, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlp82"]
+atlas = ExtResource("1_cmsy7")
+region = Rect2(129, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hvj6"]
+atlas = ExtResource("1_cmsy7")
+region = Rect2(172, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igimb"]
+atlas = ExtResource("1_cmsy7")
+region = Rect2(215, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vbes"]
+atlas = ExtResource("1_cmsy7")
+region = Rect2(258, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sklui"]
+atlas = ExtResource("1_cmsy7")
+region = Rect2(301, 0, 43, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1oib"]
+atlas = ExtResource("2_p8amv")
+region = Rect2(0, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4jtx"]
+atlas = ExtResource("2_p8amv")
+region = Rect2(23, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqbp3"]
+atlas = ExtResource("2_p8amv")
+region = Rect2(46, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6riq7"]
+atlas = ExtResource("2_p8amv")
+region = Rect2(69, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vto0h"]
+atlas = ExtResource("2_p8amv")
+region = Rect2(92, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6f34m"]
+atlas = ExtResource("2_p8amv")
+region = Rect2(115, 0, 23, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7i22"]
+atlas = ExtResource("2_p8amv")
+region = Rect2(138, 0, 23, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yjh10"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ul6r3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qgjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puips")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlp82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hvj6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igimb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vbes")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sklui")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1oib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4jtx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqbp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6riq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vto0h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6f34m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7i22")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x64hx"]
+bg_color = Color(0.23392558, 0.2339254, 0.23392543, 1)
+corner_radius_top_left = 23
+corner_radius_top_right = 23
+corner_radius_bottom_right = 23
+corner_radius_bottom_left = 23
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yjh10"]
+bg_color = Color(0.37791917, 0.37791875, 0.37791893, 1)
+corner_radius_top_left = 23
+corner_radius_top_right = 23
+corner_radius_bottom_right = 23
+corner_radius_bottom_left = 23
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8amv"]
+bg_color = Color(0.14767197, 0.14767176, 0.14767185, 1)
+corner_radius_top_left = 23
+corner_radius_top_right = 23
+corner_radius_bottom_right = 23
+corner_radius_bottom_left = 23
+
+[node name="start_screen" type="Control"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+focus_behavior_recursive = 0
+mouse_filter = 0
+mouse_behavior_recursive = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+theme_type_variation = &""
+script = ExtResource("1_p8amv")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(320, 240)
+texture = SubResource("NoiseTexture2D_3273u")
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(320, 240)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_yjh10")
+animation = &"moving"
+
+[node name="play_button" type="Button" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = 228.0
+offset_top = 267.0
+offset_right = 413.0
+offset_bottom = 317.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_x64hx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yjh10")
+theme_override_styles/hover = SubResource("StyleBoxFlat_p8amv")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_yjh10")
+text = "Play"

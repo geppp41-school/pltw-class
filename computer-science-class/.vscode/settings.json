@@ -11,5 +11,6 @@
     "powermode.explosions.customExplosions": [
         "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.davidfloresdev.net%2Fpost%2Fmy-first-unreal-project&psig=AOvVaw1jI3pazNWhpweJOBwAgvrF&ust=1759851873629000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCLDQjqD1j5ADFQAAAAAdAAAAABAT"
     ],
-    "powermode.explosions.backgroundMode": "image"
+    "powermode.explosions.backgroundMode": "image",
+    "C_Cpp.default.compilerPath": "C:/mingw64/bin/g++.exe"
 }
