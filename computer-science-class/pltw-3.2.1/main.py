@@ -44,7 +44,7 @@ for i in range(len(temp_data['Anomaly'])):
         max_year = temp_data['Year'][i]
 
 for i in range(len(temp_data['Anomaly'])):
-    sum_anomaly += int(temp_data['Anomaly'][i])
+    sum_anomaly += temp_data['Anomaly'][i]
 
 avg_anomaly = sum_anomaly/len(temp_data['Anomaly'])
 
