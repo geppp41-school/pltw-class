@@ -10,15 +10,47 @@ temp_data = pd.read_csv("pltw-3.2.1\\temperature_data.csv", header=0)   # identi
 
 # TODO #2: Use matplotlib to make a line graph
 plt.plot(temp_data['Year'], temp_data['Anomaly'], color='gray')
+
+
+
+# TODO #3: Plot LOWESS in a line graph
+plt.plot(temp_data['Year'], temp_data['Anomaly'], color='red')
 plt.ylabel('Temperature Anomalies in Celsius')
 plt.xlabel('Years')
 plt.title('Change in Temperatures')
-plt.show()
-
-# TODO #3: Plot LOWESS in a line graph
 
 
 # TODO #4: Use matplotlib to make a bar chart
+plt.bar(temp_data['Year'], temp_data['Anomaly'], align='center', color='green')
+plt.ylabel('Temperature Anomalies in Celsius')
+plt.xlabel('Years')
+plt.title('Change in Temperatures')
 
 
 # TODO #5: Calculate min, max, and avg anomaly and the corresponding min/max years
+min_anomaly = temp_data['Anomaly'][0]
+max_anomaly = temp_data['Anomaly'][0]
+min_year = temp_data['Year'][0]
+max_year = temp_data['Year'][0]
+sum_anomaly = 0
+avg_anomaly = 0
+# find the min, max and calculate the sum
+for i in range(len(temp_data['Anomaly'])):
+    if (temp_data['Anomaly'][i] < min_anomaly):
+        min_anomaly = temp_data['Anomaly'][i]
+        min_year = temp_data['Year'][i]
+    if (temp_data['Anomaly'][i] > max_anomaly):
+        max_anomaly = temp_data['Anomaly'][i]
+        max_year = temp_data['Year'][i]
+
+for i in range(len(temp_data['Anomaly'])):
+    sum_anomaly += int(temp_data['Anomaly'][i])
+
+avg_anomaly = sum_anomaly/len(temp_data['Anomaly'])
+
+print(f"minimum {min_anomaly} | year {min_year}")
+print(f"maximum {max_anomaly} | year {max_year}")
+print(f"avrage: {avg_anomaly}")
+
+
+plt.show()
